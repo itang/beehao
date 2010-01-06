@@ -1,0 +1,111 @@
+#{extends 'main.html' /}
+#{set title:'我的小工具' /}
+<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/site.css'}" />
+<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/libs/jquery/ui/ui-lightness/jquery-ui-1.7.2.custom.css'}" />
+<script src="@{'/public/libs/jquery/ui/jquery-ui-1.7.2.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
+<script src="@{'/public/javascripts/Tool/AddBookmarker.js'}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+	$(function(){
+		$('#btnInitData').click(function(){
+			$("#spanInitData").html("正在请求执行数据初始化...");
+			$.ajax({
+				type: "POST",
+				url: "@{Tool.init_mysite_datas()}",
+				dataType: "json",
+				success: function(data){
+					alert(data.msg)
+					$("#spanInitData").html("执行数据初始化成功！");
+				}
+			});
+		})
+		
+		$("#getfile").click(function(){
+			alert ( $("#file").attr("value") );
+		});
+		
+		$("#dialog").dialog({
+			bgiframe: true,
+			height: 200,
+			autoOpen: false,
+			modal: true,
+			buttons: {
+				"Ok": function() { 
+					$.ajax({
+						url: "@{Tool.add_bookmarker()}",
+						data: {
+							name:$("#iName").val(),
+							url:$("#iUrl").val(),
+							key:$('#iKey').val()
+						},
+						type: "POST",
+						dataType: "json",
+						success:function(data){
+							alert(data.msg)
+						}
+					})
+					$(this).dialog("close"); 
+				}, 
+				"Cancel": function() { 
+					$(this).dialog("close"); 
+				} 
+			}
+		});
+		
+		$("#btnAddBookmarker").click(function(){
+			$("#dialog").dialog('open')	
+		});
+		
+	});
+</script>
+
+<h1>我的小工具</h1>
+
+<div>
+	1、<a href="" target="blank">Map Show</a>
+</div>
+
+<div>
+	2. 清理SVN，CVS目录及子目录：	<font color="red">${message}</font>
+	#{ifErrors}
+	<p> <font color="red">Oops...</font>
+		<ul>
+		#{errors}
+			<li>${error}</li>
+		#{/errors}
+		</ul>
+   </p>
+	#{/ifErrors} 
+
+	<form id="cleanTool" action="" method="post" enctype="multipart/form-data">
+		<label>清空目录</label>
+		<input type="file" id="file" name="file"/>
+		<input type="radio" name="scmType" value="CVS"/> CVS
+		<input type="radio" name="scmType" value=".svn"/> SVN
+		<input type="submit" value="执行"/>
+	</form>
+	<input type="button" id="getfile" value="getfile"/>
+</div>
+
+<div>
+ 3.下载最新play！ <span id="playdownload" >正在获取最新的play下载地址...</span> 
+</div>
+
+<div>
+	<div id="dialog" title="添加书签">
+		<label>key:</label>
+		<input type="input" id="iKey" /><br/>
+		<label>name:</label>
+		<input type="input" id="iName" /><br/>
+		<label >url:</label>
+		<input type="input" id="iUrl"/>
+	</div>
+	4.添加书签：<input type="button" id="btnAddBookmarker" value="添加书签"/>
+</div>
+
+<div>
+ 5. 初始化数据 !<input type="button" id="btnInitData" value="initData"/> <span id="spanInitData" ></span> 
+</div>
+
+<div>
+ 6. 导出书签数据 !<input type="button" id="btnExportData" value="ExportData"/> <span id="spanExportData" ></span> 
+</div>

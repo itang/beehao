@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>#{get 'title' /}</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}" />
+        <link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}" />
+        <script src="@{'/public/libs/jquery/jquery-1.3.2.min.js'}" type="text/javascript" charset="utf-8"></script>
+        <script src="@{'/public/javascripts/main.js'}" type="text/javascript" charset="utf-8"></script>
+        <script type="text/javascript">
+        	$(function(){
+        		function openSearchPage(){ window.open("@{Tool.search()}?key=" + $("#searchkey").attr("value"), "My Search" ); };
+        		$("#btnSearch").click(openSearchPage);
+        		$("#searchkey").keypress(function(e){
+    					if (e.which == 13){
+    						openSearchPage()
+    					}
+	    		});
+        	})
+        </script>
+    </head>
+    <body>
+    <div id="container">
+    	<div id="header">
+    		<span>
+    			我的网站
+    		</span>
+			<div id="quicklinks">
+				<span>快捷方式</span>
+				<input type="input" id="searchkey" name="searchkey" value="${key}"/> <input type="button" id="btnSearch" value="Go!"/>
+				|<a href="/">主页</a>
+				|<a href="http://www.playframework.org/documentation/1.1-trunk/home" target="_blank">play!-1.1</a>
+				|<a href="http://localhost:9000/bespin" target="_blank">bespin</a>
+				|<a href="@{Tool.index()}">my tools</a>
+			</div>
+		</div>
+		
+		<div id="content">
+        #{doLayout /}
+        </div>
+        
+    	<div id="footer"> 
+    		<span>
+    		itang &copy 2009
+    		</span>
+		</div>
+    </div>
+    </body>
+</html>

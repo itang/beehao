@@ -1,0 +1,29 @@
+/**
+ * css for main
+ *
+ */
+
+body{
+	margin:0 0 0 0;
+	font-size:9pt;
+	font-family: "Monaco,宋体";
+	/*background-color:black;
+	color:white;*/
+}
+
+#header{
+	background-color:black;
+	color:white;
+	height: 30px;
+}
+
+div#quicklinks{
+	float: right;
+	margin-right: 10px;
+}
+
+#searchkey{
+	width: 300px;
+	font-size: 11pt;
+	font-weight:bold;
+}

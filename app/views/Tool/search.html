@@ -1,0 +1,27 @@
+#{extends 'main.html' /}
+#{set title:'我的搜索' /}
+
+<script type="text/javascript">
+	function _resizeFrame(){
+		var size = _getViewportInfo()
+		$(".frame").each( function(){
+			this.width = ( size.w - 50 ) / 2
+			this.height = ( size.h - 60 ) 
+		});
+	}
+	$(function(){
+		$(window).resize(_resizeFrame);
+		//iframe 大小自适应窗口
+		_resizeFrame()
+	});
+</script>
+
+<table>
+	<tr>
+		<td>
+			<iframe class="frame" src="${googleurl}"></iframe>
+		</td>
+			<td><iframe class="frame" src="${bingurl}"></iframe> 
+		</td>
+	</tr>
+</table>
