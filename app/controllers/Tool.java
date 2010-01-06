@@ -6,6 +6,7 @@ import java.text.MessageFormat;
 import java.io.*;
 
 import java.util.*;
+import java.net.*;
 
 import play.*;
 import play.mvc.*;
@@ -16,6 +17,7 @@ import models.Bookmarker;
 import models.Bookmarkers;
 
 import myutils.AjaxResultJSON;
+import myutils.ProxyUrl;
 
 
 /**
@@ -56,9 +58,58 @@ public class Tool extends Controller {
 	public static void search () {
 		String key = params.get("key");
 		renderArgs .put ("key", key);
-		renderArgs .put ("googleurl", "http://www.google.cn/search?q=" + key);
-		renderArgs. put ("bingurl", "http://www.bing.com/search?q=" + key);
+		
+		//倒墙?
+		if(key!=null && key.startsWith("http")){
+		  proxy(key);
+		  return;
+		}
+
+		renderArgs.put ("googleurl", "http://www.google.cn/search?q=" + key);
+		renderArgs.put ("bingurl", "http://www.bing.com/search?q=" + key);
 		render();
+	}
+	
+	/**
+	 * 翻墙.
+	 *
+	 */
+	public static void proxy(final String url){
+	  HttpURLConnection conn = null; 
+	  InputStream is = null; 
+	  StringWriter writer = new StringWriter();
+	  final String targetURL = ProxyUrl.real(url);
+	  System.out.println("target url:" + targetURL);
+	   
+	  try{
+	    conn = (HttpURLConnection) new URL(targetURL).openConnection();
+	    conn.setConnectTimeout(15000);
+	    conn.setReadTimeout(15000); 
+	    conn.setInstanceFollowRedirects(true);  
+      conn.setUseCaches(false); 
+      
+	    is = conn.getInputStream();
+	    byte[] buff = new byte[1024];  
+      int size = 0;  
+
+      while ((size = is.read(buff)) != -1) {
+            writer.write(new String(buff, 0, size));  
+      }
+	  }catch(Exception e){
+	    e.printStackTrace();
+	    writer.write("发生错误!" + e.getMessage());
+	  
+	  }finally{
+	    if(is!=null) try{is.close();}catch(Exception e){}
+	    
+	    writer.flush();
+	    
+	    final String content = writer.toString().replaceAll("href","value").replaceAll("src","value");
+      
+      renderArgs.put ("content", content);
+      render();
+	  } 
+	
 	}
 	
 	/**
@@ -69,6 +120,7 @@ public class Tool extends Controller {
 	 	String key = params.get("key");
 	 	String name = params.get("name");
 	 	String url = params.get("url");
+	 	
 	 	Bookmarkers.add(key, name, url);
 	 	renderJSON(new AjaxResultJSON(true,"操作成功").toJson());
 	 }

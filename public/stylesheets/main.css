@@ -22,6 +22,10 @@ div#quicklinks{
 	margin-right: 10px;
 }
 
+div#quicklinks a{
+  background-color: white;
+}
+
 #searchkey{
 	width: 300px;
 	font-size: 11pt;

@@ -9,8 +9,29 @@
         <script src="@{'/public/libs/jquery/jquery-1.3.2.min.js'}" type="text/javascript" charset="utf-8"></script>
         <script src="@{'/public/javascripts/main.js'}" type="text/javascript" charset="utf-8"></script>
         <script type="text/javascript">
+          var proxyUrl = {
+            "http://googlegroups" : "http://groups.google.com"
+          };
         	$(function(){
-        		function openSearchPage(){ window.open("@{Tool.search()}?key=" + $("#searchkey").attr("value"), "My Search" ); };
+        	 
+        		function openSearchPage(){ 
+        		  var searchKey = $("#searchkey").attr("value");
+        		  var isproxy = function(){
+        		     return searchKey && searchKey.indexOf("http") == 0;
+        		  }
+        		  
+        		  function real(){
+        		    if(isproxy()){
+        		      for(p in proxyUrl){
+        		        if(searchKey.indexOf(proxyUrl[p]) == 0){
+        		          return p + searchKey.substring(proxyUrl[p].length);
+        		        }
+        		      }
+        		    }
+        		    return searchKey;
+        		  }
+        		  window.open("@{Tool.search()}?key=" + real(), "My Search" ); 
+        		};
         		$("#btnSearch").click(openSearchPage);
         		$("#searchkey").keypress(function(e){
     					if (e.which == 13){
