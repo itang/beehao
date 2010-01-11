@@ -42,7 +42,7 @@ $(function(){
 		function updateHit(){
 			$.ajax({
 					url:"/site/update_hit",
-					data: "key=" + t.id,
+					data: "id=" + t.id,
 					type:"POST",
 					dataType:"json",
 					success: function(data){

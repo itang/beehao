@@ -13,11 +13,11 @@ import play.mvc.*;
 import play.data.validation.Validation;
 import play.data.validation.Required;
 
-import models.Bookmarker;
-import models.Bookmarkers;
+import play.modules.gae.*;
 
-import myutils.AjaxResultJSON;
-import myutils.ProxyUrl;
+import models.*;
+
+import myutils.*;
 
 
 /**
@@ -25,11 +25,21 @@ import myutils.ProxyUrl;
  *
  */
 public class Tool extends Controller {
+  @Before
+  static void checkConnected() {
+      if(GAE.getUser() == null) {
+          Application.login();
+      } else {
+          renderArgs.put("user", GAE.getUser().getEmail());
+      }
+  }
 	/**
 	 * 工具主页.
 	 *
 	 */
 	public static void index(){
+	  renderArgs.put("homepage", Config.getHomepage(getUser()));
+	  
 		render();
 	}
 	
@@ -43,14 +53,14 @@ public class Tool extends Controller {
     }
 		//默认收藏站点列表
 		LinkedHashMap<String, Site> sites = new LinkedHashMap<String, Site>();
-		Bookmarkers.add("javaeye" ,"JavaEye", "http://www.javaeye.com") ;
-		Bookmarkers.add("infoq" ,"infoq","http://www.infoq.com");
-		Bookmarkers.add("infoqcn" ,"info中国","http://www.infoq.com/cn");
-		Bookmarkers.add("github" ,"github","http://github.com");
-		Bookmarkers.add("pragrammingscala","pragrammingscala", "http://programming-scala.labs.oreilly.com");
-		Bookmarkers.add("tianya","天涯房产", "http://www.tianya.cn/publicforum/articleslist/0/house.shtml");
-		Bookmarkers.add("tieba","湖南贴吧","http://tieba.baidu.com/f?kw=%BA%FE%C4%CF%CE%C0%CA%D3");
-		Bookmarkers.add("sina","新浪","http://news.sina.com.cn");
+		Bookmarkers.add("javaeye" ,"JavaEye", "http://www.javaeye.com", getUser()) ;
+		Bookmarkers.add("infoq" ,"infoq","http://www.infoq.com", getUser());
+		Bookmarkers.add("infoqcn" ,"info中国","http://www.infoq.com/cn", getUser());
+		Bookmarkers.add("github" ,"github","http://github.com", getUser());
+		Bookmarkers.add("pragrammingscala","pragrammingscala", "http://programming-scala.labs.oreilly.com", getUser());
+		Bookmarkers.add("tianya","天涯房产", "http://www.tianya.cn/publicforum/articleslist/0/house.shtml", getUser());
+		Bookmarkers.add("tieba","湖南贴吧","http://tieba.baidu.com/f?kw=%BA%FE%C4%CF%CE%C0%CA%D3", getUser());
+		Bookmarkers.add("sina","新浪","http://news.sina.com.cn", getUser());
 		
 		renderJSON("{msg:'success!'}");
 	}
@@ -125,7 +135,18 @@ public class Tool extends Controller {
 	 	String name = params.get("name");
 	 	String url = params.get("url");
 	 	
-	 	Bookmarkers.add(key, name, url);
+	 	Bookmarkers.add(key, name, url, getUser());
+	 	
 	 	renderJSON(new AjaxResultJSON(true,"操作成功").toJson());
 	 }
+
+	 static String getUser() {
+     return renderArgs.get("user", String.class);
+  }
+  
+  public static void set_homepage(String homepage){
+    Config.setHomepage(homepage, getUser());
+    
+    renderJSON(new AjaxResultJSON(true,"操作成功").toJson());
+  }
 }

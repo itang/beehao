@@ -19,6 +19,7 @@ public class Bookmarker extends Model{
 		public Date createDate  = new Date();
 		public int hit = 0;
 		public String tag  = "default";
+		public String user = "live.tang@gmail.com";
 		
 		public Bookmarker(){
 			
@@ -30,7 +31,14 @@ public class Bookmarker extends Model{
 			this.url = url;
 		}
 		
+		public Bookmarker(String key, String name, String url, String user){
+			this.key = key;
+			this.name = name;
+			this.url = url;
+			this.user = user;
+		}
+		
 		public String toString() {
-			return  name + "("  + key + ")";
+			return  name + "("  + id + ", " +  key + ")";
 		}
 }

@@ -48,7 +48,24 @@
 		});
 		
 		$("#btnAddBookmarker").click(function(){
-			$("#dialog").dialog('open')	
+			$("#dialog").dialog('open');
+		});
+		
+		$("#btnSetHomepage").click(function(){
+		  var  homepage = $("#txtHomepage").val();
+		  if(confirm("确认设置" + homepage + "为主页?")){
+		    $.ajax({
+						url: "@{Tool.set_homepage()}",
+						data: {
+							"homepage":homepage,
+						},
+						type: "POST",
+						dataType: "json",
+						success:function(data){
+							alert(data.msg);
+						}
+					});
+		  }
 		});
 		
 	});
@@ -57,7 +74,7 @@
 <h1>我的小工具</h1>
 
 <div>
-	<div id="dialog" title="添加书签">
+	<div id="dialog" title="添加书签" style="display:none">
 		<label>key:</label>
 		<input type="input" id="iKey" /><br/>
 		<label>name:</label>
@@ -69,6 +86,13 @@
 </div>
 
 <div>
- 2. 初始化数据 !<input type="button" id="btnInitData" value="initData"/> <span id="spanInitData" ></span> 
+  2.设置主页:<input type="text" value="${homepage}" id="txtHomepage" name="txtHomepage"/>
+  <input type="button" id="btnSetHomepage" value="设置主页"/>
 </div>
+
+<div>
+ 3. 初始化数据 !<input type="button" id="btnInitData" value="initData"/> <span id="spanInitData" ></span> 
+</div>
+
+
 

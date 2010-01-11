@@ -10,13 +10,13 @@
 
 <ul id="globalnav">
 #{list items:bookmarkers, as:'bookmarker'}
-	<li><a id = "${bookmarker.key}" href="${bookmarker.url}" target="_blank" title="${bookmarker.description}">${bookmarker.name}
-		<span id = "${bookmarker.key}hit">${bookmarker.hit}</span>
+	<li><a id = "${bookmarker.id}" href="${bookmarker.url}" target="_blank" title="${bookmarker.description}">${bookmarker.name}
+		<span id = "${bookmarker.id}hit">${bookmarker.hit}</span>
 	</a> <span class="sd">[${bookmarker.key}]</span></li>
 #{/list}
 </ul>
 
 <div id="frame_container">
-	<iframe class="frame" src="${homepage.url}" width="1024" height="600">
+	<iframe class="frame" src="${homepage}" width="1024" height="600">
 	</iframe>
 </div>
