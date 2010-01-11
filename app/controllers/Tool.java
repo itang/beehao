@@ -37,6 +37,10 @@ public class Tool extends Controller {
 	 * 初始化站点数据.
 	 */
 	public static void init_mysite_datas(){
+	  //clear data first
+    for(Bookmarker bm :	Bookmarkers.getAll()){
+      bm.delete();
+    }
 		//默认收藏站点列表
 		LinkedHashMap<String, Site> sites = new LinkedHashMap<String, Site>();
 		Bookmarkers.add("javaeye" ,"JavaEye", "http://www.javaeye.com") ;

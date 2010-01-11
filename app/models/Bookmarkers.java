@@ -14,7 +14,7 @@ public class Bookmarkers extends Model{
     }
     
     public static List<Bookmarker> getAll() {
-    	return all().fetch();
+    	return all().order("-hit").fetch();
     } 
     
     public static  Bookmarker increaseOneHit(String key) {
