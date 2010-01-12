@@ -45,18 +45,22 @@
     <div id="container">
     	<div id="header">
     		<span>
-    			我的网站
+    			牛窝
     		</span>
 			<div id="quicklinks">
-				<span>快捷方式</span>
-				<input type="input" id="searchkey" name="searchkey" value="${key}"/> <input type="button" id="btnSearch" value="Go!"/>
+	      #{if user}
+	        ${user}
+	      #{/if}
 				|<a href="/">主页</a>
-				|<a href="http://www.playframework.org/documentation/1.1-trunk/home" target="_blank">play!-1.1</a>
-				|<a href="http://localhost:9000/bespin" target="_blank">bespin</a>
+				#{if user}
+				<input type="input" id="searchkey" name="searchkey" value="${key}"/> 
+				<input type="button" id="btnSearch" value="Go!"/>
 				|<a href="@{Tool.index()}">选项</a>
-				 #{if user}
-        |<a href="@{Application.logout()}">Logout</a>${user}
-         #{/if}
+        |<a href="@{Application.logout()}">退出</a>
+        #{/if}
+        #{else}
+        |<a href="@{Application.login()}">登录</a>
+        #{/else}
 			</div>
 		</div>
 		

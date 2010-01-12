@@ -1,5 +1,5 @@
 #{extends 'main.html' /}
-#{set title:'我的小工具' /}
+#{set title:'个人设置 - 阿牛的孵化窝' /}
 <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/site.css'}" />
 <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/libs/jquery/ui/ui-lightness/jquery-ui-1.7.2.custom.css'}" />
 <script src="@{'/public/libs/jquery/ui/jquery-ui-1.7.2.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
@@ -7,17 +7,19 @@
 <script type="text/javascript">
 	$(function(){
 		$('#btnInitData').click(function(){
-			$("#spanInitData").html("正在请求执行数据初始化...");
-			$.ajax({
-				type: "POST",
-				url: "@{Tool.init_mysite_datas()}",
-				dataType: "json",
-				success: function(data){
-					alert(data.msg)
-					$("#spanInitData").html("执行数据初始化成功！");
-				}
-			});
-		})
+		  if(confirm("确认清空已有书签并设置为牛推荐的书签?")){
+  			$("#spanInitData").html("正在设置为牛推荐的书签...");
+  			$.ajax({
+  				type: "POST",
+  				url: "@{Tool.init_mysite_datas()}",
+  				dataType: "json",
+  				success: function(data){
+  					alert(data.msg)
+  					$("#spanInitData").html("设置为牛推荐的书签成功！");
+  				}
+  			});
+			}
+		});
 		
 		$("#dialog").dialog({
 			bgiframe: true,
@@ -71,7 +73,7 @@
 	});
 </script>
 
-<h1>我的小工具</h1>
+<h1>选项 - 个人设置</h1>
 
 <div>
 	<div id="dialog" title="添加书签" style="display:none">
@@ -82,17 +84,23 @@
 		<label >url:</label>
 		<input type="input" id="iUrl"/>
 	</div>
-	1.添加书签：<input type="button" id="btnAddBookmarker" value="添加书签"/>
+	<span id="spanInitData" ></span> 
+	1.添加书签：
+	<input type="button" id="btnAddBookmarker" value="添加书签"/>
+  <input type="button" id="btnInitData" value="设置为牛推荐的书签"/>
 </div>
 
 <div>
-  2.设置主页:<input type="text" value="${homepage}" id="txtHomepage" name="txtHomepage"/>
+  2.设置主页:
+  <input type="text" value="${homepage}" id="txtHomepage" name="txtHomepage"/>
   <input type="button" id="btnSetHomepage" value="设置主页"/>
 </div>
 
-<div>
- 3. 初始化数据 !<input type="button" id="btnInitData" value="initData"/> <span id="spanInitData" ></span> 
-</div>
+<span>
+  返回<a href="@{Site.index}" title="返回首页"/>首页</a>
+</span>
+
+
 
 
 

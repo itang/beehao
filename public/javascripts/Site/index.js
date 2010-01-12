@@ -12,11 +12,10 @@ var curr_window_status = "max"
 function _isMaximized(){
 	return curr_window_status == "max"
 }
+
 $(function(){
 	//resize event
 	$(window).resize(_resizeFrame);
-	//iframe load
-	//$(".frame").load(resizeFrame);  
 
 	//refresh click事件 -> iframe reload
 	$('#refresh').click( function(){
@@ -26,10 +25,10 @@ $(function(){
 	$('#btnMaximize').click(function(){
 		if(!_isMaximized()){
 			curr_window_status = "max"
-			this.value = "Minimize";
+			this.value = "显示书签栏";
 		}else{
 			curr_window_status = "min"
-			this.value = "Maximize";
+			this.value = "隐藏书签栏";
 		}
 
 		$("#globalnav").slideToggle("slow"); //.toggle();
@@ -42,7 +41,7 @@ $(function(){
 		function updateHit(){
 			$.ajax({
 					url:"/site/update_hit",
-					data: "id=" + t.id,
+					data: "id=" + t.id,  
 					type:"POST",
 					dataType:"json",
 					success: function(data){
@@ -54,6 +53,7 @@ $(function(){
 			};
 		updateHit();
 
+    //刷新
 		$('.frame').each(function(){ this.src = t.href;})
 		event.preventDefault();
 		event.stopPropagation(); // do something
@@ -61,8 +61,9 @@ $(function(){
 });
 
 $(function(){
-	//iframe 大小自适应窗口
-	_resizeFrame()
 	//隐藏导航栏
 	$("#globalnav").hide();
+	
+	//iframe 大小自适应窗口
+	_resizeFrame()
 });

@@ -1,14 +1,14 @@
 #{extends 'main.html' /}
-#{set title:'我的网站收藏' /}
+#{set title:'我的网站书签 - 阿牛的孵化窝' /}
 <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/site.css'}" />
 <script src="@{'/public/javascripts/Site/index.js'}" type="text/javascript" charset="utf-8"></script>
 <div class="toolbar">
 	共收藏<b>${bookmarkers.size()}</b>个站点
 	<input type="button" id="refresh" value="刷新"/>
-	<input type="button" id="btnMaximize" value="Minimize"/>
+	<input type="button" id="btnMaximize" value="显示书签栏"/>
 </div>
 
-<ul id="globalnav">
+<ul id="globalnav"  style="display:none">
 #{list items:bookmarkers, as:'bookmarker'}
 	<li><a id = "${bookmarker.id}" href="${bookmarker.url}" target="_blank" title="${bookmarker.description}">${bookmarker.name}
 		<span id = "${bookmarker.id}hit">${bookmarker.hit}</span>
