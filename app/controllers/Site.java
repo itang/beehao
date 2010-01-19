@@ -33,7 +33,7 @@ public class Site extends Controller{
 	  if(homepage == null) homepage = "http://www.javaeye.com";
 
 		renderArgs.put("homepage", homepage);
-		renderArgs.put("bookmarkers",  Bookmarkers.findByUser(getUser()) );
+		renderArgs.put("bookmarkers",  Bookmarker.viewer(getUser()).getAll());
 		render();
 	}  
 	
@@ -43,12 +43,12 @@ public class Site extends Controller{
 	 */
 	public static void update_hit(Long id){
 		if(Request.current().method.equals( "POST")){
-			Bookmarker bookmarker = Bookmarkers.getById(id);
+			Bookmarker bookmarker = Bookmarker.getById(id);
 			
 			notFoundIfNull(bookmarker);
 			checkOwner(bookmarker);
 			
-			Bookmarker b = Bookmarkers.increaseOneHit(bookmarker);
+			Bookmarker b = Bookmarker.increaseOneHit(bookmarker);
 			
 			renderJSON( "{msg:'ok',success:true,currHit: " + b.hit + "}" );
 		} else{  

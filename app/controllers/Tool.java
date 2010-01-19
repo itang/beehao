@@ -47,20 +47,19 @@ public class Tool extends Controller {
 	 * 初始化站点数据.
 	 */
 	public static void init_mysite_datas(){
-	  //clear data first
-    for(Bookmarker bm :	Bookmarkers.getAll()){
-      bm.delete();
-    }
-		//默认收藏站点列表
-		LinkedHashMap<String, Site> sites = new LinkedHashMap<String, Site>();
-		Bookmarkers.add("javaeye" ,"JavaEye", "http://www.javaeye.com", getUser()) ;
-		Bookmarkers.add("infoq" ,"infoq","http://www.infoq.com", getUser());
-		Bookmarkers.add("infoqcn" ,"info中国","http://www.infoq.com/cn", getUser());
-		Bookmarkers.add("github" ,"github","http://github.com", getUser());
-		Bookmarkers.add("pragrammingscala","pragrammingscala", "http://programming-scala.labs.oreilly.com", getUser());
-		Bookmarkers.add("tianya","天涯房产", "http://www.tianya.cn/publicforum/articleslist/0/house.shtml", getUser());
-		Bookmarkers.add("tieba","湖南贴吧","http://tieba.baidu.com/f?kw=%BA%FE%C4%CF%CE%C0%CA%D3", getUser());
-		Bookmarkers.add("sina","新浪","http://news.sina.com.cn", getUser());
+	  BookmarkerViewer currUserBookmarkers = Bookmarker.viewer(getUser());
+	  
+	  //清空书签
+    currUserBookmarkers.deleteAll();
+		//添加默认书签列表
+		currUserBookmarkers.add("javaeye" ,"JavaEye", "http://www.javaeye.com")
+		  .add("infoq" ,"infoq","http://www.infoq.com")
+		  .add("infoqcn" ,"info中国","http://www.infoq.com/cn")
+		  .add("github" ,"github","http://github.com")
+		  .add("pragrammingscala","pragrammingscala", "http://programming-scala.labs.oreilly.com")
+		  .add("tianya","天涯房产", "http://www.tianya.cn/publicforum/articleslist/0/house.shtml")
+		  .add("tieba","湖南贴吧","http://tieba.baidu.com/f?kw=%BA%FE%C4%CF%CE%C0%CA%D3")
+		  .add("sina","新浪","http://news.sina.com.cn");
 		
 		renderJSON("{msg:'success!'}");
 	}
@@ -135,7 +134,7 @@ public class Tool extends Controller {
 	 	String name = params.get("name");
 	 	String url = params.get("url");
 	 	
-	 	Bookmarkers.add(key, name, url, getUser());
+	 	Bookmarker.add(key, name, url, getUser());
 	 	
 	 	renderJSON(new AjaxResultJSON(true,"操作成功").toJson());
 	 }
