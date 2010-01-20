@@ -5,18 +5,25 @@
 #header{
 	background-color:black;
 	color:white;
-	height: 30px;
+	height: 28px;
+	padding: 4px 2px 0px 2px;
+}
+
+#sitetitle{
+  float: left;
 }
 
 div#quicklinks{
 	float: right;
-	margin-right: 10px;
+	text-align: right;
 }
 
 div#quicklinks a{
   background-color: white;
   text-decoration: none;
-  padding: 4px 5px 4px 5px ;
+  padding-left: 5px;
+  padding-right: 5px;
+  line-height: 1em;
 }
 
 div#quicklinks a:hover{

@@ -34,9 +34,12 @@ $(function() {
         } else {
             curr_window_status = "min";
             this.value = "隐藏书签栏";
+            
+            $("#frameWindow").hide();
         }
-
+       
         $("#globalnav").slideToggle("fast", function() {
+            $("#frameWindow").show();
             _resizeFrame();
         });
     });
