@@ -1,22 +1,14 @@
 #{extends 'main.html' /}
-#{set title:'阿牛的孵化窝' /}
+#{set title:'主页' /}
 
 <style type="text/css">
-
-#content{
-   width: 100%;
-}
-#divLogin{
-  margins: auto;
-  border: 1px solid blue;
-  width: 400px;
-  height: 100px;
-  text-align: center;
-}
+    .divLogin {
+        text-align: center;
+    }
 </style>
 
-<div id="content">
-  <div id="divLogin">
-      <a href="@{Application.login()}">使用google帐号登录</a>
-  </div>
+<div class="container">
+    <div class="span24 divLogin">
+        <a href="@{Application.login()}">使用google帐号登录</a>
+    </div>
 </div>

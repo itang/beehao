@@ -1,104 +1,63 @@
 #{extends 'main.html' /}
-#{set title:'个人设置 - 阿牛的孵化窝' /}
-<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/site.css'}" />
-<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/libs/jquery/ui/ui-lightness/jquery-ui-1.7.2.custom.css'}" />
+#{set title:'个人设置' /}
+
+#{set 'moreStyles'}
+<link rel="stylesheet" type="text/css" media="screen"
+      href="@{'/public/libs/jquery/ui/ui-lightness/jquery-ui-1.7.2.custom.css'}"/>
+<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/site.css'}"/>
+#{/set}
+#{set 'moreScripts'}
 <script src="@{'/public/libs/jquery/ui/jquery-ui-1.7.2.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
 <script src="@{'/public/javascripts/Tool/AddBookmarker.js'}" type="text/javascript" charset="utf-8"></script>
+#{/set}
+
 <script type="text/javascript">
-	$(function(){
-		$('#btnInitData').click(function(){
-		  if(confirm("确认清空已有书签并设置为牛推荐的书签?")){
-  			$("#spanInitData").html("正在设置为牛推荐的书签...");
-  			$.ajax({
-  				type: "POST",
-  				url: "@{Tool.init_mysite_datas()}",
-  				dataType: "json",
-  				success: function(data){
-  					alert(data.msg)
-  					$("#spanInitData").html("设置为牛推荐的书签成功！");
-  				}
-  			});
-			}
-		});
-		
-		$("#dialog").dialog({
-			bgiframe: true,
-			height: 200,
-			autoOpen: false,
-			modal: true,
-			buttons: {
-				"Ok": function() { 
-					$.ajax({
-						url: "@{Tool.add_bookmarker()}",
-						data: {
-							name:$("#iName").val(),
-							url:$("#iUrl").val(),
-							key:$('#iKey').val()
-						},
-						type: "POST",
-						dataType: "json",
-						success:function(data){
-							alert(data.msg)
-						}
-					})
-					$(this).dialog("close"); 
-				}, 
-				"Cancel": function() { 
-					$(this).dialog("close"); 
-				} 
-			}
-		});
-		
-		$("#btnAddBookmarker").click(function(){
-			$("#dialog").dialog('open');
-		});
-		
-		$("#btnSetHomepage").click(function(){
-		  var  homepage = $("#txtHomepage").val();
-		  if(confirm("确认设置" + homepage + "为主页?")){
-		    $.ajax({
-						url: "@{Tool.set_homepage()}",
-						data: {
-							"homepage":homepage,
-						},
-						type: "POST",
-						dataType: "json",
-						success:function(data){
-							alert(data.msg);
-						}
-					});
-		  }
-		});
-		
-	});
+    $(document).ready(function() {
+        var $tabs = $("#tabs").tabs({
+            fx: { opacity: 'toggle' } ,
+            selected: 0
+        });
+    });
 </script>
 
-<h1>选项 - 个人设置</h1>
+<h3>选项 - 个人设置</h3>
 
-<div>
-	<div id="dialog" title="添加书签" style="display:none">
-		<label>key:</label>
-		<input type="input" id="iKey" /><br/>
-		<label>name:</label>
-		<input type="input" id="iName" /><br/>
-		<label >url:</label>
-		<input type="input" id="iUrl"/>
-	</div>
-	1.添加书签：
-	<input type="button" id="btnAddBookmarker" value="添加书签"/>
-  <input type="button" id="btnInitData" value="设置为牛推荐的书签"/>
-  <span id="spanInitData" ></span> 
+<div id="tabs">
+    <ul>
+        <li><a href="#fragment-1"><span>书签管理</span></a></li>
+        <li><a href="#fragment-2"><span>设置主页</span></a></li>
+        <li><a href="#fragment-3"><span>其他</span></a></li>
+    </ul>
+    <div id="fragment-1">
+        <div id="dialog" title="添加书签" style="display:none">
+            <label>key:</label>
+            <input type="input" id="iKey"/><br/>
+            <label>name:</label>
+            <input type="input" id="iName"/><br/>
+            <label>url:</label>
+            <input type="input" id="iUrl"/>
+        </div>
+        书签管理：
+        <input type="button" id="btnAddBookmarker" value="添加书签"/>
+        <input type="button" id="btnInitData" value="设置为牛推荐的书签"/>
+        <span id="spanInitData"></span>
+    </div>
+    <div id="fragment-2">
+        设置主页:
+        <input type="text" value="${homepage}" id="txtHomepage" name="txtHomepage"/>
+        <input type="button" id="btnSetHomepage" value="设置主页"/>
+    </div>
+    <div id="fragment-3">
+
+    </div>
 </div>
 
 <div>
-  2.设置主页:
-  <input type="text" value="${homepage}" id="txtHomepage" name="txtHomepage"/>
-  <input type="button" id="btnSetHomepage" value="设置主页"/>
-</div>
-
 <span>
-  返回<a href="@{Site.index}" title="返回首页"/>首页</a>
+  <a href="@{Site.index}" title="返回首页"/>返回首页</a>
 </span>
+</div>
+
 
 
 

@@ -6,8 +6,8 @@
       <include path="/**.png"/>
       <include path="/**.gif"/>
       <include path="/**.ico"/>
-      <include path="/**.css"/>
-      <include path="/**.js"/>
+      <include path="/**.css" expiration="1s"/>
+      <include path="/**.js"  expiration="1s"/>
   </static-files>
 </appengine-web-app>
 
