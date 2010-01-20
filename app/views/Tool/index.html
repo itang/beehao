@@ -8,6 +8,14 @@
 #{/set}
 #{set 'moreScripts'}
 <script src="@{'/public/libs/jquery/ui/jquery-ui-1.7.2.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+  //page action routes
+  var routes = {
+    init_mysite_datas: "@{Tool.init_mysite_datas()}",
+    add_bookmarker: "@{Tool.add_bookmarker()}",
+    set_homepage: "@{Tool.set_homepage()}"
+  };
+</script>
 <script src="@{'/public/javascripts/Tool/AddBookmarker.js'}" type="text/javascript" charset="utf-8"></script>
 #{/set}
 

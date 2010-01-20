@@ -2,15 +2,6 @@
  * css for main
  *
  */
-
-body{
-	margin:0 0 0 0;
-	font-size:9pt;
-	font-family: "Monaco,宋体";
-	/*background-color:black;
-	color:white;*/
-}
-
 #header{
 	background-color:black;
 	color:white;
@@ -24,6 +15,14 @@ div#quicklinks{
 
 div#quicklinks a{
   background-color: white;
+  text-decoration: none;
+  padding: 4px 5px 4px 5px ;
+}
+
+div#quicklinks a:hover{
+  text-decoration: underline;
+  background: #FFCC00;
+  color: red;
 }
 
 #searchkey{

@@ -1,14 +1,14 @@
-    $(function() {
+ï»¿    $(function() {
         $('#btnInitData').click(function() {
-            if (confirm("È·ÈÏÇå¿ÕÒÑÓĞÊéÇ©²¢ÉèÖÃÎªÅ£ÍÆ¼öµÄÊéÇ©?")) {
-                $("#spanInitData").html("ÕıÔÚÉèÖÃÎªÅ£ÍÆ¼öµÄÊéÇ©...");
+            if (confirm("ç¡®è®¤æ¸…ç©ºå·²æœ‰ä¹¦ç­¾å¹¶è®¾ç½®ä¸ºç‰›æ¨èçš„ä¹¦ç­¾?")) {
+                $("#spanInitData").html("æ­£åœ¨è®¾ç½®ä¸ºç‰›æ¨èçš„ä¹¦ç­¾...");
                 $.ajax({
                     type: "POST",
-                    url: "@{Tool.init_mysite_datas()}",
+                    url: routes.init_mysite_datas,
                     dataType: "json",
                     success: function(data) {
                         alert(data.msg)
-                        $("#spanInitData").html("ÉèÖÃÎªÅ£ÍÆ¼öµÄÊéÇ©³É¹¦£¡");
+                        $("#spanInitData").html("è®¾ç½®ä¸ºç‰›æ¨èçš„ä¹¦ç­¾æˆåŠŸï¼");
                     }
                 });
             }
@@ -22,7 +22,7 @@
             buttons: {
                 "Ok": function() {
                     $.ajax({
-                        url: "@{Tool.add_bookmarker()}",
+                        url: routes.add_bookmarker,
                         data: {
                             name:$("#iName").val(),
                             url:$("#iUrl").val(),
@@ -48,9 +48,9 @@
 
         $("#btnSetHomepage").click(function() {
             var homepage = $("#txtHomepage").val();
-            if (confirm("È·ÈÏÉèÖÃ" + homepage + "ÎªÖ÷Ò³?")) {
+            if (confirm("ç¡®è®¤è®¾ç½®" + homepage + "ä¸ºä¸»é¡µ?")) {
                 $.ajax({
-                    url: "@{Tool.set_homepage()}",
+                    url: routes.set_homepage,
                     data: {
                         "homepage":homepage
                     },
