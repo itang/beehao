@@ -17,10 +17,22 @@
     <!--media="screen, projection">-->
     <link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/main.css'}"/>
     #{get 'moreStyles' /}
-    <link rel="stylesheet" type="text/css" href="@{'/public/stylesheets/main.css'}" media="screen"/>
     <script src="@{'/public/libs/jquery/jquery-1.3.2.min.js'}" type="text/javascript" charset="utf-8"></script>
     <script src="@{'/public/javascripts/main.js'}" type="text/javascript" charset="utf-8"></script>
     #{get 'moreScripts' /}
+    
+    <script type="text/javascript">
+      var pageData = {
+        channels: [{
+          name: 'homepage',
+          uri: '/site/index'
+        },
+        {
+          name: 'setting',
+          uri: '/tool/index'
+        } ]
+      };
+    </script>
 </head>
 <body>
 <div id="container">
@@ -34,16 +46,16 @@
             ${user}
             #{/if}
             |
-            <a href="/">主页</a>
+            <a href="/" id="a_homepage">主页</a>
             |
-            <a href="#" title="TODO...">Blog</a>
+            <a href="#" title="TODO..." id="a_blog">Blog</a>
             |
-            <a href="#" title="TODO...">相册</a>
+            <a href="#" title="TODO..." id="a_photo">相册</a>
             #{if user}
             <input type="input" id="searchkey" name="searchkey" value="${key}"/>
             <input type="button" id="btnSearch" value="Go!"/>
             |
-            <a href="@{Tool.index()}">选项</a>
+            <a href="@{Tool.index()}" id="a_setting">选项</a>
             |
             <a href="@{Application.logout()}">退出</a>
             #{/if}

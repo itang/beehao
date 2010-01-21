@@ -2,6 +2,7 @@ var proxyUrl = {
     "http://googlegroups" : "http://groups.google.com"
 };
 
+
 $(function() {
 
     function openSearchPage() {
@@ -30,5 +31,16 @@ $(function() {
             openSearchPage()
         }
     });
-
+    
+    //选中当前频道
+    (function highlightChannel(){
+      var currHref = window.localtion.href;
+      $.each(pageData.channels, function(index, it){
+        if(currHref.indexOf( it.url ) != - 1){
+          $("#a_" + it.name).addClass("selected");
+          return false;
+        }
+      });
+    })();
+ 
 })
