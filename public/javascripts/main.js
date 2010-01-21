@@ -34,9 +34,9 @@ $(function() {
     
     //选中当前频道
     (function highlightChannel(){
-      var currHref = window.localtion.href;
+      var currHref = window.location.href;
       $.each(pageData.channels, function(index, it){
-        if(currHref.indexOf( it.url ) != - 1){
+        if(currHref.indexOf( it.uri ) != - 1){
           $("#a_" + it.name).addClass("selected");
           return false;
         }
