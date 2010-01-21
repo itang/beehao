@@ -35,12 +35,12 @@ $(function() {
     //选中当前频道
     (function highlightChannel(){
       var currHref = window.location.href;
-      $.each(pageData.channels, function(index, it){
-        if(currHref.indexOf( it.uri ) != - 1){
-          $("#a_" + it.name).addClass("selected");
+      $("div#quicklinks a").each(function(){
+      	if(currHref.indexOf( this.href ) != - 1){
+          $(this).addClass("selected");
           return false;
         }
-      });
+  		});
     })();
  
 })
