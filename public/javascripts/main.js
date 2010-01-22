@@ -22,7 +22,7 @@ $(function() {
             return searchKey;
         }
 
-        window.open("@{Tool.search()}?key=" + real(), "My Search");
+        window.open("/tool/search?key=" + real(), "My Search");
     }
 
     $("#btnSearch").click(openSearchPage);
