@@ -1,11 +1,6 @@
-function _getViewportInfo() {
-    var w = (window.innerWidth) ? window.innerWidth : (document.documentElement && document.documentElement.clientWidth) ? document.documentElement.clientWidth : document.body.offsetWidth;
-    var h = (window.innerHeight) ? window.innerHeight : (document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : document.body.offsetHeight;
-    return {w:w, h:h};
-}
 
 function _resizeFrame() {
-    var height = _getViewportInfo().h - $("#frameWindow").position().top;
+    var height = g.getViewportInfo().h - $("#frameWindow").position().top;
     height = height - $("#footer").height();
     $("#frameWindow").height(height);
 }

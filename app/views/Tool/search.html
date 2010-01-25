@@ -3,16 +3,16 @@
 
 <script type="text/javascript">
 	function _resizeFrame(){
-		var size = _getViewportInfo()
+		var size =  g.getViewportInfo();
 		$(".frame").each( function(){
-			this.width = ( size.w - 50 ) / 2
-			this.height = ( size.h - 60 ) 
+			this.width = ( size.w - 50 ) / 2;
+			this.height = ( size.h - 60 ) ;
 		});
 	}
 	$(function(){
 		$(window).resize(_resizeFrame);
 		//iframe 大小自适应窗口
-		_resizeFrame()
+		_resizeFrame();
 	});
 </script>
 
