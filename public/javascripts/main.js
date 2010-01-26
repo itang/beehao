@@ -1,10 +1,10 @@
 //global object
 var g = {
-  getViewportInfo: function(){
-    var w = (window.innerWidth) ? window.innerWidth : (document.documentElement && document.documentElement.clientWidth) ? document.documentElement.clientWidth : document.body.offsetWidth;
-    var h = (window.innerHeight) ? window.innerHeight : (document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : document.body.offsetHeight;
-    return {w:w, h:h};
-  }
+    getViewportInfo: function() {
+        var w = (window.innerWidth) ? window.innerWidth : (document.documentElement && document.documentElement.clientWidth) ? document.documentElement.clientWidth : document.body.offsetWidth;
+        var h = (window.innerHeight) ? window.innerHeight : (document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : document.body.offsetHeight;
+        return {w:w, h:h};
+    }
 
 };
 
@@ -41,16 +41,16 @@ $(function() {
             openSearchPage()
         }
     });
-    
+
     //选中当前频道
-    (function highlightChannel(){
-      var currHref = window.location.href;
-      $("div#quicklinks a").each(function(){
-      	if(currHref.indexOf( this.href ) != - 1){
-          $(this).addClass("selected");
-          return false;
-        }
-  		});
+    (function highlightChannel() {
+        var currHref = window.location.href;
+        $("div#quicklinks a").each(function() {
+            if (currHref.indexOf(this.href) != - 1) {
+                $(this).addClass("selected");
+                return false;
+            }
+        });
     })();
- 
+
 })

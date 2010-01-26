@@ -1,0 +1,137 @@
+#{extends 'main.html' /}
+#{set title:'心说' /}
+#{set 'moreStyles'}
+<link rel="stylesheet" href="@{'/public/stylesheets/blueprint/plugins/silksprite/sprite.css'}" type="text/css"
+      media="screen, projection">
+#{/set}
+<style type="text/css">
+    input#content {
+        width: 300px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+</style>
+<script type="text/javascript">
+
+    $(function() {
+        $("#btnSay").click(function(event) {
+            event.preventDefault();
+            event.stopPropagation();
+            add();
+        });
+
+        function eventsBind() {
+            $(".a_reply").unbind();
+            $(".a_remove").unbind();
+            $(".a_reply").bind("click", function(event) {
+                event.preventDefault();
+                reply.call(this);
+            });
+
+            $(".a_remove").bind("click", function(event) {
+                event.preventDefault();
+                remove.call(this);
+            });
+        }
+
+        eventsBind();
+        $("input#content").focus();
+
+        function add(successFunc) {
+            var content = $("input#content").val();
+            if (!validate()) return;
+
+            ajax("/says/add", {content: content}, function(result) {
+                var item = '<div class="item">';
+                item += '<span>' + result.data.content + '</span>';
+                item += '<span>' + result.data.createAt + '</span>';
+                var replys = result.data.replys != 0 ? '[' + result.data.replys + ']' : '';
+                item += '<span><a class="a_reply ss_sprite ss_bell_go "  href="#" target="' + result.data.id + '">回复' + replys + '</a>';
+                item += '<a class="a_remove ss_sprite ss_bell_delete "  href="#" target="' + result.data.id + '"> 删除</a>';
+                item += "</span></div>";
+
+                $('.list').prepend(item);
+                eventsBind();
+
+                $("input#content").val("");
+                $("input#content").focus();
+            });
+        }
+
+        function reply() {
+            var content = $("input#content").val().trim();
+            if (!validate()) return;
+            var THIS = this;
+            ajax("/says/reply", {content: content ,target:THIS.target}, function(result) {
+                $(THIS).text("回复 [" + result.data.replys + "]");
+            });
+        }
+
+        function remove() {
+            var target = this.target;
+            var t = this;
+            ajax("/says/delete", {id:target}, function(result) {
+                $(t).parent().parent().remove();
+            });
+        }
+
+        function validate(c) {
+            if (!$("input#content").val().trim()) {
+                alert("内容不能为空!");
+                $("input#content").focus();
+                return false;
+            }
+            return true;
+        }
+
+        function ajax(action, data, successFunc) {
+            $.ajax({
+                type: "POST",
+                url: action,
+                data: data,
+                dataType: "json",
+                success: function(result) {
+                    if (result.success) {
+                        successFunc(result);
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                },
+                failure:function(result) {
+                    alert(result.message);
+                }
+            });
+        }
+    });
+</script>
+
+<div class="container">
+    <div class="span24">
+        <div>
+            <input type="text" id="content" name="content"/>
+            <span class="a_reply ss_sprite ss_bell "></span>
+            <input type="button" id="btnSay" value=" ${user} 说! "/>
+        </div>
+
+        <div class="list">
+            #{list items:says, as:'say'}
+            <div class="item">
+                <span>${say.content} </span>
+                <span>${say.createAt}  </span>
+               <span>
+                   <a class="a_reply ss_sprite ss_bell_go " href="#" target="${say.id}">回复
+                       #{if say.replys }
+                       [${say.replys}]
+                       #{/if}</a>
+               <a class="a_remove ss_sprite ss_bell_delete " href="#" target="${say.id}"> 删除</a></span>
+            </div>
+            #{/list}
+        </div>
+    </div>
+</div>
+
+
+

@@ -1,4 +1,3 @@
-
 function _resizeFrame() {
     var height = g.getViewportInfo().h - $("#frameWindow").position().top;
     height = height - $("#footer").height();
@@ -29,10 +28,10 @@ $(function() {
         } else {
             curr_window_status = "min";
             this.value = "隐藏书签栏";
-            
+
             $("#frameWindow").hide();
         }
-       
+
         $("#globalnav").slideToggle("fast", function() {
             $("#frameWindow").show();
             _resizeFrame();
@@ -50,10 +49,10 @@ $(function() {
                 data: "id=" + t.id,
                 type:"POST",
                 dataType:"json",
-                success: function(data) {
-                    if (data.success)
-                        $("#" + t.id + "hit").html(data.currHit);
-                    else alert("update hit error:" + data.msg);
+                success: function(result) {
+                    if (result.success)
+                        $("#" + t.id + "hit").html(result.data.currHit);
+                    else alert("update hit error:" + result.message);
                 }
             })
         })();
