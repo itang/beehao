@@ -3,6 +3,7 @@ package controllers;
 import models.Bookmarker;
 import models.BookmarkerViewer;
 import models.Config;
+import models.User;
 import myutils.ProxyUrl;
 import myutils.ResultBuilder;
 import play.modules.gae.GAE;
@@ -33,6 +34,7 @@ public class Tool extends Controller {
      */
     public static void index() {
         renderArgs.put("homepage", Config.getHomepage(getUser()));
+        renderArgs.put("currUser", currUser());
 
         render();
     }
@@ -55,7 +57,7 @@ public class Tool extends Controller {
                 .add("tieba", "湖南贴吧", "http://tieba.baidu.com/f?kw=%BA%FE%C4%CF%CE%C0%CA%D3")
                 .add("sina", "新浪", "http://news.sina.com.cn");
 
-       renderJSON(ResultBuilder.get().msg("设置成功!").toJson());
+        renderJSON(ResultBuilder.get().msg("设置成功!").toJson());
     }
 
     /**
@@ -137,9 +139,31 @@ public class Tool extends Controller {
         return renderArgs.get("user", String.class);
     }
 
+    static User currUser() {
+        return User.get(getUser());
+    }
+
     public static void set_homepage(String homepage) {
         Config.setHomepage(homepage, getUser());
 
         renderJSON(ResultBuilder.get().msg("操作成功!").toJson());
+    }
+
+    public static void save_profile() {
+        String nickname = params.get("nickname");
+        final String email = getUser();
+        User currUser = User.get(email);
+        if (currUser == null) {
+            currUser = new User();
+
+            currUser.email = email;
+            currUser.nickname = nickname;
+            currUser.insert();
+        } else {
+            currUser.nickname = nickname;
+            currUser.update();
+        }
+
+        renderJSON(ResultBuilder.success().msg("操作成功!").toJson());
     }
 }

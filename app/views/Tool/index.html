@@ -9,12 +9,12 @@
 #{set 'moreScripts'}
 <script src="@{'/public/libs/jquery/ui/jquery-ui-1.7.2.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">
-  //page action routes
-  var routes = {
-    init_mysite_datas: "@{Tool.init_mysite_datas()}",
-    add_bookmarker: "@{Tool.add_bookmarker()}",
-    set_homepage: "@{Tool.set_homepage()}"
-  };
+    //page action routes
+    var routes = {
+        init_mysite_datas: "@{Tool.init_mysite_datas()}",
+        add_bookmarker: "@{Tool.add_bookmarker()}",
+        set_homepage: "@{Tool.set_homepage()}"
+    };
 </script>
 <script src="@{'/public/javascripts/Tool/AddBookmarker.js'}" type="text/javascript" charset="utf-8"></script>
 #{/set}
@@ -25,7 +25,35 @@
             fx: { opacity: 'toggle' } ,
             selected: 0
         });
-    });
+
+        $("#btnProfileSave").click(function() {
+            ajax("@{Tool.save_profile()}", {
+                nickname: $("#nickname").attr("value")
+            }, function(result) {
+                alert(result.message);
+            });
+        });
+        function ajax(action, data, successFunc) {
+            $.ajax({
+                type: "POST",
+                url: action,
+                data: data,
+                dataType: "json",
+                success: function(result) {
+                    if (result.success) {
+                        successFunc(result);
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                },
+                failure:function(result) {
+                    alert(result.message);
+                }
+            });
+        }
+    })
+            ;
 </script>
 
 <h3>选项 - 个人设置</h3>
@@ -34,7 +62,7 @@
     <ul>
         <li><a href="#fragment-1"><span>书签管理</span></a></li>
         <li><a href="#fragment-2"><span>设置主页</span></a></li>
-        <li><a href="#fragment-3"><span>其他</span></a></li>
+        <li><a href="#fragment-3"><span>个人信息</span></a></li>
     </ul>
     <div id="fragment-1">
         <div id="dialog" title="添加书签" style="display:none">
@@ -56,7 +84,14 @@
         <input type="button" id="btnSetHomepage" value="设置主页"/>
     </div>
     <div id="fragment-3">
+        <p>用户: ${user}</p>
 
+        <p>昵称: <input type="text" id="nickname" name="nickname" value="${currUser.nickname}"/></p>
+
+        <p> 大头贴:
+
+        </p>
+        <input type="button" id="btnProfileSave" value="保存"/>
     </div>
 </div>
 

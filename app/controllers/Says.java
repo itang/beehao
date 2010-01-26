@@ -7,11 +7,14 @@ import play.modules.gae.GAE;
 import play.mvc.Before;
 import play.mvc.Controller;
 
+import java.util.List;
+
 
 public class Says extends Controller {
 
     public static void index() {
-        renderArgs.put("says", Says.viewer(getUser()).getAll());
+        renderArgs.put("says", Say.getAll());
+        // renderArgs.put("mysays", Says.viewer(getUser()).getAll());
         render();
     }
 
@@ -37,14 +40,14 @@ public class Says extends Controller {
         if (target == null) {
             renderJSON(ResultBuilder.failure().msg("出错了,回复对象不存在!").toJson());
         }
-        
+
         Says.viewer(getUser()).reply(content, target);
 
 
         renderJSON(ResultBuilder.success().msg("回复成功!").value("replys", target.replys).toJson());
     }
 
-    @Before
+    @Before()
     static void checkConnected() {
         if (GAE.getUser() == null) {
             Application.login();

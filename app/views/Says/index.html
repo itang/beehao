@@ -12,10 +12,31 @@
     a {
         text-decoration: none;
     }
+
+    .item {
+    : 150 %;
+    }
+
+    .item span {
+        margin-left: 8px;
+        color: gray;
+    }
+
+    .item span a {
+        color: gray;
+    }
+
+    .item span.item_content {
+        color: blue;
+    }
 </style>
 <script type="text/javascript">
 
     $(function() {
+        var p = {
+            user: '${user}'
+        };
+
         $("#btnSay").click(function(event) {
             event.preventDefault();
             event.stopPropagation();
@@ -37,14 +58,22 @@
         }
 
         eventsBind();
-        $("input#content").focus();
+        $("#content").focus();
 
         function add(successFunc) {
-            var content = $("input#content").val();
             if (!validate()) return;
+            var content = $.trim($("#content").attr("value"));
 
             ajax("/says/add", {content: content}, function(result) {
                 var item = '<div class="item">';
+                item += '<span>';
+                if (p.user == result.data.user)
+                    item += '<a href="#">我</a>';
+                else {
+                    item += '<a href="#">' + result.data.user + '</a>';
+                }
+                item += ' <span>说：</span>';
+                item += '</span>';
                 item += '<span>' + result.data.content + '</span>';
                 item += '<span>' + result.data.createAt + '</span>';
                 var replys = result.data.replys != 0 ? '[' + result.data.replys + ']' : '';
@@ -61,8 +90,9 @@
         }
 
         function reply() {
-            var content = $("input#content").val().trim();
             if (!validate()) return;
+
+            var content = $.trim($("#content").attr("value"));
             var THIS = this;
             ajax("/says/reply", {content: content ,target:THIS.target}, function(result) {
                 $(THIS).text("回复 [" + result.data.replys + "]");
@@ -78,9 +108,9 @@
         }
 
         function validate(c) {
-            if (!$("input#content").val().trim()) {
+            if (!$.trim($("#content").attr("value"))) {
                 alert("内容不能为空!");
-                $("input#content").focus();
+                $("#content").focus();
                 return false;
             }
             return true;
@@ -119,14 +149,25 @@
         <div class="list">
             #{list items:says, as:'say'}
             <div class="item">
-                <span>${say.content} </span>
-                <span>${say.createAt}  </span>
+                <span>
+                       #{if user == say.user }
+                       <a href="#">我</a>
+                       #{/if}
+                       #{else}
+                       <a href="#">${say.user}</a>
+                       #{/else}
+                       <span>说：</span>
+                </span>
+                <span class="item_content">${say.content} </span>
+                <span>${say.createAt.prettyFormat()} </span>
                <span>
                    <a class="a_reply ss_sprite ss_bell_go " href="#" target="${say.id}">回复
                        #{if say.replys }
                        [${say.replys}]
                        #{/if}</a>
-               <a class="a_remove ss_sprite ss_bell_delete " href="#" target="${say.id}"> 删除</a></span>
+                #{if user == say.user }
+                     <a class="a_remove ss_sprite ss_bell_delete " href="#" target="${say.id}"> 删除</a></span>
+                #{/if}
             </div>
             #{/list}
         </div>

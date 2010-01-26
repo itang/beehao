@@ -5,11 +5,13 @@ import siena.Model;
 import siena.Query;
 
 import java.util.Date;
+import java.util.List;
 
 public class Say extends Model {
     @Id
     public Long id;
     public String user;
+    public String nickname;
     public String content;
     public Date createAt = new Date();
     public Say target;
@@ -29,7 +31,12 @@ public class Say extends Model {
         return all().filter("id", id).get();
     }
 
+    public static List<Say> getAll() {
+        return all().order("-createAt").fetch();
+    }
+
     static Query<Say> all() {
         return Model.all(Say.class);
     }
+
 }

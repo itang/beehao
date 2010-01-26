@@ -24,22 +24,22 @@
 <body>
 <div id="container">
     <div id="header">
-    		<div id="sitetitle">
-    			牛窝
-    		</div>
+        <div id="sitetitle">
+            牛窝
+        </div>
 
         <div id="quicklinks">
             #{if user}
             ${user}
             #{/if}
             |
-            <a href="@{Site.index()}">主页</a>
+            <a href="@{Site.index()}">书签</a>
+            |
+            <a href="@{Says.index()}" title="">心语</a>
             |
             <a href="#" title="TODO...">Blog</a>
             |
             <a href="#" title="TODO...">相册</a>
-            |
-            <a href="@{Says.index()}" title="">心说</a>
             #{if user}
             <input type="input" id="searchkey" name="searchkey" value="${key}"/>
             <input type="button" id="btnSearch" value="Go!"/>
@@ -55,7 +55,7 @@
         </div>
     </div>
 
-    <div id="content">
+    <div id="main">
         #{doLayout /}
     </div>
 
