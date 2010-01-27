@@ -43,6 +43,14 @@
             add();
         });
 
+        $("#content").keypress(function(event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                event.stopPropagation();
+                add();
+            }
+        });
+
         function eventsBind() {
             $(".a_reply").unbind();
             $(".a_remove").unbind();
