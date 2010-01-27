@@ -1,17 +1,16 @@
 package controllers;
 
+import controllers.api.GaeController;
 import models.User;
-import play.*;
 
-import play.mvc.*;
 import play.modules.gae.*;
 
-public class Application extends Controller {
+public class Application extends GaeController {
 
     public static void index() {
-        if (GAE.isLoggedIn()) {
-            session.put("user", GAE.getUser().getEmail());
-            User.getOrSave(GAE.getUser().getEmail());//同步用户
+        if (isLoggedIn()) {
+            //同步用户
+            cacheCurrUser();
 
             Says.index();
         } else {

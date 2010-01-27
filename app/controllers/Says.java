@@ -1,32 +1,33 @@
 package controllers;
 
+import controllers.api.PageController;
 import models.Say;
-import models.SayViewer;
-import myutils.ResultBuilder;
-import play.modules.gae.GAE;
-import play.mvc.Before;
-import play.mvc.Controller;
-
-import java.util.List;
+import utils.ResultBuilder;
+import org.apache.commons.lang.time.DateFormatUtils;
 
 
-public class Says extends Controller {
+public class Says extends PageController {
 
     public static void index() {
         renderArgs.put("says", Say.getAll());
-        // renderArgs.put("mysays", Says.viewer(getUser()).getAll());
+
         render();
     }
 
     public static void add() {
         String content = params.get("content");
 
-        Say say = Says.viewer(getUser()).add(content);
-        renderJSON(ResultBuilder.success().msg("心说成功!").data(say).toJson());
+        Say say = Say.viewer(currUser().email).add(currUser().nickname, content);
+        renderJSON(ResultBuilder.success().msg("心说成功!")
+                .value("id", say.id).value("replys", say.replys)
+                .value("user", say.user)
+                .value("content", say.content)
+                .value("createAt", DateFormatUtils.format(say.createAt, "yyyy-MM-dd HH:mm:ss"))
+                .toJson());
     }
 
     public static void delete(Long id) {
-        Say say = Says.viewer(getUser()).get(id);
+        Say say = Say.viewer(currUser().email).get(id);
         if (say != null)
             say.delete();
 
@@ -41,26 +42,8 @@ public class Says extends Controller {
             renderJSON(ResultBuilder.failure().msg("出错了,回复对象不存在!").toJson());
         }
 
-        Says.viewer(getUser()).reply(content, target);
-
+        Say.viewer(currUser().email).reply(content, target);
 
         renderJSON(ResultBuilder.success().msg("回复成功!").value("replys", target.replys).toJson());
-    }
-
-    @Before()
-    static void checkConnected() {
-        if (GAE.getUser() == null) {
-            Application.login();
-        } else {
-            renderArgs.put("user", GAE.getUser().getEmail());
-        }
-    }
-
-    private static SayViewer viewer(String user) {
-        return new SayViewer(user);
-    }
-
-    static String getUser() {
-        return renderArgs.get("user", String.class);
     }
 }

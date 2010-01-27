@@ -7,7 +7,7 @@ import siena.*;
 /**
  * 书签Entity.
  */
-public class Bookmarker extends Model {
+public class Bookmarker extends Model implements Ownerable<String> {
     @Id
     public Long id;
     public String key;
@@ -19,7 +19,7 @@ public class Bookmarker extends Model {
     public Date createDate = new Date();
     public int hit = 0;
     public String tag = "default";
-    public String user = "live.tang@gmail.com";
+    public String user = "";
 
     public Bookmarker() {
 
@@ -80,5 +80,9 @@ public class Bookmarker extends Model {
 
     private static Query<Bookmarker> all() {
         return Model.all(Bookmarker.class);
+    }
+
+    public String owner() {
+        return user;
     }
 }

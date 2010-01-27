@@ -1,14 +1,14 @@
 package controllers;
 
+import controllers.api.PageController;
 import models.Bookmarker;
 import models.BookmarkerViewer;
 import models.Config;
 import models.User;
-import myutils.ProxyUrl;
-import myutils.ResultBuilder;
+import utils.CacheHelper;
+import utils.ProxyUrl;
+import utils.ResultBuilder;
 import play.modules.gae.GAE;
-import play.mvc.Before;
-import play.mvc.Controller;
 
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -19,22 +19,13 @@ import java.net.URL;
 /**
  * 工具.
  */
-public class Tool extends Controller {
-    @Before
-    static void checkConnected() {
-        if (GAE.getUser() == null) {
-            Application.login();
-        } else {
-            renderArgs.put("user", GAE.getUser().getEmail());
-        }
-    }
+public class Tool extends PageController {
 
     /**
      * 工具主页.
      */
     public static void index() {
-        renderArgs.put("homepage", Config.getHomepage(getUser()));
-        renderArgs.put("currUser", currUser());
+        renderArgs.put("homepage", Config.getHomepage(currUser().email));
 
         render();
     }
@@ -43,7 +34,7 @@ public class Tool extends Controller {
      * 初始化站点数据.
      */
     public static void init_mysite_datas() {
-        BookmarkerViewer currUserBookmarkers = Bookmarker.viewer(getUser());
+        BookmarkerViewer currUserBookmarkers = Bookmarker.viewer(currUser().email);
 
         //清空书签
         currUserBookmarkers.deleteAll();
@@ -130,39 +121,33 @@ public class Tool extends Controller {
         String name = params.get("name");
         String url = params.get("url");
 
-        Bookmarker.add(key, name, url, getUser());
+        Bookmarker.add(key, name, url, currUser().email);
 
         renderJSON(ResultBuilder.get().msg("操作成功!").toJson());
     }
 
-    static String getUser() {
-        return renderArgs.get("user", String.class);
-    }
-
-    static User currUser() {
-        return User.get(getUser());
-    }
-
+    /**
+     * 设置 书签浏览模式下默认显示页.
+     *
+     * @param homepage
+     */
     public static void set_homepage(String homepage) {
-        Config.setHomepage(homepage, getUser());
+        Config.setHomepage(homepage, currUser().email);
 
         renderJSON(ResultBuilder.get().msg("操作成功!").toJson());
     }
 
+    /**
+     * 更新个人设置.
+     */
     public static void save_profile() {
-        String nickname = params.get("nickname");
-        final String email = getUser();
-        User currUser = User.get(email);
-        if (currUser == null) {
-            currUser = new User();
+        final User currUser = currUser();
 
-            currUser.email = email;
-            currUser.nickname = nickname;
-            currUser.insert();
-        } else {
-            currUser.nickname = nickname;
-            currUser.update();
-        }
+        currUser.nickname = params.get("nickname").trim();
+        currUser.update();
+
+        //update cache
+        cacheCurrUser(currUser);
 
         renderJSON(ResultBuilder.success().msg("操作成功!").toJson());
     }

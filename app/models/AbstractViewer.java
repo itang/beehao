@@ -3,7 +3,6 @@ package models;
 import siena.Model;
 import siena.Query;
 
-
 public abstract class AbstractViewer<M extends Model> {
     protected abstract Class<M> clazz();
 

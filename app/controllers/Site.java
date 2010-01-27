@@ -1,41 +1,34 @@
 package controllers;
 
-import models.Bookmarker;
-import models.Config;
-import myutils.ResultBuilder;
-import play.modules.gae.GAE;
-import play.mvc.Before;
-import play.mvc.Controller;
 import play.mvc.Http.Request;
 import play.mvc.results.Forbidden;
+
+import controllers.api.PageController;
+import models.Bookmarker;
+import models.Config;
+import utils.ResultBuilder;
+
 
 /**
  * 我的主页Action.
  */
-public class Site extends Controller {
-    @Before
-    static void checkConnected() {
-        if (GAE.getUser() == null) {
-            Application.login();
-        } else {
-            renderArgs.put("user", GAE.getUser().getEmail());
-        }
-    }
-
+public class Site extends PageController {
     /**
      * 主页.
      */
     public static void index() {
-        String homepage = Config.getHomepage(getUser());
+        String homepage = Config.getHomepage(currUser().email);
         if (homepage == null) homepage = "http://www.javaeye.com";
 
         renderArgs.put("homepage", homepage);
-        renderArgs.put("bookmarkers", Bookmarker.viewer(getUser()).getAll());
+        renderArgs.put("bookmarkers", Bookmarker.viewer(currUser().email).getAll());
         render();
     }
 
     /**
      * 更新bookmarker点击量.
+     *
+     * @param id 书签id
      */
     public static void update_hit(Long id) {
         if (Request.current().method.equals("POST")) {
@@ -52,13 +45,5 @@ public class Site extends Controller {
         }
     }
 
-    static String getUser() {
-        return renderArgs.get("user", String.class);
-    }
 
-    static void checkOwner(Bookmarker bookmarker) {
-        if (!getUser().equals(bookmarker.user)) {
-            forbidden();
-        }
-    }
 }

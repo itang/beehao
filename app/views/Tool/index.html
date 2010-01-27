@@ -52,8 +52,7 @@
                 }
             });
         }
-    })
-            ;
+    });
 </script>
 
 <h3>选项 - 个人设置</h3>
@@ -84,12 +83,12 @@
         <input type="button" id="btnSetHomepage" value="设置主页"/>
     </div>
     <div id="fragment-3">
-        <p>用户: ${user}</p>
-
+        <p>用户: ${currUser.email}</p>
+                  
         <p>昵称: <input type="text" id="nickname" name="nickname" value="${currUser.nickname}"/></p>
 
         <p> 大头贴:
-
+                                
         </p>
         <input type="button" id="btnProfileSave" value="保存"/>
     </div>

@@ -14,7 +14,7 @@
     }
 
     .item {
-    : 150 %;
+        line-height: 150%;
     }
 
     .item span {
@@ -34,7 +34,7 @@
 
     $(function() {
         var p = {
-            user: '${user}'
+            user: '${currUser.email}'
         };
 
         $("#btnSay").click(function(event) {
@@ -74,7 +74,7 @@
                 }
                 item += ' <span>说：</span>';
                 item += '</span>';
-                item += '<span>' + result.data.content + '</span>';
+                item += '<span class="item_content ">' + result.data.content + '</span>';
                 item += '<span>' + result.data.createAt + '</span>';
                 var replys = result.data.replys != 0 ? '[' + result.data.replys + ']' : '';
                 item += '<span><a class="a_reply ss_sprite ss_bell_go "  href="#" target="' + result.data.id + '">回复' + replys + '</a>';
@@ -94,17 +94,26 @@
 
             var content = $.trim($("#content").attr("value"));
             var THIS = this;
-            ajax("/says/reply", {content: content ,target:THIS.target}, function(result) {
-                $(THIS).text("回复 [" + result.data.replys + "]");
-            });
+            ajax("/says/reply",
+            {   content: content ,
+                target:THIS.target
+            },
+                    function(result) {
+                        // $(THIS).text("回复 [" + result.data.replys + "]");
+                        //TODO 动态 or 改变操作模式
+                        window.location.reload();
+                    });
         }
 
         function remove() {
+            if (!confirm("确认删除此心语?")) return;
+
             var target = this.target;
             var t = this;
             ajax("/says/delete", {id:target}, function(result) {
                 $(t).parent().parent().remove();
             });
+
         }
 
         function validate(c) {
@@ -143,19 +152,22 @@
         <div>
             <input type="text" id="content" name="content"/>
             <span class="a_reply ss_sprite ss_bell "></span>
-            <input type="button" id="btnSay" value=" ${user} 说! "/>
+            <input type="button" id="btnSay" value=" ${currUser.nickname?:currUser.email} 说! "/>
         </div>
 
         <div class="list">
             #{list items:says, as:'say'}
             <div class="item">
                 <span>
-                       #{if user == say.user }
+                       #{if currUser.email == say.user }
                        <a href="#">我</a>
                        #{/if}
                        #{else}
-                       <a href="#">${say.user}</a>
+                       <a href="#">${currUser.nickname?:currUser.email}</a>
                        #{/else}
+                       #{if say.target }
+                        对 ${say.replyTo}
+                       #{/if}
                        <span>说：</span>
                 </span>
                 <span class="item_content">${say.content} </span>
@@ -165,9 +177,10 @@
                        #{if say.replys }
                        [${say.replys}]
                        #{/if}</a>
-                #{if user == say.user }
+                #{if currUser.email == say.user }
                      <a class="a_remove ss_sprite ss_bell_delete " href="#" target="${say.id}"> 删除</a></span>
                 #{/if}
+                ${say.target?.user}
             </div>
             #{/list}
         </div>

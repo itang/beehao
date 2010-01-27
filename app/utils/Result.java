@@ -1,6 +1,4 @@
-package myutils;
-
-import java.util.Map;
+package utils;
 
 public interface Result {
     boolean getSuccess();

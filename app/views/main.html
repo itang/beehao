@@ -29,23 +29,24 @@
         </div>
 
         <div id="quicklinks">
-            #{if user}
-            ${user}
+            #{if currUser}
+            ${currUser.nickname ?: currUser.email}
+            -
             #{/if}
+            <a href="@{Says.index()}" title="">心语</a>
             |
             <a href="@{Site.index()}">书签</a>
-            |
-            <a href="@{Says.index()}" title="">心语</a>
             |
             <a href="#" title="TODO...">Blog</a>
             |
             <a href="#" title="TODO...">相册</a>
-            #{if user}
+            #{if currUser}
+            |
             <input type="input" id="searchkey" name="searchkey" value="${key}"/>
             <input type="button" id="btnSearch" value="Go!"/>
             |
             <a href="@{Tool.index()}">选项</a>
-            |
+            -
             <a href="@{Application.logout()}">退出</a>
             #{/if}
             #{else}

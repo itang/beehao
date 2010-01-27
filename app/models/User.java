@@ -4,8 +4,10 @@ import siena.Id;
 import siena.Model;
 import siena.Query;
 
+import java.io.Serializable;
 
-public class User extends Model {
+
+public class User extends Model implements Serializable {
     @Id
     public Long id;
     public String email;
