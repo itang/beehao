@@ -163,7 +163,7 @@
                        <a href="#">我</a>
                        #{/if}
                        #{else}
-                       <a href="#">${currUser.nickname?:currUser.email}</a>
+                       <a href="#">${say.nickname?:say.user}</a>
                        #{/else}
                        #{if say.target }
                         对 ${say.replyTo}
