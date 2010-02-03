@@ -4,6 +4,7 @@ import play.templates.JavaExtensions;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 
 public class DateFormatExtensions extends JavaExtensions {
@@ -27,4 +28,10 @@ public class DateFormatExtensions extends JavaExtensions {
             return "";
         }
     }
+
+    public static String rssDateFormat(final Date date) {
+        SimpleDateFormat sdf = new SimpleDateFormat(
+                "EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
+        return sdf.format(date);
+    }     
 }

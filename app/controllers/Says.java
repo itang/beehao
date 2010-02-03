@@ -1,13 +1,13 @@
 package controllers;
 
+
 import controllers.api.PageController;
 import models.Say;
-import utils.ResultBuilder;
 import org.apache.commons.lang.time.DateFormatUtils;
+import utils.ResultBuilder;
 
 
 public class Says extends PageController {
-
     public static void index() {
         renderArgs.put("says", Say.getAll());
 
@@ -46,4 +46,5 @@ public class Says extends PageController {
 
         renderJSON(ResultBuilder.success().msg("回复成功!").value("replys", target.replys).toJson());
     }
+
 }

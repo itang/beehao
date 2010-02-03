@@ -5,10 +5,11 @@ import models.Ownerable;
 import models.User;
 import play.modules.gae.GAE;
 import play.mvc.Before;
+import utils.RenderRss;
 
 
 public class PageController extends GaeController {
-    @Before
+    @Before(unless = "rss")
     static void checkConnected() {
         if (GAE.getUser() == null) {
             Application.login();
@@ -27,4 +28,9 @@ public class PageController extends GaeController {
             forbidden();
         }
     }
+
+    protected static void renderRss(String xml) {
+        throw new RenderRss(xml);
+    }
+
 }

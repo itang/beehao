@@ -1,0 +1,37 @@
+<rss version="2.0">
+
+    <channel>
+        <generator>NFE/1.0</generator>
+        <title>tangqiong.com 心语</title>
+        <link>
+        http://www.tangqiong.com/says</link>
+        <language>zh_CN</language>
+        <webMaster>live.tang@gmail.com</webMaster>
+        <copyright>&amp;copy;2010 tangqiong.com</copyright>
+        <pubDate>${pubDate.rssDateFormat() }</pubDate>
+        <lastBuildDate>${lastBuildDate.rssDateFormat() }</lastBuildDate>
+        <!--<image><title>Top Stories - Google News</title>-->
+        <!--<url>http://www.gstatic.com/news/img/bluelogo/en_us/news.gif</url>-->
+        <!--<link>-->
+        <!--http://news.google.com?pz=1&amp;ned=us&amp;hl=en</link></image>-->
+        #{list items:says, as:'say'}
+        <item><title>
+            ${say.nickname}
+            #{if say.replyTo}
+            对 ${say.replyTo}
+            #{/if}
+            说 at ${say.createAt.prettyFormat() }
+        </title>
+            <link>
+            http://www.tangqiong.com/says/${say.id}
+            </link>
+            <guid isPermaLink="false">http://www.tangqiong.com/says/${say.id}</guid>
+            <category>心语</category>
+            <pubDate>${say.createAt.rssDateFormat() }</pubDate>
+            <description>
+                ${say.content}
+            </description>
+        </item>
+        #{/list}
+    </channel>
+</rss>
