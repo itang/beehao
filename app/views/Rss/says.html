@@ -1,19 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0">
-
     <channel>
         <generator>NFE/1.0</generator>
         <title>tangqiong.com 心语</title>
         <link>
-        http://www.tangqiong.com/says</link>
+        http://www.tangqiong.com/rss/says</link>
         <language>zh_CN</language>
         <webMaster>live.tang@gmail.com</webMaster>
         <copyright>&amp;copy;2010 tangqiong.com</copyright>
         <pubDate>${pubDate.rssDateFormat() }</pubDate>
         <lastBuildDate>${lastBuildDate.rssDateFormat() }</lastBuildDate>
-        <!--<image><title>Top Stories - Google News</title>-->
-        <!--<url>http://www.gstatic.com/news/img/bluelogo/en_us/news.gif</url>-->
-        <!--<link>-->
-        <!--http://news.google.com?pz=1&amp;ned=us&amp;hl=en</link></image>-->
         #{list items:says, as:'say'}
         <item><title>
             ${say.nickname}
