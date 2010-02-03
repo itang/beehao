@@ -16,9 +16,9 @@ public class SayViewer extends AbstractViewer<Say> {
         return all().order("-createAt").fetch();
     }
 
-    public Say add(String nickname, String content) {
+    public Say add(String content) {
         Say say = new Say(user(), content);
-        say.nickname = nickname;
+        say.nickname = currUser().nickname;
         say.insert();
 
         return say;
@@ -29,7 +29,7 @@ public class SayViewer extends AbstractViewer<Say> {
         User replyToUser = User.get(target.user);
 
         say.replyTo = replyToUser.nickname != null ? replyToUser.nickname : replyToUser.email;
-
+        say.nickname = currUser().nickname;
         say.insert();
 
         target.replys += 1;

@@ -17,7 +17,7 @@ public class Says extends PageController {
     public static void add() {
         String content = params.get("content");
 
-        Say say = Say.viewer(currUser().email).add(currUser().nickname, content);
+        Say say = Say.viewer(currUser().email).add(content);
         renderJSON(ResultBuilder.success().msg("心说成功!")
                 .value("id", say.id).value("replys", say.replys)
                 .value("user", say.user)
