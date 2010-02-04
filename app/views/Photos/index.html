@@ -1,0 +1,52 @@
+#{extends 'main.html' /}
+#{set title:'相册' /}
+#{set 'moreStyles'}
+<link rel="stylesheet" href="@{'/public/stylesheets/blueprint/plugins/silksprite/sprite.css'}" type="text/css"
+      media="screen, projection">
+#{/set}
+<style type="text/css">
+
+</style>
+<script type="text/javascript">
+
+    $(function() {
+
+    });
+</script>
+
+
+<div class="container">
+    <div class="span-24 ">
+        <h3>相册</h3>
+    </div>
+    <div class="span-5 colborder ">
+        上传照片:
+        <div>
+            #{form @Photos.upload() , id:'uploadForm', enctype:'multipart/form-data' }
+            <p>
+                <label>名称：</label>
+                <input type="text" id="name" name="name"/>
+                <input type="file" id="upload" name="upload"/>
+            </p>
+            <input type="submit" value=" 上传 "/>
+            #{/form}
+        </div>
+    </div>
+
+    <div class="span-18 last list">
+        #{list items:photos, as:'photo'}
+        <div class="span-3 colborder ">
+                <span class="item_content">
+                    <a href="@{Photos.view_photo()}?id=${photo.id}" target="_blank">
+                        <img src="@{Photos.view_smallphoto()}?id=${photo.id}" alt="${photo.name}">
+                    </a>
+                </span>
+                 <span>
+                        ${photo.name?: photo.createAt.prettyFormat()}
+                </span>
+        </div>
+        #{/list}
+
+    </div>
+</div>
+
