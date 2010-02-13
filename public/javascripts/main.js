@@ -1,4 +1,37 @@
 //global object
+var TANG_QIONG_JS = {
+    version : "1.0"
+};
+TANG_QIONG_JS.util = {
+    toString: function(obj) {
+        if (obj == null) return "null";
+        if (typeof obj == "string") return obj;
+        if (jQuery.isArray(obj)) {
+            var array = [];
+            for (var i = 0; i < obj.length; i++) {
+                array.push(this.toString(obj[i]));
+            }
+            return "[" + array.join(", ") + "]";
+        }
+        if (typeof obj == "object") {
+            var array = [];
+            for (var p in obj) {
+                array.push(p + ":" + this.toString(obj[p]));
+            }
+            return  "{" + array.join(", ") + "}";
+        }
+
+        return obj.toString();
+    },
+    log: function(obj) {
+        if (console) {
+            console.log(this.toString(obj));
+        }
+        else alert(this.toString(obj));
+    }
+};
+var tutil = TANG_QIONG_JS.util;
+
 var g = {
     getViewportInfo: function() {
         var w = (window.innerWidth) ? window.innerWidth : (document.documentElement && document.documentElement.clientWidth) ? document.documentElement.clientWidth : document.body.offsetWidth;
@@ -19,7 +52,7 @@ $(function() {
         var searchKey = $("#searchkey").attr("value");
         var isproxy = function() {
             return searchKey && searchKey.indexOf("http") == 0;
-        }
+        };
 
         function real() {
             if (isproxy()) {
@@ -53,4 +86,16 @@ $(function() {
         });
     })();
 
-})
+
+    /**
+     * 重置footer位置.
+     */
+    ( function rePositionFooter() {
+        var f = $("#footer");
+        if (f.offset().top < 400) {
+            $("#footer").css("margin-top", "200px");
+        }
+    })();
+
+
+});

@@ -1,4 +1,4 @@
-package models;
+package models.api;
 
 import siena.Model;
 

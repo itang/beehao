@@ -45,7 +45,7 @@ $(function() {
         //增加点击率
         (function updateHit() {
             $.ajax({
-                url:"/site/update_hit",
+                url:"/bookmarkers/update_hit",
                 data: "id=" + t.id,
                 type:"POST",
                 dataType:"json",

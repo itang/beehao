@@ -1,0 +1,110 @@
+#{extends 'main.html' /}
+#{set title:'个人设置' /}
+
+#{set 'moreStyles'}
+<link rel="stylesheet" type="text/css" media="screen"
+      href="@{'/public/libs/jquery/ui/ui-lightness/jquery-ui-1.7.2.custom.css'}"/>
+#{/set}
+#{set 'moreScripts'}
+<script src="@{'/public/libs/jquery/ui/jquery-ui-1.7.2.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+    //page action routes
+    var routes = {
+        init_mysite_datas: "@{Setting.init_mysite_datas()}",
+        add_bookmarker: "@{Setting.add_bookmarker()}",
+        set_homepage: "@{Setting.set_homepage()}"
+    };
+</script>
+<script src="@{'/public/javascripts/Setting/AddBookmarker.js'}" type="text/javascript" charset="utf-8"></script>
+#{/set}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        var $tabs = $("#tabs").tabs({
+            fx: { opacity: 'toggle' } ,
+            selected: 0
+        });
+
+        $("#btnProfileSave").click(function() {
+            ajax("@{Setting.save_profile()}", {
+                nickname: $("#nickname").attr("value")
+            }, function(result) {
+                alert(result.message);
+            });
+        });
+        function ajax(action, data, successFunc) {
+            $.ajax({
+                type: "POST",
+                url: action,
+                data: data,
+                dataType: "json",
+                success: function(result) {
+                    if (result.success) {
+                        successFunc(result);
+                    }
+                    else {
+                        alert(result.message);
+                    }
+                },
+                failure:function(result) {
+                    alert(result.message);
+                }
+            });
+        }
+    });
+</script>
+
+<div class="container">
+    <div class="span-24">
+        <h3>选项 - 个人设置</h3>
+
+        <div id="tabs">
+            <ul>
+                <li><a href="#fragment-1"><span>书签管理</span></a></li>
+                <li><a href="#fragment-2"><span>设置主页</span></a></li>
+                <li><a href="#fragment-3"><span>个人信息</span></a></li>
+            </ul>
+            <div id="fragment-1">
+                <div id="dialog" title="添加书签" style="display:none">
+                    <label>key:</label>
+                    <input type="input" id="iKey"/><br/>
+                    <label>name:</label>
+                    <input type="input" id="iName"/><br/>
+                    <label>url:</label>
+                    <input type="input" id="iUrl"/>
+                </div>
+                书签管理：
+                <input type="button" id="btnAddBookmarker" value="添加书签"/>
+                <input type="button" id="btnInitData" value="设置为牛推荐的书签"/>
+                <span id="spanInitData"></span>
+            </div>
+            <div id="fragment-2">
+                设置主页:
+                <input type="text" value="${homepage}" id="txtHomepage" name="txtHomepage"/>
+                <input type="button" id="btnSetHomepage" value="设置主页"/>
+            </div>
+            <div id="fragment-3">
+                <p>用户: ${currUser.email}</p>
+
+                <p>昵称: <input type="text" id="nickname" name="nickname" value="${currUser.nickname}"/></p>
+
+                <p> 大头贴:
+
+                </p>
+                <input type="button" id="btnProfileSave" value="保存"/>
+            </div>
+        </div>
+
+        <div>
+            <p>
+                <a href="@{Says.index}" title="返回首页"/>返回首页</a>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+

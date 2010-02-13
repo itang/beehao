@@ -1,14 +1,11 @@
 package controllers;
 
 import controllers.api.PageController;
-import models.Bookmarker;
-import models.BookmarkerViewer;
-import models.Config;
-import models.User;
-import utils.CacheHelper;
+import models.manage.BookmarkerManage;
+import models.entity.Config;
+import models.entity.User;
 import utils.ProxyUrl;
 import utils.ResultBuilder;
-import play.modules.gae.GAE;
 
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -19,7 +16,7 @@ import java.net.URL;
 /**
  * 工具.
  */
-public class Tool extends PageController {
+public class Setting extends PageController {
 
     /**
      * 工具主页.
@@ -34,12 +31,10 @@ public class Tool extends PageController {
      * 初始化站点数据.
      */
     public static void init_mysite_datas() {
-        BookmarkerViewer currUserBookmarkers = Bookmarker.viewer(currUser().email);
-
         //清空书签
-        currUserBookmarkers.deleteAll();
+        ownerBookmarkerManage().deleteAll();
         //添加默认书签列表
-        currUserBookmarkers.add("javaeye", "JavaEye", "http://www.javaeye.com")
+        ownerBookmarkerManage().add("javaeye", "JavaEye", "http://www.javaeye.com")
                 .add("infoq", "infoq", "http://www.infoq.com")
                 .add("infoqcn", "info中国", "http://www.infoq.com/cn")
                 .add("github", "github", "http://github.com")
@@ -121,9 +116,13 @@ public class Tool extends PageController {
         String name = params.get("name");
         String url = params.get("url");
 
-        Bookmarker.add(key, name, url, currUser().email);
+        ownerBookmarkerManage().add(key, name, url);
 
         renderJSON(ResultBuilder.get().msg("操作成功!").toJson());
+    }
+
+    private static BookmarkerManage ownerBookmarkerManage() {
+        return BookmarkerManage.instance(currUser().email);
     }
 
     /**

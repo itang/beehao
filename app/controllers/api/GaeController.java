@@ -1,6 +1,6 @@
 package controllers.api;
 
-import models.User;
+import models.entity.User;
 import utils.CacheHelper;
 import play.modules.gae.GAE;
 import play.mvc.Controller;

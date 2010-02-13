@@ -9,5 +9,9 @@ GET     /                                       Application.index
 # Map static resources from the /app/public folder to the /public path
 GET     /public/                                staticDir:public
 
+
+#pretty url
+GET		/photos/{<[0-9]+>id}					Photos.view_photo
+
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

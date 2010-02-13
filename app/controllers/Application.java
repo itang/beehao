@@ -1,7 +1,6 @@
 package controllers;
 
 import controllers.api.GaeController;
-import models.User;
 
 import play.modules.gae.*;
 

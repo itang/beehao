@@ -1,18 +1,19 @@
 package controllers;
 
+import models.manage.BookmarkerManage;
+import models.entity.Bookmarker;
 import play.mvc.Http.Request;
 import play.mvc.results.Forbidden;
 
 import controllers.api.PageController;
-import models.Bookmarker;
-import models.Config;
+import models.entity.Config;
 import utils.ResultBuilder;
 
 
 /**
  * 我的主页Action.
  */
-public class Site extends PageController {
+public class Bookmarkers extends PageController {
     /**
      * 主页.
      */
@@ -21,9 +22,10 @@ public class Site extends PageController {
         if (homepage == null) homepage = "http://www.javaeye.com";
 
         renderArgs.put("homepage", homepage);
-        renderArgs.put("bookmarkers", Bookmarker.viewer(currUser().email).getAll());
+        renderArgs.put("bookmarkers", ownerBookmarkerManage().getAll());
         render();
     }
+
 
     /**
      * 更新bookmarker点击量.
@@ -32,12 +34,12 @@ public class Site extends PageController {
      */
     public static void update_hit(Long id) {
         if (Request.current().method.equals("POST")) {
-            Bookmarker bookmarker = Bookmarker.getById(id);
+            Bookmarker bookmarker = bookmarkerManage().get(id);
 
             notFoundIfNull(bookmarker);
             checkOwner(bookmarker);
 
-            Bookmarker b = Bookmarker.increaseOneHit(bookmarker);
+            Bookmarker b = bookmarkerManage().increaseOneHit(bookmarker);
 
             renderJSON(ResultBuilder.success().msg("OK").value("currHit", b.hit).toJson());
         } else {
@@ -45,5 +47,12 @@ public class Site extends PageController {
         }
     }
 
+    private static BookmarkerManage ownerBookmarkerManage() {
+        return BookmarkerManage.instance(currUser().email);
+    }
+
+    private static BookmarkerManage bookmarkerManage() {
+        return BookmarkerManage.instance();
+    }
 
 }

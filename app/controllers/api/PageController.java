@@ -1,8 +1,8 @@
 package controllers.api;
 
 import controllers.Application;
-import models.Ownerable;
-import models.User;
+import models.api.Ownerable;
+import models.entity.User;
 import play.modules.gae.GAE;
 import play.mvc.Before;
 import utils.RenderRss;
@@ -21,7 +21,7 @@ public class PageController extends GaeController {
     protected static User currUser() {
         return renderArgs.get("currUser", User.class);
     }
-
+                            
 
     protected static void checkOwner(Ownerable ownerable) {
         if (!currUser().email.equals(ownerable.owner())) {

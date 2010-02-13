@@ -2,14 +2,18 @@ package controllers;
 
 
 import controllers.api.PageController;
-import models.Say;
+import models.entity.Say;
+import models.manage.SayManage;
 import org.apache.commons.lang.time.DateFormatUtils;
 import utils.ResultBuilder;
+
+import java.util.Arrays;
 
 
 public class Says extends PageController {
     public static void index() {
-        renderArgs.put("says", Say.getAll());
+        renderArgs.put("says", SayManage.instance.getAll());
+        System.out.println(Arrays.toString(Say.class.getTypeParameters()));
 
         render();
     }
@@ -17,7 +21,7 @@ public class Says extends PageController {
     public static void add() {
         String content = params.get("content");
 
-        Say say = Say.viewer(currUser().email).add(content);
+        Say say = ownerSayManage().add(content);
         renderJSON(ResultBuilder.success().msg("心说成功!")
                 .value("id", say.id).value("replys", say.replys)
                 .value("user", say.user)
@@ -27,7 +31,7 @@ public class Says extends PageController {
     }
 
     public static void delete(Long id) {
-        Say say = Say.viewer(currUser().email).get(id);
+        Say say = ownerSayManage().get(id);
         if (say != null)
             say.delete();
 
@@ -37,14 +41,18 @@ public class Says extends PageController {
     public static void reply() {
         String content = params.get("content");
         Long targetId = params.get("target", Long.class);
-        Say target = Say.get(targetId);
+        Say target = SayManage.instance.get(targetId);
         if (target == null) {
             renderJSON(ResultBuilder.failure().msg("出错了,回复对象不存在!").toJson());
         }
 
-        Say.viewer(currUser().email).reply(content, target);
+        ownerSayManage().reply(content, target);
 
         renderJSON(ResultBuilder.success().msg("回复成功!").value("replys", target.replys).toJson());
+    }
+
+    private static SayManage ownerSayManage() {
+        return SayManage.instance(currUser().email);
     }
 
 }

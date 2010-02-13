@@ -4,15 +4,11 @@ import com.google.appengine.api.datastore.Blob;
 import com.google.appengine.api.images.Image;
 import com.google.appengine.api.images.ImagesService;
 import com.google.appengine.api.images.ImagesServiceFactory;
-import com.google.appengine.api.images.Transform;
 import controllers.api.PageController;
-import models.Photo;
+import models.entity.Photo;
 import play.data.Upload;
 
 import java.io.ByteArrayInputStream;
-import java.io.OutputStreamWriter;
-import java.io.StringWriter;
-import java.text.SimpleDateFormat;
 
 public class Photos extends PageController {
     static ImagesService imagesService = ImagesServiceFactory.getImagesService();
