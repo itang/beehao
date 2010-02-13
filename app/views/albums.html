@@ -1,0 +1,30 @@
+#{extends 'main.html' /}
+#{set title:'我的相册' /}
+
+#{set 'moreStyles'}
+<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/Albums/index.css'}"/>
+<style type="text/css">
+    p textarea {
+        width: 200px;
+        height: 80px;
+    }
+</style>
+
+#{/set}
+#{set 'moreScripts'}
+<script src="@{'/public/libs/jquery/ui/jquery-ui-1.7.2.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
+#{/set}
+
+<div class="container">
+    <div class="span-24">
+        <h3>我的相册</h3>
+        #{if flash.error}
+        <p class="error">${flash.error}</p>
+        #{/if}
+        #{if flash.success}
+        <p class="success">${flash.success}</p>
+        #{/if}
+
+        #{doLayout /}
+    </div>
+</div>

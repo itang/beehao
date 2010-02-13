@@ -6,6 +6,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
+/**
+ * 操作结果构建器.
+ *
+ * @author itang
+ */
 final public class ResultBuilder implements Jsonable {
     private final ResultHolder result = new ResultHolder();
 
@@ -72,7 +77,7 @@ final public class ResultBuilder implements Jsonable {
         public Object data;
 
         public ResultHolder() {
-
+            //
         }
 
         public ResultHolder(boolean success, String message) {

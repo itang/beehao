@@ -2,45 +2,52 @@
  * css for main
  *
  */
-#header{
-	background-color:black;
-	color:white;
-	height: 28px;
-	padding: 4px 2px 0px 2px;
+#header {
+    background-color: #E0FFB8;
+    color: black;
+    height: 28px;
+    padding: 4px 2px 0px 2px;
 }
 
-#sitetitle{
-  float: left;
+#footer {
+    background-color: #E0FFB8;
+    color: black;
+    height: 28px;
+    padding: 4px 2px 0px 2px;
 }
 
-div#quicklinks{
-	float: right;
-	text-align: right;
+#sitetitle {
+    float: left;
 }
 
-div#quicklinks a{
-  background-color: white;
-  text-decoration: none;
-  padding-left: 5px;
-  padding-right: 5px;
-  line-height: 1em;
+div#quicklinks {
+    float: right;
+    text-align: right;
 }
 
-div#quicklinks a.selected{
-  text-decoration: underline;
-  background: #FFCC00;
-  color: red;
-  font-weight: bold;
+div#quicklinks a {
+    background-color: white;
+    text-decoration: none;
+    padding-left: 5px;
+    padding-right: 5px;
+    line-height: 1em;
 }
 
-div#quicklinks a:hover{
-  text-decoration: underline;
-  background: #FFCC00;
-  color: red;
+div#quicklinks a.selected {
+    text-decoration: underline;
+    background: #FFCC00;
+    color: red;
+    font-weight: bold;
 }
 
-#searchkey{
-	width: 300px;
-	font-size: 11pt;
-	font-weight:bold;
+div#quicklinks a:hover {
+    text-decoration: underline;
+    background: #FFCC00;
+    color: red;
+}
+
+#searchkey {
+    width: 300px;
+    font-size: 11pt;
+    font-weight: bold;
 }

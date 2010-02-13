@@ -74,13 +74,13 @@
                     <input type="input" id="iUrl"/>
                 </div>
                 书签管理：
-                <input type="button" id="btnAddBookmarker" value="添加书签"/>
+                <input type="button" id="btnAddBookmarker" value=" + 添加书签"/>
                 <input type="button" id="btnInitData" value="设置为牛推荐的书签"/>
                 <span id="spanInitData"></span>
             </div>
             <div id="fragment-2">
                 设置主页:
-                <input type="text" value="${homepage}" id="txtHomepage" name="txtHomepage"/>
+                <input type="text" value="${homepage}" id="txtHomepage" name="txtHomepage" size="60"/>
                 <input type="button" id="btnSetHomepage" value="设置主页"/>
             </div>
             <div id="fragment-3">
@@ -89,16 +89,9 @@
                 <p>昵称: <input type="text" id="nickname" name="nickname" value="${currUser.nickname}"/></p>
 
                 <p> 大头贴:
-
                 </p>
                 <input type="button" id="btnProfileSave" value="保存"/>
             </div>
-        </div>
-
-        <div>
-            <p>
-                <a href="@{Says.index}" title="返回首页"/>返回首页</a>
-            </p>
         </div>
 
     </div>

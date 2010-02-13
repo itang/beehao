@@ -1,0 +1,50 @@
+#{extends 'albums.html' /}
+        
+<div class="container">
+    <div class="span-24 ">
+        <h4>编辑 <span class="more"> 或者 #{a @Albums.delete(album.id)}删除相册#{/a}</span></h4>
+
+        <div class="span-6 colborder ">
+            #{form @Albums.save(album.id)}
+            <p>
+                <label for="name">名称</label>
+                <input type="text" name="name" id="name" size="30" value="${album.name}"/>
+            </p>
+
+            <p>
+                <label for="notes">备注 (可选)</label>
+                <textarea id="notes" name="notes" cols="30" rows="2">${flash.notes ?: album.notes}</textarea>
+            </p>
+
+            <p>
+                <input type="submit" value="保存修改"> 或者 <a href="@{Albums.show(album.id)}">取消</a>
+            </p>
+
+            #{/form}
+        </div>
+
+
+        <div class="span-17 last list">
+            #{list items:photos, as:'photo'}
+            <div class="span-3 colborder photo">
+                <span class="item_content">
+                    <a href="@{Albums.view_photo()}?id=${photo.id}" target="_blank">
+                        <img src="@{Albums.view_smallphoto()}?id=${photo.id}" alt="${photo.name}">
+                    </a>
+                </span>
+                 <span>
+                        ${photo.name?: photo.createAt.prettyFormat()}
+                  </span>
+                <span><a href="@{Albums.delete_photo(album.id, photo.id)}">删除</a>
+                     #{if album.cover ==null || photo.id != album.cover.id}
+                     <a href="@{Albums.set_cover(album.id, photo.id)}">作为封面</a>
+                     #{/if}
+                    #{else}
+                        封面
+                    #{/else}
+                </span>
+            </div>
+            #{/list}
+        </div>
+    </div>
+</div>

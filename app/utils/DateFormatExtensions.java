@@ -29,9 +29,15 @@ public class DateFormatExtensions extends JavaExtensions {
         }
     }
 
+    public static String format(final Date date, final String pattern) {
+        if (date == null) return "";
+        return new SimpleDateFormat(pattern == null ? "yyyy-MM-dd HH:mm:ss" : pattern)
+                .format(date);
+    }
+
     public static String rssDateFormat(final Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat(
                 "EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
         return sdf.format(date);
-    }     
+    }
 }

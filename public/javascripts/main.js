@@ -93,7 +93,7 @@ $(function() {
     ( function rePositionFooter() {
         var f = $("#footer");
         if (f.offset().top < 400) {
-            $("#footer").css("margin-top", "200px");
+            $("#footer").css("margin-top", g.getViewportInfo().h - 300);
         }
     })();
 

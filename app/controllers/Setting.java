@@ -14,7 +14,9 @@ import java.net.URL;
 
 
 /**
- * 工具.
+ * 设置 Action.
+ *
+ * @author itang
  */
 public class Setting extends PageController {
 
@@ -66,9 +68,11 @@ public class Setting extends PageController {
 
     /**
      * 翻墙.
+     *
+     * @param url 要代理的URL
      */
     public static void proxy(final String url) {
-        HttpURLConnection conn = null;
+        HttpURLConnection conn;
         InputStream is = null;
         StringWriter writer = new StringWriter();
         final String targetURL = ProxyUrl.real(url);
@@ -83,8 +87,7 @@ public class Setting extends PageController {
 
             is = conn.getInputStream();
             byte[] buff = new byte[1024];
-            int size = 0;
-
+            int size;
             while ((size = is.read(buff)) != -1) {
                 writer.write(new String(buff, 0, size));
             }
@@ -96,6 +99,7 @@ public class Setting extends PageController {
             if (is != null) try {
                 is.close();
             } catch (Exception e) {
+                //
             }
 
             writer.flush();
@@ -128,7 +132,7 @@ public class Setting extends PageController {
     /**
      * 设置 书签浏览模式下默认显示页.
      *
-     * @param homepage
+     * @param homepage 主页URL
      */
     public static void set_homepage(String homepage) {
         Config.setHomepage(homepage, currUser().email);

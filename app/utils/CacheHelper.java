@@ -3,6 +3,11 @@ package utils;
 import play.cache.Cache;
 
 
+/**
+ * 缓存帮助类.
+ *
+ * @author itang
+ */
 public final class CacheHelper extends Cache {
     public static final String DEFAULT_EXP = "30mn";
 

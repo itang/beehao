@@ -44,11 +44,10 @@ public class Says extends PageController {
         Say target = SayManage.instance.get(targetId);
         if (target == null) {
             renderJSON(ResultBuilder.failure().msg("出错了,回复对象不存在!").toJson());
+        } else {
+            ownerSayManage().reply(content, target);
+            renderJSON(ResultBuilder.success().msg("回复成功!").value("replys", target.replys).toJson());
         }
-
-        ownerSayManage().reply(content, target);
-
-        renderJSON(ResultBuilder.success().msg("回复成功!").value("replys", target.replys).toJson());
     }
 
     private static SayManage ownerSayManage() {

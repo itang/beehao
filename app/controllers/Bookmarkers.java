@@ -1,12 +1,11 @@
 package controllers;
 
-import models.manage.BookmarkerManage;
+import controllers.api.PageController;
 import models.entity.Bookmarker;
+import models.entity.Config;
+import models.manage.BookmarkerManage;
 import play.mvc.Http.Request;
 import play.mvc.results.Forbidden;
-
-import controllers.api.PageController;
-import models.entity.Config;
 import utils.ResultBuilder;
 
 

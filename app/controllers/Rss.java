@@ -7,6 +7,12 @@ import play.mvc.Controller;
 import java.util.Date;
 import java.util.List;
 
+
+/**
+ * RSS 发布 Action.
+ *
+ * @author itang
+ */
 public class Rss extends Controller {
 
     public static void says() {

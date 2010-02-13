@@ -1,5 +1,10 @@
 package utils;
 
-public interface Jsonable{
-	public String toJson();
+/**
+ * 支持输出JSON格式.
+ *
+ * @author itang
+ */
+public interface Jsonable {
+    String toJson();
 }

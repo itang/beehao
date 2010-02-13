@@ -10,6 +10,8 @@
 
 <ol id="lists">
     #{list items:lists, as:'list'}
-    <li><a href="@{Lists.show(list.id)}">${list}</a></li>
+    <li><a href="@{Lists.show(list.id)}">${list}</a>
+    <span>${list.createAt?.format("yyyy-MM-dd HH:mm")}</span>
+    </li>
     #{/list}
 </ol>

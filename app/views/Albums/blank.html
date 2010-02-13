@@ -1,0 +1,15 @@
+#{extends 'albums.html'/}
+
+#{form @Albums.create() }
+<p>
+    <label for="name">名称</label>
+    <input type="text" name="name" id="name" size="60"/>
+</p>
+<p>
+    <label for="notes">备注</label>
+    <textarea id="notes" name="notes" cols="60" rows="2">${flash.notes ?: ""}</textarea>
+</p>
+<p>
+    <input type="submit" value="创建"> 或者 <a href="@{Albums.index()}">取消</a>
+</p>
+#{/form}

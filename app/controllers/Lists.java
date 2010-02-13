@@ -6,9 +6,16 @@ import models.entity.TodoList;
 import models.manage.TodoListManage;
 import notifiers.Notifier;
 import play.data.validation.Required;
+import play.data.validation.Validation;
 
+import java.util.Date;
 import java.util.List;
 
+/**
+ * 待办 Action.
+ *
+ * @author itang
+ */
 public class Lists extends PageController {
 
     public static void index() {
@@ -30,7 +37,7 @@ public class Lists extends PageController {
     }
 
     public static void create(@Required String name) {
-        if (validation.hasErrors()) {
+        if (Validation.hasErrors()) {
             flash.error("Oops, please give a name to your new list");
             blank();
         }
@@ -55,7 +62,7 @@ public class Lists extends PageController {
     }
 
     public static void save(Long id, @Required String name, String notes) {
-        if (validation.hasErrors()) {
+        if (Validation.hasErrors()) {
             params.flash();
             flash.error("Oops, please give a name to your list");
             edit(id);
@@ -82,10 +89,15 @@ public class Lists extends PageController {
         TodoItem item = TodoItem.findById(itemId);
         notFoundIfNull(item);
         checkOwner(item);
+        if (done) {
+            item.closeAt = new Date();
+        }
         item.done = done;
         item.position = item.list.nextPosition++;
         item.update();
+
         item.list.update();
+
         ok();
     }
 
@@ -110,6 +122,7 @@ public class Lists extends PageController {
             }
         }
         list.update();
+
         ok();
     }
 

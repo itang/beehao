@@ -3,13 +3,17 @@ package utils;
 import org.w3c.dom.Document;
 import play.exceptions.UnexpectedException;
 import play.libs.XML;
-import play.mvc.Http;
 import play.mvc.Http.Request;
 import play.mvc.Http.Response;
 
+/**
+ * RSS render 支持.
+ *
+ * @author itang
+ */
 public class RenderRss extends play.mvc.results.Result {
 
-    String xml;
+    private final String xml;
 
     public RenderRss(CharSequence xml) {
         this.xml = xml.toString();
