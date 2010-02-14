@@ -1,6 +1,7 @@
 package controllers.api;
 
 import controllers.Application;
+import controllers.Users;
 import models.api.Ownerable;
 import models.entity.User;
 import play.modules.gae.GAE;
@@ -11,8 +12,8 @@ import utils.RenderRss;
 public class PageController extends GaeController {
     @Before(unless = "rss")
     static void checkConnected() {
-        if (GAE.getUser() == null) {
-            Application.login();
+        if (!isLoggedIn()) {
+            Users.login();
         } else {
             renderArgs.put("currUser", cacheCurrUser());
         }
@@ -21,7 +22,7 @@ public class PageController extends GaeController {
     protected static User currUser() {
         return renderArgs.get("currUser", User.class);
     }
-                            
+
 
     protected static void checkOwner(Ownerable ownerable) {
         if (!currUser().email.equals(ownerable.owner())) {

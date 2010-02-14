@@ -20,8 +20,12 @@ public class Says extends PageController {
 
     public static void add() {
         String content = params.get("content");
-
+        
         Say say = ownerSayManage().add(content);
+        validation.valid(say);
+        if (validation.hasErrors()) {
+            renderJSON(ResultBuilder.failure().toJson());
+        }
         renderJSON(ResultBuilder.success().msg("心说成功!")
                 .value("id", say.id).value("replys", say.replys)
                 .value("user", say.user)

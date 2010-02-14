@@ -24,6 +24,14 @@ public class GaeController extends Controller {
      * @return 已登录返回true,否则false
      */
     protected static boolean isLoggedIn() {
+        return isLocalLoggedIn() || isGaeLoggedIn();
+    }
+
+    protected static boolean isLocalLoggedIn() {
+        return session.get("user") != null;
+    }
+
+    protected static boolean isGaeLoggedIn() {
         return GAE.isLoggedIn();
     }
 
@@ -33,9 +41,10 @@ public class GaeController extends Controller {
      * @return 返回用户email
      */
     protected static String userEmail() {
-        if (isLoggedIn())
-            return GAE.getUser().getEmail();
-        return null;
+        if (isLocalLoggedIn()) {
+            return session.get("user");
+        }
+        return GAE.getUser().getEmail();
     }
 
     /**

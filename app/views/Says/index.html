@@ -1,8 +1,13 @@
 #{extends 'main.html' /}
 #{set title:'心说' /}
 #{set 'moreStyles'}
+<link rel="stylesheet" type="text/css" media="screen"
+      href="@{'/public/libs/jquery/ui/ui-lightness/jquery-ui-1.7.2.custom.css'}"/>
 <link rel="stylesheet" href="@{'/public/stylesheets/blueprint/plugins/silksprite/sprite.css'}" type="text/css"
       media="screen, projection">
+#{/set}
+#{set 'moreScripts'}
+<script src="@{'/public/libs/jquery/ui/jquery-ui-1.7.2.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
 #{/set}
 <style type="text/css">
     input#content {
@@ -31,7 +36,6 @@
     }
 </style>
 <script type="text/javascript">
-
     $(function() {
         var p = {
             user: '${currUser.email}'
@@ -158,6 +162,7 @@
 <div class="container">
     <div class="span24">
         <h3>心语心说</h3>
+
         <div>
             <input type="text" id="content" name="content"/>
             <span class="a_reply ss_sprite ss_bell "></span>

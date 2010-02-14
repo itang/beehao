@@ -1,0 +1,39 @@
+#{extends 'main.html'/}
+#{set title: '新用户注册'/}
+
+
+<div class="container">
+    <div class="span-24">
+        <h3>新用户注册</h3>
+        #{if flash.error}
+        <p class="error">${flash.error}</p>
+        #{/if}
+        #{if flash.success}
+        <p class="success">${flash.success}</p>
+        #{/if}
+
+        <div class="span-5">
+            #{form @Users.signon(), id:'signonForm' }
+            <p>
+                <label for="email">邮件：</label>
+                <input type="text" id="email" name="email" value="${flash.email?:''}"/>
+            </p>
+
+            <p>
+                <label for="nickname">昵称：</label>
+                <input type="text" id="nickname" name="nickname" value="${flash.nickname?:''}"/>
+            </p>
+
+            <p>
+                <label for="password">密码：</label>
+                <input type="password" id="password" name="password"/>
+            </p>
+
+
+            <p>
+                <input type="submit" name="regist" value="注册"/>
+            </p>
+            #{/form}
+        </div>
+    </div>
+</div>

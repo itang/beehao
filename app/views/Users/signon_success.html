@@ -1,0 +1,24 @@
+#{extends 'main.html'/}
+#{set title: '注册成功'/}
+
+<div class="container">
+    <div class="span-24">
+        <h3>用户注册</h3>
+        #{if flash.error}
+        <p class="error">${flash.error}</p>
+        #{/if}
+        #{if flash.success}
+        <p class="success">${flash.success}</p>
+        #{/if}
+
+       <span>
+           3秒后，转入首页...  <a href="@{Application.index()}">马上进入</a>
+
+       </span>
+    </div>
+</div>
+<script type="text/javascript">
+    window.setTimeout(function redirect() {
+        window.location.href = "@{Application.index()}";
+    }, 3000);
+</script>

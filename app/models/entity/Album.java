@@ -1,6 +1,7 @@
 package models.entity;
 
 import models.api.Ownerable;
+import org.apache.commons.lang.StringUtils;
 import siena.Filter;
 import siena.Id;
 import siena.Model;
@@ -50,6 +51,12 @@ public class Album extends Model implements Ownerable<String> {
     }
 
     public List<Photo> photos() {
-        return photos.order("-createAt").fetch();
+        return photos("-createAt");
+    }
+
+    public List<Photo> photos(String order) {
+        return StringUtils.isBlank(order) ?
+                photos.fetch()
+                : photos.order(order).fetch();
     }
 }

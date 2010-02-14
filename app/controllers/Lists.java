@@ -19,7 +19,8 @@ import java.util.List;
 public class Lists extends PageController {
 
     public static void index() {
-        List<TodoList> lists = TodoListManage.instance(currUser().email).getAll();
+        List<TodoList> lists = TodoListManage.instance(currUser().email).getAll("-createAt");
+
         render(lists);
     }
 
@@ -78,10 +79,19 @@ public class Lists extends PageController {
 
     public static void addItem(Long id, String label) {
         TodoList list = getTodoListById(id);
+
         notFoundIfNull(list);
         checkOwner(list);
-        new TodoItem(list, label).insert();
-        list.update(); // to keep last position up to date
+
+        TodoItem todoItem = new TodoItem(list, label);
+        todoItem.insert();
+        validation.valid(todoItem);
+        if (validation.hasErrors()) {
+            flash.error(validation.toString());
+        } else {
+            list.update(); // to keep last position up to date
+        }
+
         show(id);
     }
 

@@ -25,6 +25,9 @@
             selected: 0
         });
 
+        $("#btnEnablePassword").click(function() {
+            $("#password").removeAttr("disabled");
+        });
         $("#btnProfileSave").click(function() {
             ajax("@{Setting.save_profile()}", {
                 nickname: $("#nickname").attr("value")
@@ -76,6 +79,7 @@
                 书签管理：
                 <input type="button" id="btnAddBookmarker" value=" + 添加书签"/>
                 <input type="button" id="btnInitData" value="设置为牛推荐的书签"/>
+                <a href="@{Bookmarkers.index()}">转入书签主页</a>
                 <span id="spanInitData"></span>
             </div>
             <div id="fragment-2">
@@ -88,12 +92,19 @@
 
                 <p>昵称: <input type="text" id="nickname" name="nickname" value="${currUser.nickname}"/></p>
 
+                <p>密码: <input type="password" id="password" name="password" value="${currUser.password?:''}" #{if
+                    !currUser.password} disabled #{/if}/>
+                    #{if !currUser.password}
+                    <font color="red">当前使用GAE Gooogle帐号登录，无须设置密码!</font><input type="button" id="btnEnablePassword"
+                                                                               value="我想设置密码，直接从本站登录">
+                    #{/if}
+                </p>
+
                 <p> 大头贴:
                 </p>
                 <input type="button" id="btnProfileSave" value="保存"/>
             </div>
         </div>
-
     </div>
 </div>
 

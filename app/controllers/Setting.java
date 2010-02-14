@@ -146,7 +146,8 @@ public class Setting extends PageController {
     public static void save_profile() {
         final User currUser = currUser();
 
-        currUser.nickname = params.get("nickname").trim();
+        currUser.nickname = params.get("nickname") == null ? "" : params.get("nickname").trim();
+        currUser.password = params.get("password") == null ? null : params.get("password").trim();
         currUser.update();
 
         //update cache
