@@ -92,8 +92,7 @@
 
                 <p>昵称: <input type="text" id="nickname" name="nickname" value="${currUser.nickname}"/></p>
 
-                <p>密码: <input type="password" id="password" name="password" value="${currUser.password?:''}" #{if
-                    !currUser.password} disabled #{/if}/>
+                <p>密码: <input type="password" id="password" name="password" value="${currUser.password?:''}" #{if !currUser.password} disabled #{/if}/>
                     #{if !currUser.password}
                     <font color="red">当前使用GAE Gooogle帐号登录，无须设置密码!</font><input type="button" id="btnEnablePassword"
                                                                                value="我想设置密码，直接从本站登录">
