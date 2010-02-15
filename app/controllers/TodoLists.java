@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author itang
  */
-public class Lists extends PageController {
+public class TodoLists extends PageController {
 
     public static void index() {
         List<TodoList> lists = TodoListManage.instance(currUser().email).getAll("-createAt");

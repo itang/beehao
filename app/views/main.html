@@ -33,15 +33,15 @@
             ${currUser.nickname ?: currUser.email}
             -
             #{/if}
-            <a href="@{Says.index()}" title="">心语</a>
             |
-            <a href="@{Lists.index()}" title="">待办</a>
+            <a href="@{Blogs.index()}" title="博客">博客</a>
+            <a href="@{Says.index()}" title="心语新说">心语</a>
             |
-            <a href="@{Bookmarkers.index()}">书签</a>
+            <a href="@{TodoLists.index()}" title="你的ToDo List">待办</a>
             |
-            <a href="#" title="TODO...">博客</a>
+            <a href="@{Bookmarkers.index()}" title="在线书签">书签</a>
             |
-            <a href="@{Albums.index()}" title="beta...">相册</a>
+            <a href="@{Albums.index()}" title="相册">相册</a>
             #{if currUser}
             |
             <input type="input" id="searchkey" name="searchkey" value="${key}"/>

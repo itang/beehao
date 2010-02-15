@@ -11,7 +11,23 @@ GET     /public/                                staticDir:public
 
 
 #pretty url
-GET		/photos/{<[0-9]+>id}					Photos.view_photo
+GET 	/blogs/?								Blogs.index
+GET 	/todolists/?							TodoLists.index
+GET 	/says/?									Says.index
+GET 	/albums/?								Albums.index
+GET 	/bookmarkers/?							Bookmarkers.index
+GET 	/setting/?								Setting.index
+GET 	/users/?								Users.index
+
+GET 	/todolists/{<[0-9]+>id}					TodoLists.show
+
+GET 	/albums/{<[0-9]+>id}					Albums.show
+GET 	/albums/photos/{<[0-9]+>id}				Albums.view_photo
+GET 	/albums/photos/small/{<[0-9]+>id}		Albums.view_smallphoto
+
+GET 	/blogs/{<[0-9]+>currPage}				Blogs.page
+GET 	/blogs/item/{<[0-9]+>id}				Blogs.show
+GET 	/blogs/user/{user}						Blogs.userhome
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

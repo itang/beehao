@@ -43,8 +43,8 @@
     #{/set}
     <div class="span-3 colborder photo">
                 <span class="item_content">
-                    <a href="@{Albums.view_photo()}?id=${photo.id}" target="_blank" title="#{get 'photo_title'/}">
-                        <img src="@{Albums.view_smallphoto()}?id=${photo.id}" alt="${photo.name}">
+                    <a href="@{Albums.view_photo(photo.id)}" target="_blank" title="#{get 'photo_title'/}">
+                        <img src="@{Albums.view_smallphoto(photo.id)}" alt="${photo.name}">
                     </a>
                 </span>
                  <span>
@@ -52,6 +52,4 @@
                 </span>
     </div>
     #{/list}
-
-</div>
 </div>

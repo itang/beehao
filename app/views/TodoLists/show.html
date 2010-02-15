@@ -1,4 +1,4 @@
-#{extends 'lists.html' /}
+#{extends 'todolists.html' /}
 
 #{set title:list /}
 <script type="text/javascript" charset="utf-8">
@@ -7,7 +7,7 @@
         $('.checker').change(function() {
             var done = $(this).parents('ul').is("#todo");
             var li = $(this).parent();
-            $.post('@{Lists.changeItemState(list.id, "000000")}'.replace('000000', li.attr('rel')), {done: done}, function() {
+            $.post('@{TodoLists.changeItemState(list.id, "000000")}'.replace('000000', li.attr('rel')), {done: done}, function() {
                 if (done) {
                     $('#done').prepend(li);
                     $(li).effect('highlight')
@@ -20,7 +20,7 @@
         $('.deleter').live('click', function(e) {
             var l = $(this);
             e.preventDefault();
-            $.post('@{Lists.deleteItem(list.id, "000000")}'.replace('000000', $(this).parent().parent().attr('rel')), function() {
+            $.post('@{TodoLists.deleteItem(list.id, "000000")}'.replace('000000', $(this).parent().parent().attr('rel')), function() {
                 l.parent().parent('li').effect('drop');
             });
         });
@@ -37,7 +37,7 @@
                     order += ',' + $(this).attr('rel');
                 });
                 order = order.substring(1);
-                $.post('@{Lists.reorderItems(list.id)}', {newOrder: order});
+                $.post('@{TodoLists.reorderItems(list.id)}', {newOrder: order});
             } else {
                 $(this).html("结束排序").addClass('strong');
                 $('#items').toggleClass('sortable');
@@ -47,13 +47,13 @@
         });
     });
 </script>
-<h4><a id="back" href="@{Lists.index()}">我的待办列表:</a> ${list}
+<h4><a id="back" href="@{TodoLists.index()}">我的待办列表:</a> ${list}
     <span class="more">
-        <a href="@{Lists.edit(list.id)}">编辑</a>
+        <a href="@{TodoLists.edit(list.id)}">编辑</a>
         #{if items.size() > 1} |
         <a id="sort" href="#">重新排序</a>
         #{/if}
-        #{a @Lists.email(list.id)}备份到邮件#{/a}
+        #{a @TodoLists.email(list.id)}备份到邮件#{/a}
      </span>
 </h4>
 
@@ -73,7 +73,7 @@
         #{/list}
     </ul>
 
-    #{form @Lists.addItem(list.id)}
+    #{form @TodoLists.addItem(list.id)}
     <input type="text" name="label" size="30"/>
 
     <p>

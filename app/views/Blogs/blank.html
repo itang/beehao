@@ -1,0 +1,37 @@
+#{extends 'main.html'/}
+#{set title:'博客'/}
+
+<div class="container">
+    <div class="span-24">
+        <h3> ${currUser.nickname} 的博客</h3>
+    </div>
+    <div class="span-24">
+        <div class="span-18 colborder">
+
+            #{form @Blogs.create() }
+            <p>
+                <label for="title">标题:</label>
+                <input type="text" id="title" name="title" size="30"/>
+            </p>
+
+            <p>
+                <label for="content">标题:</label>
+                <textarea id="content" name="content"></textarea>
+            </p>
+
+            <p>
+                <input type="submit" name="pub" value="发布"/>
+                <input type="submit" name="unpub" value="暂存"/>
+            </p>
+            #{/form}
+        </div>
+
+        <div class="span-5 last">
+            <div class="userinfo">
+                个人说明:
+                <p>${currUser.nickname}</p>
+            </div>
+        </div>
+    </div>
+
+</div>

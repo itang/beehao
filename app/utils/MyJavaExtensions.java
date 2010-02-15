@@ -1,13 +1,13 @@
 package utils;
 
-import play.templates.JavaExtensions;
+import com.google.appengine.api.datastore.Blob;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
 
-public class DateFormatExtensions extends JavaExtensions {
+public class MyJavaExtensions extends play.templates.JavaExtensions {
     public static String prettyFormat(final Date date, final String pattern) {
         if (date == null) return "";
         try {
@@ -39,5 +39,10 @@ public class DateFormatExtensions extends JavaExtensions {
         SimpleDateFormat sdf = new SimpleDateFormat(
                 "EEE, dd MMM yyyy HH:mm:ss Z", Locale.US);
         return sdf.format(date);
+    }
+
+    public static String asString(Blob blob) {
+        if (blob == null) return "";
+        return new String(blob.getBytes());
     }
 }

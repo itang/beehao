@@ -2,6 +2,7 @@ package controllers;
 
 import controllers.api.GaeController;
 
+import models.api.Page;
 import play.modules.gae.*;
 
 
@@ -15,7 +16,7 @@ public class Application extends GaeController {
         if (isLoggedIn()) {
             //同步用户
             cacheCurrUser();
-            Says.index();
+            Blogs.index();
         } else {
             render();
         }
