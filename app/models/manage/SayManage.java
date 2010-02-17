@@ -1,8 +1,8 @@
 package models.manage;
 
 import models.api.OwnerableManage;
+import models.api.Page;
 import models.entity.Say;
-import models.entity.User;
 
 import java.util.List;
 
@@ -29,23 +29,22 @@ public class SayManage extends OwnerableManage<Say> {
     }
 
     public List<Say> getAll() {
-        return query().order("-createAt").fetch();
+        return getAll("-createAt");
+    }
+
+    public Page<Say> pagedAll(int currPage, int limit) {
+        return page(query("-createAt"), currPage, limit);
     }
 
     public Say add(String content) {
-        Say say = new Say(owner(), content);
-        say.nickname = currUser().nickname;
+        Say say = new Say(currUser().username, content);
         say.insert();
-
         return say;
     }
 
     public Say reply(String content, Say target) {
-        Say say = new Say(owner(), content, target);
-        User replyToUser = User.get(target.user);
+        Say say = new Say(currUser().username, content, target);
 
-        say.replyTo = replyToUser.nickname != null ? replyToUser.nickname : replyToUser.email;
-        say.nickname = currUser().nickname;
         say.insert();
 
         target.replys += 1;
@@ -57,4 +56,5 @@ public class SayManage extends OwnerableManage<Say> {
     public static SayManage instance(String user) {
         return new SayManage(user);
     }
+
 }

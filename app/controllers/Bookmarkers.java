@@ -17,7 +17,7 @@ public class Bookmarkers extends PageController {
      * 主页.
      */
     public static void index() {
-        String homepage = Config.getHomepage(currUser().email);
+        String homepage = Config.getHomepage(currUsername());
         if (homepage == null) homepage = "http://www.javaeye.com";
 
         renderArgs.put("homepage", homepage);
@@ -47,7 +47,7 @@ public class Bookmarkers extends PageController {
     }
 
     private static BookmarkerManage ownerBookmarkerManage() {
-        return BookmarkerManage.instance(currUser().email);
+        return BookmarkerManage.instance(currUsername());
     }
 
     private static BookmarkerManage bookmarkerManage() {

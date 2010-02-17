@@ -1,0 +1,34 @@
+#{list items:says, as:'say'}
+<div class="item">
+   <span>
+       #{if user == say.username }
+       <a href="@{Says.user(user)}">我</a>
+       #{/if}
+       #{else}
+       <a href="@{Says.user(say.username)}">${say.who}</a>
+       #{/else}
+    </span>
+
+    #{if say.target }
+    <span>对</span>
+    <span>${say.replyWho == user? "自己" :say.replyWho }</span>
+    #{/if}
+    </span>
+    <span>说：</span>
+    <span class="item_content">${say.content} </span>
+    <span>${say.createAt.prettyFormat()} </span>
+    <span>
+       <a class="a_reply ss_sprite ss_bell_go " href="@{Says.show(say.id)}" target="${say.id}">回复
+           #{if say.replys }
+           [${say.replys}]
+           #{/if}</a>
+    </span>
+    #{if user == say.username }
+    <span>
+         <a class="a_remove ss_sprite ss_bell_delete " href="@{Says.delete(say.id)}"> 删除</a></span>
+    </span>
+    #{/if}
+</div>
+#{/list}
+  
+

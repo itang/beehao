@@ -25,7 +25,7 @@ public class Album extends Model implements Ownerable<String> {
     //封面照片
     public Photo cover;
     //拥有者
-    public final String user;
+    public final String username;
     //照片
     @Filter("album")
     public Query<Photo> photos;
@@ -33,17 +33,17 @@ public class Album extends Model implements Ownerable<String> {
     public Date createAt = new Date();
 
     public Album(String user) {
-        this.user = user;
+        this.username = user;
     }
 
     public Album(String user, String name, String notes) {
-        this.user = user;
+        this.username = user;
         this.name = name;
         this.notes = notes;
     }
 
     public String owner() {
-        return this.user;
+        return this.username;
     }
 
     public String toString() {

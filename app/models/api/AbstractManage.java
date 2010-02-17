@@ -22,10 +22,10 @@ public abstract class AbstractManage<M extends Model> {
     }
 
     public List<M> getAll(String order) {
-        return query().order(order).fetch();
+        return query(order).fetch();
     }
 
-    public Page page(Query<M> query, int currPage, int limit) {
+    public Page<M> page(Query<M> query, int currPage, int limit) {
         final int total = query.count();
         if (currPage == 0) currPage = 1;
         final int start = (currPage - 1) * limit;
@@ -45,7 +45,15 @@ public abstract class AbstractManage<M extends Model> {
         return this;
     }
 
-    public Query<M> query() {
+    protected Query<M> query() {
         return Model.all(modelClass());
+    }
+
+    protected Query<M> query(String order) {
+        final Query<M> query = Model.all(modelClass());
+        if (order != null) {
+            query.order(order);
+        }
+        return query;
     }
 }

@@ -1,0 +1,103 @@
+#{extends 'main.html' /}
+#{set title:'心语新说' /}
+#{set 'moreStyles'}
+<link rel="stylesheet" type="text/css" media="screen"
+      href="@{'/public/libs/jquery/ui/ui-lightness/jquery-ui-1.7.2.custom.css'}"/>
+<link rel="stylesheet" href="@{'/public/stylesheets/blueprint/plugins/silksprite/sprite.css'}" type="text/css"
+      media="screen, projection">
+#{/set}
+#{set 'moreScripts'}
+<script src="@{'/public/libs/jquery/ui/jquery-ui-1.7.2.custom.min.js'}" type="text/javascript" charset="utf-8"></script>
+#{/set}
+<style type="text/css">
+    input#content {
+        width: 300px;
+    }
+
+    a {
+        text-decoration: none;
+    }
+
+    .item {
+        line-height: 150%;
+    }
+
+    .item span {
+        margin-left: 8px;
+        color: gray;
+    }
+
+    .item span a {
+        color: gray;
+    }
+
+    .item span.item_content {
+        color: blue;
+    }
+
+    .target {
+        border: 1px dashed black;
+        padding: 1em;
+    }
+</style>
+<script type="text/javascript">
+
+</script>
+
+<div class="container">
+    <div class="span24">
+        <h3>心语新说</h3>
+        <a href="@{Says.index()}">大家在说什么?</a>
+
+        <div class="target">
+            #{if user == target.username }
+            <a href="@{Says.user(user)}">我</a>
+            #{/if}
+            #{else}
+            <a href="@{Says.user(target.username)}">${target.who}</a>
+            #{/else}
+            <span>${target.createAt.prettyFormat()}</span>
+            说 : ${target.content}
+
+        </div>
+        #{if replys}
+        回复数： ${replys.size()}
+        <div class="list">
+            #{list items:replys, as:'say'}
+            <div class="item">
+                <span>
+                       #{if user?:"" == say.username }
+                       <a href="@{Says.user(user)}">我</a>
+                       #{/if}      
+                       #{else}
+                       <a href="@{Says.user(say.username)}">${say.who}</a>   
+                       #{/else}    
+                       #{if say.target }
+                        对 ${say.replyWho == user? "自己" :say.replyWho }
+                       #{/if}
+                       <span>说：</span>
+                </span>
+                <span class="item_content">${say.content} </span>
+                <span>${say.createAt.prettyFormat()} </span>
+               <span>
+                   <a class="a_reply ss_sprite ss_bell_go " href="@{Says.show(say.id)}" target="${say.id}">回复
+                       #{if say.replys }
+                       [${say.replys}]
+                       #{/if}</a>
+                   </span>
+            </div>
+            #{/list}
+            #{/if}
+            <div>
+                #{form @Says.reply(target.id)}
+                <input type="text" id="content" name="content"/>
+                <span class="a_reply ss_sprite ss_bell "></span>
+                <input type="submit" id="btnSay" value=" ${currUser.nickname?:currUser.email} 回复! "/>
+                #{/form}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+

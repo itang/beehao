@@ -19,7 +19,7 @@ public class Blog extends Model implements Ownerable<String> {
     @Id
     public Long id;
     //用户
-    public String user;
+    public String username;
     //作者(昵称)
     public String author;
     //标题
@@ -34,11 +34,11 @@ public class Blog extends Model implements Ownerable<String> {
 
 
     public Blog(String user) {
-        this.user = user;
+        this.username = user;
     }
 
     public Blog(String user, String title, Blob content) {
-        this.user = user;
+        this.username = user;
         this.title = title;
         this.content = content;
         this.createAt = new Date();
@@ -46,6 +46,6 @@ public class Blog extends Model implements Ownerable<String> {
     }
 
     public String owner() {
-        return this.user;
+        return this.username;
     }
 }

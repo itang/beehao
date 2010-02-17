@@ -1,23 +1,39 @@
 package controllers.api;
 
-import controllers.Application;
+import controllers.api.GaeController;
 import controllers.Users;
+import models.api.AbstractManage;
 import models.api.Ownerable;
 import models.api.Page;
 import models.entity.User;
-import play.modules.gae.GAE;
+import org.apache.commons.lang.StringUtils;
 import play.mvc.Before;
+import siena.Model;
 import utils.RenderRss;
 
 
 public class PageController extends GaeController {
-    @Before(unless = "rss")
+    public static final String[] unlessBeforeActionMethods = {
+            "index",
+            "index_page",
+            "login",
+            "rss"};
+
+    @Before
     static void checkConnected() {
-        if (!isLoggedIn()) {
-            session.put("forward", request.url);
-            Users.login();
-        } else {
-            renderArgs.put("currUser", cacheCurrUser());
+        if (!unless()) {
+            if (!isLoggedIn()) {
+                session.put("forward", request.url);
+                flash.error("你还未登录, 请先登录!");
+                Users.login();
+            }
+        }
+        if (isLoggedIn()) {
+            User currUser = cacheCurrUser();
+            renderArgs.put("currUser", currUser);
+            renderArgs.put("user", currUser.username);
+            renderArgs.put("nickname", currUser.nickname);
+            renderArgs.put("isGaeLoggedIn", isGaeLoggedIn());
         }
     }
 
@@ -25,9 +41,8 @@ public class PageController extends GaeController {
         return renderArgs.get("currUser", User.class);
     }
 
-
     protected static void checkOwner(Ownerable ownerable) {
-        if (!currUser().email.equals(ownerable.owner())) {
+        if (!currUsername().equals(ownerable.owner())) {
             forbidden();
         }
     }
@@ -40,6 +55,14 @@ public class PageController extends GaeController {
         return p("start", Integer.class, Page.DEFAULT_START);
     }
 
+    protected static int currPage() {
+        return currPage(Page.DEFAULT_PAGE_START_INDEX);
+    }
+
+    protected static int currPage(int defaultValue) {
+        return p("currPage", Integer.class, defaultValue);
+    }
+
     protected static int limit() {
         return limit(Page.DEFAULT_LIMIT);
     }
@@ -47,6 +70,7 @@ public class PageController extends GaeController {
     protected static int limit(int defaultValue) {
         return p("limit", Integer.class, defaultValue);
     }
+
 
     protected static Object p(String key, Object defaultValue) {
         Object t = params.get(key);
@@ -58,5 +82,15 @@ public class PageController extends GaeController {
         return t == null ? defaultValue : t;
     }
 
+
+    /**
+     * 当前actionMethod 不需要 Before Interceptor?
+     *
+     * @return true 如果 方法名是unlessBeforeActionMethods其中之一
+     * @NOTICE: fixed PLAY! 目前只支持只在其申明的Action 类使用unless 有效。
+     */
+    private static boolean unless() {
+        return StringUtils.indexOfAny(request.actionMethod, unlessBeforeActionMethods) != -1;
+    }
 
 }

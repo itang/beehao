@@ -29,20 +29,18 @@
         </div>
 
         <div id="quicklinks">
-            #{if currUser}
-            ${currUser.nickname ?: currUser.email}
-            -
-            #{/if}
+            ${user ? (nickname?:user ) :  "你还未登录" }
             |
             <a href="@{Blogs.index()}" title="博客">博客</a>
+            |
             <a href="@{Says.index()}" title="心语新说">心语</a>
+             #{if user}
             |
             <a href="@{TodoLists.index()}" title="你的ToDo List">待办</a>
             |
             <a href="@{Bookmarkers.index()}" title="在线书签">书签</a>
             |
             <a href="@{Albums.index()}" title="相册">相册</a>
-            #{if currUser}
             |
             <input type="input" id="searchkey" name="searchkey" value="${key}"/>
             <input type="button" id="btnSearch" value="Go!"/>

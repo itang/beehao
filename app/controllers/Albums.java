@@ -25,7 +25,7 @@ public class Albums extends PageController {
     private static final ImagesService imagesService = ImagesServiceFactory.getImagesService();
 
     public static void index() {
-        renderArgs.put("albums", instance(currUser().email).getAll());
+        renderArgs.put("albums", instance(currUsername()).getAll());
         render();
     }
 
@@ -38,25 +38,25 @@ public class Albums extends PageController {
         if (Validation.hasErrors()) {
             flash.error("输入有误");
         } else {
-            instance(currUser().email).add(name, notes);
+            instance(currUsername()).add(name, notes);
         }
         index();
     }
 
     public static void show(@Required Long id) {
-        Album album = instance(currUser().email).get(id);
+        Album album = instance(currUsername()).get(id);
         List<Photo> photos = album.photos();
         render(album, photos);
     }
 
     public static void edit(@Required Long id) {
-        Album album = instance(currUser().email).get(id);
+        Album album = instance(currUsername()).get(id);
         List<Photo> photos = album.photos();
         render(album, photos);
     }
 
     public static void delete(@Required Long id) {
-        Album album = instance(currUser().email).get(id);
+        Album album = instance(currUsername()).get(id);
         notFoundIfNull(album);
         album.delete();
         flash.success("相册 %s 已经删除了", album);
@@ -68,7 +68,7 @@ public class Albums extends PageController {
             flash.error("输入有误!");
             edit(id);
         }
-        Album album = instance(currUser().email).get(id);
+        Album album = instance(currUsername()).get(id);
         notFoundIfNull(album);
         album.name = name;
         album.notes = notes;
@@ -83,7 +83,7 @@ public class Albums extends PageController {
             show(id);
         }
 
-        Album album = instance(currUser().email).get(id);
+        Album album = instance(currUsername()).get(id);
         byte[] oldImageData = upload.asBytes();
 
         Photo.add(album, name, new Blob(oldImageData), notes);
@@ -100,7 +100,7 @@ public class Albums extends PageController {
     }
 
     public static void set_cover(@Required Long id, @Required Long photoId) {
-        Album album = instance(currUser().email).get(id);
+        Album album = instance(currUsername()).get(id);
         Photo photo = Photo.get(photoId);
         album.cover = Photo.get(photoId);
         album.update();

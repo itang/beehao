@@ -28,17 +28,39 @@ TANG_QIONG_JS.util = {
             console.log(this.toString(obj));
         }
         else alert(this.toString(obj));
-    }
-};
-var tutil = TANG_QIONG_JS.util;
+    } ,
 
-var g = {
+    ajax: function(action, data, successFunc) {
+        $.ajax({
+            type: "POST",
+            url: action,
+            data: data,
+            dataType: "json",
+            success: function(result) {
+                if (result.success) {
+                    successFunc(result);
+                }
+                else {
+                    alert(result.message);
+                }
+            },
+            failure:function(result) {
+                alert(result.message);
+            }
+        });
+    },
     getViewportInfo: function() {
         var w = (window.innerWidth) ? window.innerWidth : (document.documentElement && document.documentElement.clientWidth) ? document.documentElement.clientWidth : document.body.offsetWidth;
         var h = (window.innerHeight) ? window.innerHeight : (document.documentElement && document.documentElement.clientHeight) ? document.documentElement.clientHeight : document.body.offsetHeight;
         return {w:w, h:h};
     }
 
+};
+var tutil = TANG_QIONG_JS.util;
+var ajax = ajax || tutil.ajax;
+
+var g = {
+    getViewportInfo : tutil.getViewportInfo
 };
 
 var proxyUrl = {

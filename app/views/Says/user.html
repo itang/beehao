@@ -14,6 +14,10 @@
         width: 300px;
     }
 
+    a {
+        text-decoration: none;
+    }
+
     .item {
         line-height: 150%;
     }
@@ -23,18 +27,25 @@
         color: gray;
     }
 
+    .item span a {
+        color: gray;
+    }
+
     .item span.item_content {
         color: blue;
     }
 </style>
 <script type="text/javascript">
     $(function() {
-        var $tabs = $("#tabs").tabs({
-            fx: { opacity: 'toggle' } ,
-            selected: 0
-        });
+        $("#content").focus();
     });
 
+    $(function() {
+        var $tabs = $("#tabs").tabs({
+            fx: { opacity: 'toggle' } ,
+            selected: 1
+        });
+    });
 </script>
 
 <div class="container">
@@ -43,33 +54,50 @@
 
         <div id="tabs">
             <ul>
-                <li><a href="#fragment-1"><span>大家在说什么</span></a></li>
+                <li><a href="#fragment-1"><span><a href="@{Says.index()}">大家在说什么</a></span></a></li>
                 #{if user}
                 <li><a href="#fragment-2"><span><a href="@{Says.user(user)}">我在说什么</a></span></a></li>
                 #{/if}
             </ul>
             <div id="fragment-1">
+            </div>
+            <div id="fragment-2">
+                <div class="info">
+                    #{if flash.error}
+                    <p class="error">${flash.error}</p>
+                    #{/if}
+                    #{if flash.success}
+                    <p class="success">${flash.success}</p>
+                    #{/if}
+                </div>
+                <h4>${host.screenName()} 的心语新说</h4>
+
                 <div>
-                    <a href="@{Says.user(user)}">我要说!</a>
+                    #{form @Says.say() }
+                    <input type="text" id="content" name="content"/>
+                    <span class="a_reply ss_sprite ss_bell "></span>
+                    <input type="submit" id="btnSay" value=" ${currUser.nickname?:currUser.email} 说! "/>
+                    #{/form}
                 </div>
 
                 <div class="list">
                     #{include 'Says/_list.html' /}
                 </div>
-
                 <div class="page">
                     <hr/>
-                    #{pagebar page:says /}
+                    #{pagebar page:says/}
                     #{if !says.isFirstPage()}
-                    <span class="prePage"><a href="@{Says.index(says.currPage -1)}">《</a></span>
+                    <span class="prePage"><a href="@{Says.user(user, says.currPage -1)}">《</a></span>
                     #{/if}
                     #{if !says.isLastPage()}
-                    <span class="nextPage"><a href="@{Says.index(says.currPage +1)}">》</a></span>
+                    <span class="nextPage"><a href="@{Says.user(user, says.currPage +1)}">》</a></span>
                     #{/if}
                 </div>
             </div>
         </div>
+
     </div>
 </div>
+
 
 

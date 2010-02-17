@@ -1,7 +1,23 @@
 #{extends 'main.html'/}
 #{set title: '新用户注册'/}
 
-
+<script type="text/javascript">
+    $(function() {
+        $('#btnCheckExists').click(function() {
+            var username = $("#username").attr('value');
+            ajax("@{Users.checkExists()}",
+            {"username":username},
+                    function(result) {
+                        if (result.data.exists) {
+                            alert(result.message || "用户名:" + username + "已被注册！");
+                            $("#username").focus();
+                        } else {
+                            alert("用户名:" + username + "未被注册！");
+                        }
+                    });
+        });
+    });
+</script>
 <div class="container">
     <div class="span-24">
         <h3>新用户注册</h3>
@@ -15,7 +31,13 @@
         <div class="span-5">
             #{form @Users.signon(), id:'signonForm' }
             <p>
-                <label for="email">邮件：</label>
+                <label for="username">用户名：</label>
+                <input type="text" id="username" name="username" value="${flash.username?:''}"/>
+                <input type="button" id="btnCheckExists" value="查看是否已经注册?"/>
+            </p>
+
+            <p>
+                <label for="email">E-mail：</label>
                 <input type="text" id="email" name="email" value="${flash.email?:''}"/>
             </p>
 

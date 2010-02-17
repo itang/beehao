@@ -24,7 +24,7 @@ public class Setting extends PageController {
      * 工具主页.
      */
     public static void index() {
-        renderArgs.put("homepage", Config.getHomepage(currUser().email));
+        renderArgs.put("homepage", Config.getHomepage(currUsername()));
 
         render();
     }
@@ -126,7 +126,7 @@ public class Setting extends PageController {
     }
 
     private static BookmarkerManage ownerBookmarkerManage() {
-        return BookmarkerManage.instance(currUser().email);
+        return BookmarkerManage.instance(currUsername());
     }
 
     /**
@@ -135,7 +135,7 @@ public class Setting extends PageController {
      * @param homepage 主页URL
      */
     public static void set_homepage(String homepage) {
-        Config.setHomepage(homepage, currUser().email);
+        Config.setHomepage(homepage, currUsername());
 
         renderJSON(ResultBuilder.get().msg("操作成功!").toJson());
     }

@@ -19,7 +19,7 @@
 </style>
 <div class="container">
     <div class="span-24">
-        <h3> ${currUser.nickname} 的博客</h3>
+        <h3>${currUser.nickname} 的 博客主页 </h3>
     </div>
     <div class="span-24">
         <div class="span-18 colborder">
@@ -48,10 +48,10 @@
                 #{/list}
                 <div class="page">
                     #{if !blogs.isFirstPage()}
-                    <span class="prePage"><a href="@{Blogs.page(blogs.currPage -1)}">《</a></span>
+                    <span class="prePage"><a href="@{Blogs.user_page(user,blogs.currPage -1)}">《</a></span>
                     #{/if}
                     #{if !blogs.isLastPage()}
-                    <span class="nextPage"><a href="@{Blogs.page(blogs.currPage +1)}">》</a></span>
+                    <span class="nextPage"><a href="@{Blogs.user_page(user,blogs.currPage +1)}">》</a></span>
                     #{/if}
                 </div>
             </div>
@@ -60,10 +60,7 @@
             <div>
                 <a href="@{Blogs.blank()}">写博客</a>
             </div>
-            <div class="userinfo">
-                个人说明:
-                <p><a href="@{Blogs.userhome(currUser.nickname)}">${currUser.nickname}</a></p>
-            </div>
+
         </div>
     </div>
 </div>

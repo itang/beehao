@@ -12,7 +12,7 @@ import java.util.List;
  * @author itang
  */
 public class Page<M extends Model> implements Iterable<M> {
-     public static final int DEFAULT_PAGE_START_INDEX = 1;
+    public static final int DEFAULT_PAGE_START_INDEX = 1;
     public static final int DEFAULT_LIMIT = 10;
     public static final Integer DEFAULT_START = 0;
     public final int total;

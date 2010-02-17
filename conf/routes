@@ -25,9 +25,13 @@ GET 	/albums/{<[0-9]+>id}					Albums.show
 GET 	/albums/photos/{<[0-9]+>id}				Albums.view_photo
 GET 	/albums/photos/small/{<[0-9]+>id}		Albums.view_smallphoto
 
-GET 	/blogs/{<[0-9]+>currPage}				Blogs.page
+GET 	/blogs/{<[0-9]+>currPage}				Blogs.index_page
 GET 	/blogs/item/{<[0-9]+>id}				Blogs.show
-GET 	/blogs/user/{user}						Blogs.userhome
+GET 	/blogs/users/{user}/?					Blogs.user
+GET 	/blogs/users/{user}/{<[0-9]+>currPage}	Blogs.user_page
+
+GET 	/says/user/{user}						Says.user
+GET 	/says/item/{<[0-9]+>id}					Says.show
 
 # Catch all
 *       /{controller}/{action}                  {controller}.{action}

@@ -30,7 +30,8 @@
         });
         $("#btnProfileSave").click(function() {
             ajax("@{Setting.save_profile()}", {
-                nickname: $("#nickname").attr("value")
+                nickname: $("#nickname").attr("value"),
+                password: $("#password").attr("value")
             }, function(result) {
                 alert(result.message);
             });
@@ -88,12 +89,16 @@
                 <input type="button" id="btnSetHomepage" value="设置主页"/>
             </div>
             <div id="fragment-3">
-                <p>用户: ${currUser.email}</p>
+                <p>用户: ${currUser.username}</p>
+
+                <p>E-mail: ${currUser.email}</p>
 
                 <p>昵称: <input type="text" id="nickname" name="nickname" value="${currUser.nickname}"/></p>
 
-                <p>密码: <input type="password" id="password" name="password" value="${currUser.password?:''}" #{if !currUser.password} disabled #{/if}/>
-                    #{if !currUser.password}
+                <p>密码:
+                    <input type="password" id="password" name="password" #{if isGaeLoggedIn} disabled #{/if}
+                    value="${currUser.password?:''}"/>
+                    #{if isGaeLoggedIn}
                     <font color="red">当前使用GAE Gooogle帐号登录，无须设置密码!</font><input type="button" id="btnEnablePassword"
                                                                                value="我想设置密码，直接从本站登录">
                     #{/if}

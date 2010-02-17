@@ -2,60 +2,84 @@ package controllers;
 
 
 import controllers.api.PageController;
+import models.api.Page;
 import models.entity.Say;
+import models.entity.User;
 import models.manage.SayManage;
 import org.apache.commons.lang.time.DateFormatUtils;
+import play.data.validation.Required;
+import play.data.validation.Validation;
 import utils.ResultBuilder;
 
 import java.util.Arrays;
+import java.util.List;
 
 
 public class Says extends PageController {
-    public static void index() {
-        renderArgs.put("says", SayManage.instance.getAll());
-        System.out.println(Arrays.toString(Say.class.getTypeParameters()));
+    public static void index(int page) {
+        Page<Say> says = SayManage.instance.pagedAll(page, limit(30));
+
+        render(says);
+    }
+
+    public static void user(@Required String user, int page) {
+        user = user == null ? currUsername() : user;
+        renderArgs.put("host", User.get(user));
+        renderArgs.put("says", SayManage.instance(user).pagedAll(page, limit(15)));
 
         render();
     }
 
-    public static void add() {
-        String content = params.get("content");
-        
-        Say say = ownerSayManage().add(content);
-        validation.valid(say);
-        if (validation.hasErrors()) {
-            renderJSON(ResultBuilder.failure().toJson());
+    public static void say(@Required String content) {
+        if (Validation.hasErrors()) {
+            flash.error("你想说什么?!");
+        } else {
+            Say say = ownerSayManage().add(content);
+            flash.success("成功发表你的心说!");
         }
-        renderJSON(ResultBuilder.success().msg("心说成功!")
-                .value("id", say.id).value("replys", say.replys)
-                .value("user", say.user)
-                .value("content", say.content)
-                .value("createAt", DateFormatUtils.format(say.createAt, "yyyy-MM-dd HH:mm:ss"))
-                .toJson());
+
+        toUserHome();
     }
 
-    public static void delete(Long id) {
+    public static void delete(@Required Long id) {
         Say say = ownerSayManage().get(id);
         if (say != null)
             say.delete();
 
-        renderJSON(ResultBuilder.success().msg("删除成功!").toJson());
+        flash.success("成功删除!");
+        toUserHome();
     }
 
-    public static void reply() {
-        String content = params.get("content");
-        Long targetId = params.get("target", Long.class);
-        Say target = SayManage.instance.get(targetId);
-        if (target == null) {
-            renderJSON(ResultBuilder.failure().msg("出错了,回复对象不存在!").toJson());
-        } else {
-            ownerSayManage().reply(content, target);
-            renderJSON(ResultBuilder.success().msg("回复成功!").value("replys", target.replys).toJson());
+    public static void reply(@Required Long id, @Required String content) {
+        if (Validation.hasErrors()) {
+            flash.error("请输入回复内容!");
+            show(id);
         }
+        final Say target = SayManage.instance.get(id);
+
+        if (target == null) {
+            flash.error("null");
+            toUserHome();
+        }
+        ownerSayManage().reply(content, target);
+
+        flash.success("回复成功!");
+        show(id);
+    }
+
+    private static void toUserHome() {
+        user(currUsername(), Page.DEFAULT_PAGE_START_INDEX);
+    }
+
+    public static void show(@Required Long id) {
+        Say target = SayManage.instance.get(id);
+
+        List<Say> replys = target.replies();
+        render(target, replys);
     }
 
     private static SayManage ownerSayManage() {
-        return SayManage.instance(currUser().email);
+        return SayManage.instance(currUsername());
     }
 
 }

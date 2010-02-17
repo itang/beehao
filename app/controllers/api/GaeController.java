@@ -1,5 +1,6 @@
 package controllers.api;
 
+import controllers.Users;
 import models.entity.User;
 import play.modules.gae.GAE;
 import play.mvc.Controller;
@@ -13,8 +14,8 @@ import utils.CacheHelper.Provider;
  */
 public class GaeController extends Controller {
     private static final Provider<User> userProvider = new CacheHelper.Provider<User>() {
-        public User get(String key) {
-            return User.getOrSave(userEmail());
+        public User get(String user) {
+            return User.getOrSave(currUsername());
         }
     };
 
@@ -33,7 +34,7 @@ public class GaeController extends Controller {
      * @return true 如果从本站输入用户、密码登录
      */
     protected static boolean isLocalLoggedIn() {
-        return session.get("user") != null;
+        return session.get("user") != null ;
     }
 
     /**
@@ -50,11 +51,11 @@ public class GaeController extends Controller {
      *
      * @return 返回用户email
      */
-    protected static String userEmail() {
+    protected static String currUsername() {
         if (isLocalLoggedIn()) {
             return session.get("user");
         }
-        return GAE.getUser().getEmail();
+        return GAE.getUser().getEmail().replace("@", "AT");
     }
 
     /**
@@ -66,7 +67,7 @@ public class GaeController extends Controller {
      * @return 返回从缓存获取用户对象
      */
     protected static User cacheCurrUser() {
-        return CacheHelper.getOrCache("currUser" + userEmail(), userProvider);
+        return CacheHelper.getOrCache("currUser" + currUsername(), userProvider);
     }
 
     /**
@@ -76,7 +77,7 @@ public class GaeController extends Controller {
      * @return 用户
      */
     protected static User cacheCurrUser(User currUser) {
-        CacheHelper.replace("currUser" + userEmail(), currUser, CacheHelper.DEFAULT_EXP);
+        CacheHelper.replace("currUser" + currUsername(), currUser, CacheHelper.DEFAULT_EXP);
         return currUser;
     }
 }

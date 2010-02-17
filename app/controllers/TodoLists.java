@@ -19,15 +19,16 @@ import java.util.List;
 public class TodoLists extends PageController {
 
     public static void index() {
-        List<TodoList> lists = TodoListManage.instance(currUser().email).getAll("-createAt");
+        List<TodoList> lists = TodoListManage.instance(currUsername()).getAll("-createAt");
 
         render(lists);
     }
 
+
     public static void show(Long id) {
         TodoList list = getTodoListById(id);
         notFoundIfNull(list);
-        checkOwner(list);
+        //checkOwner(list);
         List<TodoItem> items = list.items();
         List<TodoItem> oldItems = list.oldItems();
         render(list, items, oldItems);
@@ -42,14 +43,14 @@ public class TodoLists extends PageController {
             flash.error("Oops, please give a name to your new list");
             blank();
         }
-        new TodoList(currUser().email, name).insert();
+        new TodoList(currUsername(), name).insert();
         index();
     }
 
     public static void delete(Long id) {
         TodoList list = getTodoListById(id);
         notFoundIfNull(list);
-        checkOwner(list);
+       checkOwner(list);
         list.delete();
         flash.success("The list %s has been deleted", list);
         index();
@@ -141,12 +142,12 @@ public class TodoLists extends PageController {
         notFoundIfNull(list);
         checkOwner(list);
         Notifier.emailList(list);
-        flash.success("This list has been emailed to %s", list.user);
+        flash.success("This list has been emailed to %s", list.username);
         show(id);
     }
 
     private static TodoList getTodoListById(Long id) {
-        return TodoListManage.instance(currUser().email).get(id);
+        return TodoListManage.instance(currUsername()).get(id);
     }
 
 }

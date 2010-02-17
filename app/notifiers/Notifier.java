@@ -6,9 +6,9 @@ import play.mvc.Mailer;
 public class Notifier extends Mailer {
 
     public static void emailList(TodoList list) {
-        setFrom(list.user);
+        setFrom(list.username);
         setSubject("Your list: %s", list.name);
-        addRecipient(list.user);
+        addRecipient(list.username);
         send(list);
     }
 
