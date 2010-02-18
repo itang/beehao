@@ -1,0 +1,28 @@
+input#content {
+    width: 400px;
+    height: 28px;
+    font-size: 16px;
+    font-weight: bold;
+    color: blue;
+}
+
+a {
+    text-decoration: none;
+}
+
+.item {
+    line-height: 150%;
+}
+
+.item span {
+    margin-left: 8px;
+    color: gray;
+}
+
+.item span a {
+    color: gray;
+}
+
+.item span.item_content {
+    color: blue;
+}

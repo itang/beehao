@@ -16,11 +16,11 @@ public class Page<M extends Model> implements Iterable<M> {
     public static final int DEFAULT_LIMIT = 10;
     public static final Integer DEFAULT_START = 0;
     public final int total;
-    public final List<M> items;
     public final int start;
     public final int limit;
     public final int currPage;
     public final int totalPage;
+    public final List<M> items;
 
     public Page(int total, List<M> items, int start, int limit) {
         this.total = total;
@@ -28,7 +28,7 @@ public class Page<M extends Model> implements Iterable<M> {
         this.start = start;
         this.limit = limit;
         this.currPage = start / limit + 1;
-        this.totalPage = total / limit + 1;
+        this.totalPage = maxPage(total, limit);
     }
 
     public boolean isFirstPage() {
@@ -52,6 +52,10 @@ public class Page<M extends Model> implements Iterable<M> {
                 .append(",currPage:").append(currPage)
                 .append(",totalPage:").append(totalPage)
                 .append("}").toString();
+    }
+
+    public static int maxPage(int total, int limit) {
+        return total / limit + 1;
     }
 
 }

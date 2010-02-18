@@ -25,12 +25,19 @@ public abstract class AbstractManage<M extends Model> {
         return query(order).fetch();
     }
 
-    public Page<M> page(Query<M> query, int currPage, int limit) {
+    public Page<M> page(final Query<M> query, final int currPage, final int limit) {
         final int total = query.count();
-        if (currPage == 0) currPage = 1;
-        final int start = (currPage - 1) * limit;
+        final int page = fromPage(currPage, total, limit);
+        final int start = (page - 1) * limit;
         final List<M> items = query.fetch(limit, start);
         return new Page<M>(total, items, start, limit);
+    }
+
+    private int fromPage(int currPage, int total, int limit) {
+        if (currPage == 0) return Page.DEFAULT_PAGE_START_INDEX;
+        if (currPage > Page.maxPage(total, limit))
+            return Page.maxPage(total, limit);
+        return currPage;
     }
 
     public void delete(Long id) {
