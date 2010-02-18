@@ -2,6 +2,7 @@ package controllers;
 
 import controllers.api.GaeController;
 
+import models.api.Page;
 import models.entity.TodoList;
 import models.entity.User;
 import models.manage.SayManage;
@@ -23,7 +24,7 @@ public class Application extends GaeController {
             synchronizeUser();
         }
 
-        Blogs.index();
+        Blogs.index(Page.DEFAULT_PAGE_START_INDEX);
     }
 
     private static void synchronizeUser() {

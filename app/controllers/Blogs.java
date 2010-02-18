@@ -14,12 +14,9 @@ import play.data.validation.Validation;
  * @author itang
  */
 public class Blogs extends PageController {
-    public static void index() {
-        index_page(Page.DEFAULT_PAGE_START_INDEX);
-    }
 
-    public static void index_page(int currPage) {
-        Page<Blog> blogs = BlogManage.instance.pagedPublishedBlogs(currPage);
+    public static void index(int page) {
+        Page<Blog> blogs = BlogManage.instance.pagedPublishedBlogs(page);
         render(blogs);
     }
 
@@ -36,7 +33,7 @@ public class Blogs extends PageController {
         flash.success("成功发布博客!");
         BlogManage.instance(currUsername()).addBlog(title, content);
 
-        user(currUsername());
+        user(currUsername(), Page.DEFAULT_PAGE_START_INDEX);
     }
 
     public static void show(@Required Long id) {
@@ -44,12 +41,10 @@ public class Blogs extends PageController {
     }
 
 
-    public static void user(@Required String user) {
-        user_page(user, Page.DEFAULT_PAGE_START_INDEX);
-    }
-
-    public static void user_page(@Required String user, int currPage) {
-        Page<Blog> blogs = BlogManage.instance(user).pagedPublishedBlogs(currPage);
+    public static void user(@Required String user, int page) {
+        Page<Blog> blogs = BlogManage.instance(user).pagedPublishedBlogs(page);
         render(blogs);
     }
+
+
 }

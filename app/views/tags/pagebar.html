@@ -1,3 +1,34 @@
-<span>
-       总数 : ${_page.total}, 当前页：${_page.currPage}/${_page.totalPage}, 当前显示: ${_page.start + 1} - ${_page.start + _page.items.size()}项
-</span>
+%{
+/**
+*  分页导航Bar Tag.
+e.g. #{pagebar page:says ,action:'Says.user', params:[user: user] /}
+*/
+//_action  String: 翻页action , !
+//_page   Page:  分页数据对象 ,  !
+//_params  Map: action 参数 ?
+//_config  Map: 配置        ?
+_params = _params ?: [:];
+if(params.user){//当前登录用户名
+_params += [user: params.user];
+}
+_config = _config ?: [showDetail: true];//是否显示详细信息
+__p = _params + ["page" : _page.currPage - 1];
+__n = _params + ["page" : _page.currPage + 1];
+
+_purl = play.mvc.Router.reverse(_action, __p).url;
+_nurl = play.mvc.Router.reverse(_action, __n).url;
+}%
+<div class="pagebar">
+    #{if _config.showDetail}
+    <span>
+     总记录数 : ${_page.total}, 当前显示: ${_page.start + 1} - ${_page.start + _page.items.size()}项 
+     |当前页：${_page.currPage}/${_page.totalPage}
+    </span>
+    #{/if}
+    #{if !_page.isFirstPage()}
+    <span class="prePage"><a href="${_purl}" title="上一页"> &lt;&lt; </a></span>
+    #{/if}
+    #{if !_page.isLastPage()}
+    <span class="nextPage"><a href="${_nurl}" title="下一页"> &gt;&gt;</a></span>
+    #{/if}
+</div>

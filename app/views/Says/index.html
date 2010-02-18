@@ -52,20 +52,12 @@
                 <div>
                     <a href="@{Says.user(user)}">我要说!</a>
                 </div>
-
                 <div class="list">
                     #{include 'Says/_list.html' /}
                 </div>
-
-                <div class="page">
+                <div class="pagenav">
                     <hr/>
-                    #{pagebar page:says /}
-                    #{if !says.isFirstPage()}
-                    <span class="prePage"><a href="@{Says.index(says.currPage -1)}">《</a></span>
-                    #{/if}
-                    #{if !says.isLastPage()}
-                    <span class="nextPage"><a href="@{Says.index(says.currPage +1)}">》</a></span>
-                    #{/if}
+                    #{pagebar page:says, action:'Says.index' /}
                 </div>
             </div>
         </div>
