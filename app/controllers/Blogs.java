@@ -54,7 +54,7 @@ public class Blogs extends PageController {
     }
 
     public static void show(@Required Long id) {
-        Blog blog = BlogManage.instance(currUsername()).get(id);
+        Blog blog = BlogManage.instance.get(id);
         render(blog);
     }
 

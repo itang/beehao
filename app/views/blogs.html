@@ -1,26 +1,14 @@
 #{extends 'main.html'/}
 #{set title:'博客'/}
-
-<style type="text/css">
-    div.blog {
-        border: 1px dashed gray;
-        padding: 2px;
-        margin-bottom: 1em;
-    }
-
-    .content {
-        text-indent: 1em;
-    }
-
-    .createAt, .author, .hit, .comments {
-        color: gray;
-        font-size: 9px;
-    }
-</style>
+#{set 'moreStyles'}
+<link rel="stylesheet" type="text/css" media="screen" href="@{'/public/stylesheets/Blogs/index.css'}"/>
+#{/set}
 <div class="container">
     <div class="span-24">
         <h3><a href="@{Blogs.index()}">博客主页</a></h3>
+        #{if user}
         <h4><a href="@{Blogs.user(user)}">${currUser.nickname} 的 博客主页 </a></h4>
+        #{/if}
 
         <div class="info">
             #{if flash.error}

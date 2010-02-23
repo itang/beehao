@@ -1,0 +1,14 @@
+div.blog {
+    border: 1px dashed gray;
+    padding: 2px;
+    margin-bottom: 1em;
+}
+
+.content {
+    text-indent: 1em;
+}
+
+.createAt, .author, .hit, .comments {
+    color: gray;
+    font-size: 9px;
+}
