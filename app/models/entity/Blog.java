@@ -28,10 +28,14 @@ public class Blog extends Model implements Ownerable<String> {
     public Blob content;
     //创建时间
     public Date createAt;
+    //最新修改修改时间
+    public Date lastModifiedAt;
+    //状态
     public int status;
+    //点击率
     public Integer hit;
+    //留言量
     public Integer comments;
-
 
     public Blog(String user) {
         this.username = user;

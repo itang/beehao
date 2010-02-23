@@ -5,8 +5,11 @@ import models.api.Page;
 import models.entity.Blog;
 import models.entity.User;
 import models.manage.BlogManage;
+import org.apache.commons.lang.StringUtils;
 import play.data.validation.Required;
 import play.data.validation.Validation;
+
+import java.util.List;
 
 /**
  * 博客 Action.
@@ -24,20 +27,60 @@ public class Blogs extends PageController {
         render();
     }
 
-    public static void create(@Required String title, @Required String content) {
+    public static void create(@Required String title, String content) {
         if (Validation.hasErrors()) {
-            flash.error("请输入标题或内容");
+            flash.error("请输入标题");
             blank();
         }
+        //发布还是暂存?
+        final String actionType = params.get("actionType");
+        if ("暂存".equals(actionType)) {
+            BlogManage.instance(currUsername()).saveTempBlog(title, content);
+            flash.success("成功暂存博客!");
+            user_temps();
+        } else {
+            if (StringUtils.isBlank(content)) {
+                flash.error("请输入博客内容!");
+                blank();
+            }
+            BlogManage.instance(currUsername()).publishBlog(title, content);
+            flash.success("成功发布博客!");
+            renderUserhome();
+        }
+    }
 
-        flash.success("成功发布博客!");
-        BlogManage.instance(currUsername()).addBlog(title, content);
-
+    protected static void renderUserhome() {
         user(currUsername(), Page.DEFAULT_PAGE_START_INDEX);
     }
 
     public static void show(@Required Long id) {
-        render();
+        Blog blog = BlogManage.instance(currUsername()).get(id);
+        render(blog);
+    }
+
+    public static void user_temps() {
+        List<Blog> blogs = BlogManage.instance(currUsername()).getUnpublishedBlogs();
+        render(blogs);
+    }
+
+    public static void edit(@Required Long id) {
+        Blog blog = BlogManage.instance(currUsername()).get(id);
+        render(blog);
+    }
+
+    public static void delete(@Required Long id) {
+        Blog blog = BlogManage.instance(currUsername()).get(id);
+        if (blog == null) {
+            flash.error("博客不存在!");
+            renderUserhome();
+        }
+        BlogManage.instance(currUsername()).delete(id);
+        flash.success(String.format("成功删除博客:%s", blog.title));
+        renderUserhome();
+    }
+
+    public static void save(@Required Long id, String content) {
+        renderUserhome();
     }
 
 

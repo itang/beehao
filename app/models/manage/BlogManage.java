@@ -42,6 +42,10 @@ public class BlogManage extends OwnerableManage<Blog> implements Ownerable<Strin
         return publishedBlogsQuery(order).fetch();
     }
 
+    public List<Blog> getUnpublishedBlogs() {
+        return query().filter("status", Blog.STATUS_UNPUBLISHED).order("-createAt").fetch();
+    }
+
     public Page<Blog> pagedPublishedBlogs(int currPage) {
         return pagedPublishedBlogs(null, currPage, Page.DEFAULT_LIMIT);
     }
@@ -50,9 +54,24 @@ public class BlogManage extends OwnerableManage<Blog> implements Ownerable<Strin
         return page(publishedBlogsQuery(order), currPage, limit);
     }
 
-    public Blog addBlog(String title, String content) {
+    public Blog publishBlog(String title, String content) {
+        return saveBlog(title, content, Blog.STATUS_PUBLISHED);
+    }
+
+    public Blog publishBlog(Blog blog) {
+        blog.status = Blog.STATUS_PUBLISHED;
+        blog.update();
+        return blog;
+    }
+
+    public Blog saveTempBlog(String title, String content) {
+        return saveBlog(title, content, Blog.STATUS_UNPUBLISHED);
+    }
+
+    public Blog saveBlog(String title, String content, int status) {
         Blog blog = new Blog(this.owner(), title, new Blob(content.getBytes()));
         blog.author = currUser().nickname;
+        blog.status = status;
         blog.insert();
         return blog;
     }
@@ -60,4 +79,6 @@ public class BlogManage extends OwnerableManage<Blog> implements Ownerable<Strin
     public static BlogManage instance(String owner) {
         return new BlogManage(owner);
     }
+
+
 }

@@ -44,6 +44,10 @@ public abstract class AbstractManage<M extends Model> {
         get(id).delete();
     }
 
+    public void delete(M model) {
+        model.delete();
+    }
+
     public AbstractManage<M> deleteAll() {
         for (M m : getAll()) {
             m.delete();

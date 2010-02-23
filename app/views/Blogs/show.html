@@ -1,2 +1,29 @@
-#{extends 'main.html'/}
+#{extends 'blogs.html'/}
 #{set title:'博客'/}
+
+
+<div class="blog">
+    <div class="blog_top">
+        <div class="title span-4"><h3>* <a href="@{Blogs.show(blog.id)}">${blog.title}</a></h3></div>
+        <div class="createAt span-3">
+            ${blog.status == 1? "发布" : "暂存" }于:${blog.createAt.format()}
+        </div>
+        <div class="author span-3">作者:${blog.author}</div>
+        <div class="hit span-2">点击:${blog.hit?:""}</div>
+        <div class="comments span-2">评论:${blog.comments?:""}</div>
+    </div>
+    <div class="blog_content">
+        <hr size="1" style="width:400px"/>
+        <pre> ${blog.content.asString()}</pre>
+    </div>
+    <div class="blog_bottom">
+        <span>标签：</span>
+        <span> <a href="@{Blogs.show(blog.id)}#comment">评论</a></span>
+        <span> <a href="">引用</a></span>
+        #{if blog.username == user}
+        <span> <a href="@{Blogs.edit(blog.id)}">编辑</a></span>
+        <span> <a href="@{Blogs.delete(blog.id)}">删除</a></span>
+        #{/if}
+    </div>
+</div>
+

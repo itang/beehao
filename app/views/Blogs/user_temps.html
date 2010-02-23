@@ -1,10 +1,7 @@
 #{extends 'blogs.html'/}
 #{set title:'博客'/}
 
+
 <div class="list">
     #{include 'Blogs/_list.html'/}
 </div>
-<div class="pagenav">
-    #{pagebar page:blogs ,action:'Blogs.user', config:[showDetail:false] /}
-</div>
-

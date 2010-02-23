@@ -1,0 +1,60 @@
+#{extends 'main.html'/}
+#{set title:'博客'/}
+
+<style type="text/css">
+    div.blog {
+        border: 1px dashed gray;
+        padding: 2px;
+        margin-bottom: 1em;
+    }
+
+    .content {
+        text-indent: 1em;
+    }
+
+    .createAt, .author, .hit, .comments {
+        color: gray;
+        font-size: 9px;
+    }
+</style>
+<div class="container">
+    <div class="span-24">
+        <h3><a href="@{Blogs.index()}">博客主页</a></h3>
+        <h4><a href="@{Blogs.user(user)}">${currUser.nickname} 的 博客主页 </a></h4>
+
+        <div class="info">
+            #{if flash.error}
+            <p class="error">${flash.error}</p>
+            #{/if}
+            #{if flash.success}
+            <p class="success">${flash.success}</p>
+            #{/if}
+        </div>
+    </div>
+
+    <div class="span-18 colborder">
+        #{doLayout /}
+    </div>
+
+    <div class="span-5 last">
+        #{if user}
+        <div>
+            <span><a href="@{Blogs.user(user)}">${user}</a>个人信息 </span>
+
+            <div>
+                <p>昵称: ${nickname}</p>
+            </div>
+        </div>
+        #{/if}
+        <div>
+            <span><a href="@{Blogs.blank()}">写博客</a> </span>
+        </div>
+        #{if params.user == user}
+        <div>
+                  <span>
+                      <a href="@{Blogs.user_temps}">还未发布的博客</a>
+                  </span>
+        </div>
+        #{/if}
+    </div>
+</div>
