@@ -2,6 +2,7 @@ package models.api;
 
 import siena.Model;
 import siena.Query;
+import utils.LangUtil;
 
 import java.util.List;
 
@@ -11,7 +12,6 @@ import java.util.List;
  * @author itang
  */
 public abstract class AbstractManage<M extends Model> {
-    public abstract Class<M> modelClass();
 
     public M get(Long id) {
         return query().filter("id", id).get();
@@ -63,4 +63,13 @@ public abstract class AbstractManage<M extends Model> {
         }
         return query;
     }
+
+    protected Class<M> modelClass() {
+        return getEntityClass();
+    }
+
+    private Class<M> getEntityClass() {
+        return (Class<M>) LangUtil.getRawType(LangUtil.getSuperclassTypeParameter(this.getClass()));
+    }
+
 }

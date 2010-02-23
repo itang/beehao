@@ -28,7 +28,7 @@ public class TodoLists extends PageController {
     public static void show(Long id) {
         TodoList list = getTodoListById(id);
         notFoundIfNull(list);
-        //checkOwner(list);
+        checkOwner(list);
         List<TodoItem> items = list.items();
         List<TodoItem> oldItems = list.oldItems();
         render(list, items, oldItems);
@@ -50,7 +50,7 @@ public class TodoLists extends PageController {
     public static void delete(Long id) {
         TodoList list = getTodoListById(id);
         notFoundIfNull(list);
-       checkOwner(list);
+        checkOwner(list);
         list.delete();
         flash.success("The list %s has been deleted", list);
         index();

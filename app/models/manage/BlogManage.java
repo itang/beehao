@@ -57,11 +57,6 @@ public class BlogManage extends OwnerableManage<Blog> implements Ownerable<Strin
         return blog;
     }
 
-    @Override
-    public Class<Blog> modelClass() {
-        return Blog.class;
-    }
-
     public static BlogManage instance(String owner) {
         return new BlogManage(owner);
     }

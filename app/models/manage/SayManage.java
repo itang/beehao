@@ -12,20 +12,20 @@ import java.util.List;
  * @author itang
  */
 public class SayManage extends OwnerableManage<Say> {
-    private final String owner;
     public static final SayManage instance = new SayManage(null);
 
-    public SayManage(String owner) {
+    public static SayManage instance(String owner) {
+        return new SayManage(owner);
+    }
+
+    public final String owner;
+
+    private SayManage(String owner) {
         this.owner = owner;
     }
 
     public String owner() {
         return this.owner;
-    }
-
-    @Override
-    public Class<Say> modelClass() {
-        return Say.class;
     }
 
     public List<Say> getAll() {
@@ -51,10 +51,6 @@ public class SayManage extends OwnerableManage<Say> {
         target.update();
 
         return say;
-    }
-
-    public static SayManage instance(String user) {
-        return new SayManage(user);
     }
 
 }

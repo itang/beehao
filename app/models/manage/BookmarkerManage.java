@@ -22,11 +22,6 @@ public class BookmarkerManage extends OwnerableManage<Bookmarker> {
         return query().filter("name", name).get();
     }
 
-    @Override
-    public Class<Bookmarker> modelClass() {
-        return Bookmarker.class;
-    }
-
     public List<Bookmarker> getAll() {
         return query().order("-hit").fetch();
     }

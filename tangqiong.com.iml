@@ -63,6 +63,18 @@
         <jarDirectory url="file://D:/dev-env/playframework/play-1.1-unstable-r766/modules/siena/lib" recursive="false" />
       </library>
     </orderEntry>
+    <orderEntry type="module-library">
+      <library name="guice">
+        <CLASSES>
+          <root url="file://D:/dev-env/playframework/play-1.1-unstable-r766/modules/guice/lib" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES>
+          <root url="file://D:/dev-env/playframework/play-1.1-unstable-r766/modules/guice/src" />
+        </SOURCES>
+        <jarDirectory url="file://D:/dev-env/playframework/play-1.1-unstable-r766/modules/guice/lib" recursive="false" />
+      </library>
+    </orderEntry>
   </component>
 </module>
 

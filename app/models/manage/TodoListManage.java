@@ -10,7 +10,7 @@ import models.entity.TodoList;
  * @author itang
  */
 public class TodoListManage extends OwnerableManage<TodoList> implements Ownerable<String> {
-    private String owner;
+    public String owner;
 
     public TodoListManage(String owner) {
         this.owner = owner;
@@ -18,11 +18,6 @@ public class TodoListManage extends OwnerableManage<TodoList> implements Ownerab
 
     public String owner() {
         return this.owner;
-    }
-
-    @Override
-    public Class<TodoList> modelClass() {
-        return TodoList.class;
     }
 
     public static TodoListManage instance(String owner) {

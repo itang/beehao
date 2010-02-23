@@ -10,7 +10,7 @@ import models.entity.Album;
  * @author itang
  */
 public class AlbumManage extends OwnerableManage<Album> implements Ownerable<String> {
-    final String owner;
+    public final String owner;
     public final static AlbumManage instance = new AlbumManage(null);
 
     public static AlbumManage instance(String owner) {
@@ -24,12 +24,6 @@ public class AlbumManage extends OwnerableManage<Album> implements Ownerable<Str
     public String owner() {
         return owner;
     }
-
-    @Override
-    public Class<Album> modelClass() {
-        return Album.class;
-    }
-
 
     public void add(String name, String notes) {
         new Album(this.owner, name, notes).insert();

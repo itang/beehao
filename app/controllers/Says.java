@@ -6,16 +6,15 @@ import models.api.Page;
 import models.entity.Say;
 import models.entity.User;
 import models.manage.SayManage;
-import org.apache.commons.lang.time.DateFormatUtils;
 import play.data.validation.Required;
 import play.data.validation.Validation;
-import utils.ResultBuilder;
 
-import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 
 public class Says extends PageController {
+
     public static void index(int page) {
         Page<Say> says = SayManage.instance.pagedAll(page, limit(30));
 
@@ -25,7 +24,7 @@ public class Says extends PageController {
     public static void user(@Required String user, int page) {
         user = user == null ? currUsername() : user;
         renderArgs.put("host", User.get(user));
-        renderArgs.put("says", SayManage.instance(user).pagedAll(page, limit(15)));
+        renderArgs.put("says", ownerSayManage().pagedAll(page, limit(15)));
 
         render();
     }
@@ -67,8 +66,16 @@ public class Says extends PageController {
         show(id);
     }
 
-    private static void toUserHome() {
-        user(currUsername(), Page.DEFAULT_PAGE_START_INDEX);
+
+    public static void rss() {
+        final String user = params.get("user");
+        List<Say> says = user == null ? SayManage.instance.getAll() : SayManage.instance(user).getAll();
+
+        renderArgs.put("says", says);
+        renderArgs.put("pubDate", new Date(new Date().getTime() - 1000 * 3600 * 24));
+        renderArgs.put("lastBuildDate", new Date());
+
+        render();
     }
 
     public static void show(@Required Long id) {
@@ -76,6 +83,10 @@ public class Says extends PageController {
 
         List<Say> replys = target.replies();
         render(target, replys);
+    }
+
+    private static void toUserHome() {
+        user(currUsername(), Page.DEFAULT_PAGE_START_INDEX);
     }
 
     private static SayManage ownerSayManage() {
