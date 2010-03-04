@@ -65,7 +65,6 @@
         <div id="tabs">
             <ul>
                 <li><a href="#fragment-1"><span>书签管理</span></a></li>
-                <li><a href="#fragment-2"><span>设置主页</span></a></li>
                 <li><a href="#fragment-3"><span>个人信息</span></a></li>
             </ul>
             <div id="fragment-1">
@@ -82,11 +81,15 @@
                 <input type="button" id="btnInitData" value="设置为牛推荐的书签"/>
                 <a href="@{Bookmarkers.index()}">转入书签主页</a>
                 <span id="spanInitData"></span>
+
+                <div>
+                    显示主页：
+                    <input type="text" value="${homepage}" id="txtHomepage" name="txtHomepage" size="60"/>
+                    <input type="button" id="btnSetHomepage" value="设置主页"/>
+                </div>
             </div>
             <div id="fragment-2">
-                设置主页:
-                <input type="text" value="${homepage}" id="txtHomepage" name="txtHomepage" size="60"/>
-                <input type="button" id="btnSetHomepage" value="设置主页"/>
+
             </div>
             <div id="fragment-3">
                 <p>用户: ${currUser.username}</p>

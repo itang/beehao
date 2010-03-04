@@ -3,7 +3,6 @@ package controllers;
 import controllers.api.PageController;
 import models.api.Page;
 import models.entity.Blog;
-import models.entity.User;
 import models.manage.BlogManage;
 import org.apache.commons.lang.StringUtils;
 import play.data.validation.Required;

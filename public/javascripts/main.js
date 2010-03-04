@@ -112,12 +112,12 @@ $(function() {
     /**
      * 重置footer位置.
      */
-    ( function rePositionFooter() {
-        var f = $("#footer");
-        if (f.offset().top < 400) {
-            $("#footer").css("margin-top", g.getViewportInfo().h - 300);
-        }
-    })();
+//    ( function rePositionFooter() {
+//        var f = $("#footer");
+//        if (f.offset().top < 400) {
+//            $("#footer").css("margin-top", g.getViewportInfo().h - 300);
+//        }
+//    })();
 
 
 });

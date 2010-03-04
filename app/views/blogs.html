@@ -5,7 +5,7 @@
 #{/set}
 <div class="container">
     <div class="span-24">
-        <h3><a href="@{Blogs.index()}">博客主页</a></h3>
+        <h3><a href="@{Blogs.index()}">博客主页［开发中...]</a></h3>
         #{if user}
         <h4><a href="@{Blogs.user(user)}">${currUser.nickname} 的 博客主页 </a></h4>
         #{/if}
@@ -37,7 +37,7 @@
         <div>
             <span><a href="@{Blogs.blank()}">写博客</a> </span>
         </div>
-        #{if params.user == user}
+        #{if user && params.user == user}
         <div>
                   <span>
                       <a href="@{Blogs.user_temps}">还未发布的博客</a>

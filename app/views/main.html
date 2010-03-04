@@ -5,7 +5,6 @@
 <head>
     <title>#{get 'title' /} - 阿牛的孵化窝</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <!--<link rel="shortcut icon" type="image/png" href="@{'/public/images/favicon.png'}" />-->
     <link href="@{'/public/images/favicon.ico'}" type="image/x-icon" rel="icon"/>
     <link rel="stylesheet" href="@{'/public/stylesheets/blueprint/screen.css'}" type="text/css"
           media="screen, projection">
@@ -34,7 +33,7 @@
             <a href="@{Blogs.index()}" title="博客">博客</a>
             |
             <a href="@{Says.index()}" title="心语新说">心语</a>
-             #{if user}
+            #{if user}
             |
             <a href="@{TodoLists.index()}" title="你的ToDo List">待办</a>
             |
@@ -61,9 +60,13 @@
     </div>
 
     <div id="footer">
-    		<span>
-    		itang &copy 2009
-    		</span>
+        &copy 2010
+        <a href="http://code.google.com/appengine/" title="HOSTED BY GAE" target="_blank">beehao</a>
+        <span id="bataInfo">[Beta1]</span>
+        |
+        <a href="#">About</a>
+        |
+        <a href="#">Roadmap</a>
     </div>
 </div>
 
