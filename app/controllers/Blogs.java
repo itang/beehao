@@ -78,8 +78,35 @@ public class Blogs extends PageController {
         renderUserhome();
     }
 
-    public static void save(@Required Long id, String content) {
-        renderUserhome();
+    public static void save(@Required Long id, @Required String title, String content) {
+        if (Validation.hasErrors()) {
+            flash.error("请输入标题");
+            edit(id);
+        }
+        if (StringUtils.isBlank(content)) {
+            flash.error("请输入博客内容!");
+            edit(id);
+        }
+
+        final String actionType = params.get("actionType");
+        Blog blog = BlogManage.instance(currUsername()).get(id);
+        if (blog == null) {
+            flash.error("博客不存在!");
+            renderUserhome();
+        }
+
+        //保存修改内容
+        BlogManage.instance.updateBlog(blog, title, content);
+        
+        if ("发布".equals(actionType)) {//同时发布博客
+            BlogManage.instance.publishBlog(blog);
+
+            flash.success("成功发布博客!");
+            renderUserhome();
+        } else {
+            flash.success("成功保存博客!");
+            edit(id);
+        }
     }
 
 
@@ -87,6 +114,5 @@ public class Blogs extends PageController {
         Page<Blog> blogs = BlogManage.instance(user).pagedPublishedBlogs(page);
         render(blogs);
     }
-
 
 }

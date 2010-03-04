@@ -41,12 +41,20 @@ public class Blog extends Model implements Ownerable<String> {
         this.username = user;
     }
 
-    public Blog(String user, String title, Blob content) {
+    public Blog(String user, String title, String content) {
         this.username = user;
         this.title = title;
-        this.content = content;
+        this.content(content);
         this.createAt = new Date();
         this.status = STATUS_PUBLISHED;
+    }
+
+    public void content(String content) {
+        this.content = new Blob(content.getBytes());
+    }
+
+    public boolean isPublished() {
+        return this.status == STATUS_PUBLISHED;
     }
 
     public String owner() {

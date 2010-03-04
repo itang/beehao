@@ -9,6 +9,7 @@ import play.data.validation.Required;
 import play.data.validation.Validation;
 import siena.Query;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -69,11 +70,20 @@ public class BlogManage extends OwnerableManage<Blog> implements Ownerable<Strin
     }
 
     public Blog saveBlog(String title, String content, int status) {
-        Blog blog = new Blog(this.owner(), title, new Blob(content.getBytes()));
+        Blog blog = new Blog(this.owner(), title, content);
         blog.author = currUser().nickname;
         blog.status = status;
         blog.insert();
         return blog;
+    }
+
+    public void updateBlog(Blog blog, String title, String content) {
+        blog.title = title;
+        blog.content(content);
+        if (blog.isPublished()) {
+            blog.lastModifiedAt = new Date();
+        }
+        blog.update();
     }
 
     public static BlogManage instance(String owner) {

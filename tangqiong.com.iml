@@ -6,9 +6,6 @@
       <sourceFolder url="file://$MODULE_DIR$/app" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/test" isTestSource="true" />
     </content>
-    <content url="file://D:/dev-env/playframework/play-1.1-unstable-r766/modules/gae">
-      <sourceFolder url="file://D:/dev-env/playframework/play-1.1-unstable-r766/modules/gae/app" isTestSource="false" />
-    </content>
     <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="inheritedJdk" />
@@ -52,6 +49,7 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/../../dev-env/play/modules/gae-1.0.1/src" />
         </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../../dev-env/play/modules/gae-1.0.1/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
@@ -75,6 +73,7 @@
         <SOURCES>
           <root url="file://$MODULE_DIR$/../../dev-env/play/modules/guice-1.0/src" />
         </SOURCES>
+        <jarDirectory url="file://$MODULE_DIR$/../../dev-env/play/modules/guice-1.0/lib" recursive="false" />
       </library>
     </orderEntry>
   </component>
