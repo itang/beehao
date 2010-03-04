@@ -3,7 +3,7 @@
 
 <div>
     #{form @Blogs.save() }
-
+    <input type="hidden" name="id" value="${blog.id}"/>
     <p>
         <label for="title">标题:</label>
         <input type="text" id="title" name="title" size="30" value="${blog.title}"/>
