@@ -1,14 +1,14 @@
-<!-- Indices written at Tue, 23 Feb 2010 19:08:08 CST -->
+<!-- Indices written at Thu, 4 Mar 2010 16:19:28 CST -->
 
 <datastore-indexes>
 
-    <!-- Used 124 times in query history -->
+    <!-- Used 94 times in query history -->
     <datastore-index kind="Blog" ancestor="false" source="auto">
         <property name="status" direction="asc"/>
         <property name="createAt" direction="desc"/>
     </datastore-index>
 
-    <!-- Used 2 times in query history -->
+    <!-- Used 1 time in query history -->
     <datastore-index kind="TodoList" ancestor="false" source="auto">
         <property name="username" direction="asc"/>
         <property name="createAt" direction="desc"/>
@@ -28,23 +28,29 @@
         <property name="position" direction="desc"/>
     </datastore-index>
 
-    <!-- Used 183 times in query history -->
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Bookmarker" ancestor="false" source="auto">
+        <property name="username" direction="asc"/>
+        <property name="hit" direction="desc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Photo" ancestor="false" source="auto">
+        <property name="id" direction="asc"/>
+        <property name="createAt" direction="desc"/>
+    </datastore-index>
+
+    <!-- Used 4 times in query history -->
     <datastore-index kind="Blog" ancestor="false" source="auto">
         <property name="status" direction="asc"/>
         <property name="username" direction="asc"/>
         <property name="createAt" direction="desc"/>
     </datastore-index>
 
-    <!-- Used 6 times in query history -->
+    <!-- Used 2 times in query history -->
     <datastore-index kind="Say" ancestor="false" source="auto">
         <property name="username" direction="asc"/>
         <property name="createAt" direction="desc"/>
-    </datastore-index>
-
-    <!-- Used 1 time in query history -->
-    <datastore-index kind="Bookmarker" ancestor="false" source="auto">
-        <property name="username" direction="asc"/>
-        <property name="hit" direction="desc"/>
     </datastore-index>
 
 </datastore-indexes>
