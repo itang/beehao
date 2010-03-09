@@ -86,6 +86,12 @@ public class BlogManage extends OwnerableManage<Blog> implements Ownerable<Strin
         blog.update();
     }
 
+    public Blog increaseHits(final Blog blog) {
+        blog.hit += 1;
+        blog.update();
+        return blog;
+    }
+
     public static BlogManage instance(String owner) {
         return new BlogManage(owner);
     }

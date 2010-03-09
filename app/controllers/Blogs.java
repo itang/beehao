@@ -3,6 +3,7 @@ package controllers;
 import controllers.api.PageController;
 import models.api.Page;
 import models.entity.Blog;
+import models.entity.User;
 import models.manage.BlogManage;
 import org.apache.commons.lang.StringUtils;
 import play.data.validation.Required;
@@ -54,6 +55,13 @@ public class Blogs extends PageController {
 
     public static void show(@Required Long id) {
         Blog blog = BlogManage.instance.get(id);
+
+        notFoundIfNull(blog);
+        //增加点击量
+        if (!blog.username.equals(currUsername())) { //非blog作者
+            BlogManage.instance.increaseHits(blog);
+        }
+
         render(blog);
     }
 
@@ -97,7 +105,7 @@ public class Blogs extends PageController {
 
         //保存修改内容
         BlogManage.instance.updateBlog(blog, title, content);
-        
+
         if ("发布".equals(actionType)) {//同时发布博客
             BlogManage.instance.publishBlog(blog);
 
@@ -111,7 +119,12 @@ public class Blogs extends PageController {
 
 
     public static void user(@Required String user, int page) {
+        User theUser = User.get(user);
+        notFoundIfNull(theUser);
+
         Page<Blog> blogs = BlogManage.instance(user).pagedPublishedBlogs(page);
+        renderArgs.put("user_name", user);
+        renderArgs.put("user_nickname", theUser.nickname);
         render(blogs);
     }
 

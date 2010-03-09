@@ -5,8 +5,8 @@
         <div class="createAt span-4">
             ${blog.status == 1? "发布" : "暂存" }于:${blog.createAt.format()}
         </div>
-        <div class="author span-3">作者:${blog.author}</div>
-        <div class="hit span-2">点击:${blog.hit?:""}</div>
+        <div class="author span-3">作者:<a href="@{Blogs.user(blog.username)}">${blog.author?:blog.username}</a></div>
+        <div class="hit span-2">点击:${blog.hit}</div>
         <div class="comments span-2">评论:${blog.comments?:""}</div>
     </div>
     <div class="blog_content">

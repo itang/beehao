@@ -33,9 +33,9 @@ public class Blog extends Model implements Ownerable<String> {
     //状态
     public int status;
     //点击率
-    public Integer hit;
+    public int hit;
     //留言量
-    public Integer comments;
+    public int comments;
 
     public Blog(String user) {
         this.username = user;

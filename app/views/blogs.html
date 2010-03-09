@@ -7,7 +7,7 @@
     <div class="span-24">
         <h3><a href="@{Blogs.index()}">博客主页［开发中...]</a></h3>
         #{if user}
-        <h4><a href="@{Blogs.user(user)}">${currUser.nickname} 的 博客主页 </a></h4>
+        <h4><a href="@{Blogs.user(user)}">${user_nickname?:user_name} 的 博客主页 </a></h4>
         #{/if}
 
         <div class="info">
@@ -27,10 +27,10 @@
     <div class="span-5 last">
         #{if user}
         <div>
-            <span><a href="@{Blogs.user(user)}">${user}</a>个人信息 </span>
+            <span><a href="@{Blogs.user(user_name)}">${user_name}</a>个人信息 </span>
 
             <div>
-                <p>昵称: ${nickname}</p>
+                <p>昵称: ${user_nickname}</p>
             </div>
         </div>
         #{/if}
