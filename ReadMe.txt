@@ -1,4 +1,4 @@
 GAE:beehao.appspot.com
 
 stack: play + gae + jquery 
-env: git + gedit
+env: git + gedit + idea
