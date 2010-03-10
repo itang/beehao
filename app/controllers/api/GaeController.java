@@ -34,7 +34,7 @@ public class GaeController extends Controller {
      * @return true 如果从本站输入用户、密码登录
      */
     protected static boolean isLocalLoggedIn() {
-        return session.get("user") != null ;
+        return session.get("user") != null;
     }
 
     /**
@@ -55,7 +55,9 @@ public class GaeController extends Controller {
         if (isLocalLoggedIn()) {
             return session.get("user");
         }
-        return GAE.getUser().getEmail().replace("@", "AT");
+        if (isGaeLoggedIn())
+            return GAE.getUser().getEmail().replace("@", "AT");
+        return "";
     }
 
     /**

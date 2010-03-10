@@ -1,19 +1,10 @@
-function _resizeFrame() {
-    var height = g.getViewportInfo().h - $("#frameWindow").position().top;
-    height = height - $("#footer").height();
-    $("#frameWindow").height(height);
-}
-
-//
-var curr_window_status = "max"
+var curr_window_status = "min";
 
 function _isMaximized() {
     return curr_window_status == "max"
 }
 
 $(function() {
-    //resize event
-    $(window).resize(_resizeFrame);
 
     //refresh click事件 -> iframe reload
     $('#refresh').click(function() {
@@ -22,20 +13,16 @@ $(function() {
     });
 
     $('#btnMaximize').click(function() {
+        $("#navbar").toggle("fast");
         if (!_isMaximized()) {
             curr_window_status = "max";
             this.value = "显示书签栏";
+            $("#frame_container").width(g.getViewportInfo().w - 30);
         } else {
             curr_window_status = "min";
             this.value = "隐藏书签栏";
-
-            $("#frameWindow").hide();
+            $("#frame_container").width(g.getViewportInfo().w - 250);
         }
-
-        $("#globalnav").slideToggle("fast", function() {
-            $("#frameWindow").show();
-            _resizeFrame();
-        });
     });
 
     //点击tab链接，在iframe显示网页
@@ -63,8 +50,6 @@ $(function() {
         event.preventDefault();
         event.stopPropagation();
     });
-});
 
-$(function() {
-    _resizeFrame();
+    $("#frame_container").width(g.getViewportInfo().w - 250);
 });
