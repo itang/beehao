@@ -11,7 +11,7 @@
 <ol id="lists">
     #{list items:lists, as:'list'}
     <li><a href="@{TodoLists.show(list.id)}">${list}</a>
-        <span>${list.createAt?.format("yyyy-MM-dd HH:mm")}</span>
+        <span>${list.createAt?.formatISO("yyyy-MM-dd HH:mm")}</span>
     </li>
     #{/list}
 </ol>

@@ -2,6 +2,7 @@ package utils;
 
 import com.google.appengine.api.datastore.Blob;
 
+import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -29,7 +30,7 @@ public class MyJavaExtensions extends play.templates.JavaExtensions {
         }
     }
 
-    public static String format(final Date date, final String pattern) {
+    public static String formatISO(final Date date, final String pattern) {
         if (date == null) return "";
         return new SimpleDateFormat(pattern == null ? "yyyy-MM-dd HH:mm:ss" : pattern)
                 .format(date);
@@ -41,8 +42,13 @@ public class MyJavaExtensions extends play.templates.JavaExtensions {
         return sdf.format(date);
     }
 
-    public static String asString(Blob blob) {
-        if (blob == null) return "";
-        return new String(blob.getBytes());
+    public static String asString(Blob text) {
+        if (text == null) return "";
+        try {
+            return new String(text.getBytes(), "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+            return "";
+        }
     }
 }

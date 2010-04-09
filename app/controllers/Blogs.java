@@ -19,7 +19,6 @@ import java.util.List;
 public class Blogs extends PageController {
 
     public static void index(int page) {
-         BlogManage.instance.deleteAll();
         Page<Blog> blogs = BlogManage.instance.pagedPublishedBlogs(page);
         render(blogs);
     }

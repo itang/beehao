@@ -3,7 +3,7 @@
     <div class="blog_top">
         <div class="title span-6"><h3>* <a href="@{Blogs.show(blog.id)}">${blog.title}</a></h3></div>
         <div class="createAt span-4">
-            ${blog.status == 1? "发布" : "暂存" }于:${blog.createAt.format()}
+            ${blog.status == 1? "发布" : "暂存" }于:${blog.createAt.formatISO()}
         </div>
         <div class="author span-3">作者:<a href="@{Blogs.user(blog.username)}">${blog.author?:blog.username}</a></div>
         <div class="hit span-2">点击:${blog.hit}</div>

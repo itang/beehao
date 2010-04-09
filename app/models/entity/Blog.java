@@ -5,6 +5,7 @@ import models.api.Ownerable;
 import siena.Id;
 import siena.Model;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Date;
 
 /**
@@ -50,7 +51,11 @@ public class Blog extends Model implements Ownerable<String> {
     }
 
     public void content(String content) {
-        this.content = new Blob(content.getBytes());
+        try {
+            this.content = new Blob(content.getBytes("UTF-8"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     public boolean isPublished() {

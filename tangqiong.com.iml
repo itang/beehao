@@ -22,58 +22,46 @@
     <orderEntry type="module-library">
       <library name="PlayFramework Dependecies">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../../dev-env/play/framework/lib" />
+          <root url="file://D:/dev-env/playframework/play-1.0.2/framework/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
-        <jarDirectory url="file://$MODULE_DIR$/../../dev-env/play/framework/lib" recursive="false" />
+        <jarDirectory url="file://D:/dev-env/playframework/play-1.0.2/framework/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library>
+      <library name="play.jar">
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../dev-env/play/framework/play.jar!/" />
+          <root url="jar://D:/dev-env/playframework/play-1.0.2/framework/play.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../../dev-env/play/framework/src" />
+          <root url="file://D:/dev-env/playframework/play-1.0.2/framework/src" />
         </SOURCES>
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library name="gae">
-        <CLASSES>
-          <root url="file://$MODULE_DIR$/../../dev-env/play/modules/gae-1.0.1/lib" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES>
-          <root url="file://$MODULE_DIR$/../../dev-env/play/modules/gae-1.0.1/src" />
-        </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/../../dev-env/play/modules/gae-1.0.1/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
       <library name="siena">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../../dev-env/play/modules/siena-1.1/lib" />
+          <root url="file://D:/dev-env/playframework/play-1.0.2/modules/siena-1.1/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../../dev-env/play/modules/siena-1.1/src" />
+          <root url="file://D:/dev-env/playframework/play-1.0.2/modules/siena-1.1/src" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/../../dev-env/play/modules/siena-1.1/lib" recursive="false" />
+        <jarDirectory url="file://D:/dev-env/playframework/play-1.0.2/modules/siena-1.1/lib" recursive="false" />
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="guice">
+      <library name="gae">
         <CLASSES>
-          <root url="file://$MODULE_DIR$/../../dev-env/play/modules/guice-1.0/lib" />
+          <root url="file://D:/dev-env/playframework/play-1.0.2/modules/gae-1.0.2/lib" />
         </CLASSES>
         <JAVADOC />
         <SOURCES>
-          <root url="file://$MODULE_DIR$/../../dev-env/play/modules/guice-1.0/src" />
+          <root url="file://D:/dev-env/playframework/play-1.0.2/modules/gae-1.0.2/src" />
         </SOURCES>
-        <jarDirectory url="file://$MODULE_DIR$/../../dev-env/play/modules/guice-1.0/lib" recursive="false" />
+        <jarDirectory url="file://D:/dev-env/playframework/play-1.0.2/modules/gae-1.0.2/lib" recursive="false" />
       </library>
     </orderEntry>
   </component>
