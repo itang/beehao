@@ -1,6 +1,7 @@
 *~
 *#
 tmp
+precompiled
 logs
 test-result
 war/WEB-INF/appengine-generated/datastore-indexes-auto.xml
