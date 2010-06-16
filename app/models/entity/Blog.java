@@ -54,7 +54,7 @@ public class Blog extends Model implements Ownerable<String> {
         try {
             this.content = new Blob(content.getBytes("UTF-8"));
         } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 

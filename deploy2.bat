@@ -1,1 +1,1 @@
-play gae:deploy --gae D:\dev-env\appengine\appengine-java-sdk-1.3.2
+play gae:deploy --gae D:\dev-env\appengine\appengine-java-sdk-1.3.4
