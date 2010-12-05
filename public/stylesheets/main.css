@@ -19,6 +19,7 @@
 
 #sitetitle {
     float: left;
+    font-weight:bolder;
 }
 
 div#quicklinks {
@@ -41,7 +42,7 @@ div#quicklinks a.selected {
     font-weight: bold;
 }
 
-div#quicklinks a:hover {
+div#quicklinks a:hover {version_info
     text-decoration: underline;
     background: #FFCC00;
     color: red;
@@ -51,4 +52,9 @@ div#quicklinks a:hover {
     width: 300px;
     font-size: 11pt;
     font-weight: bold;
+}
+
+#version_info{
+    font-size: 5px; 
+    color: gray;
 }
