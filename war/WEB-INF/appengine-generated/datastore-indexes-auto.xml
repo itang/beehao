@@ -1,29 +1,10 @@
-<!-- Indices written at Sun, 5 Dec 2010 10:33:35 CST -->
+<!-- Indices written at Thu, 9 Dec 2010 09:07:24 CST -->
 
 <datastore-indexes>
 
-    <!-- Used 24 times in query history -->
-    <datastore-index kind="Blog" ancestor="false" source="auto">
-        <property name="status" direction="asc"/>
-        <property name="createAt" direction="desc"/>
-    </datastore-index>
-
-    <!-- Used 6 times in query history -->
-    <datastore-index kind="Bookmarker" ancestor="false" source="auto">
-        <property name="username" direction="asc"/>
-        <property name="hit" direction="desc"/>
-    </datastore-index>
-
-    <!-- Used 2 times in query history -->
-    <datastore-index kind="Blog" ancestor="false" source="auto">
-        <property name="status" direction="asc"/>
-        <property name="username" direction="asc"/>
-        <property name="createAt" direction="desc"/>
-    </datastore-index>
-
     <!-- Used 4 times in query history -->
-    <datastore-index kind="Say" ancestor="false" source="auto">
-        <property name="username" direction="asc"/>
+    <datastore-index kind="Blog" ancestor="false" source="auto">
+        <property name="status" direction="asc"/>
         <property name="createAt" direction="desc"/>
     </datastore-index>
 
@@ -31,6 +12,12 @@
     <datastore-index kind="TodoList" ancestor="false" source="auto">
         <property name="username" direction="asc"/>
         <property name="createAt" direction="desc"/>
+    </datastore-index>
+
+    <!-- Used 1 time in query history -->
+    <datastore-index kind="Bookmarker" ancestor="false" source="auto">
+        <property name="username" direction="asc"/>
+        <property name="hit" direction="desc"/>
     </datastore-index>
 
 </datastore-indexes>
